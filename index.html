@@ -18,11 +18,13 @@
         .resume-header, .resume-wrapper-inner {
             border: 0 solid transparent !important;
             border-top-right-radius: 3rem !important;
+            border-top-left-radius: 3rem !important;
         }
 
         .resume-wrapper-inner {
             border: 0 solid transparent !important;
             border-bottom-left-radius: 3.5rem !important;
+            border-bottom-right-radius: 3.5rem !important;
             box-shadow: 0 0 3rem rgba(0, 0, 0, 0.3) !important;
         }
 
@@ -48,18 +50,23 @@
 
 <article class="resume-wrapper text-center position-relative">
     <div class="resume-wrapper-inner mx-auto text-start bg-white">
-        <header class="resume-header pt-4 pt-md-0">
+        <header class="resume-header pt-4">
             <div class="row">
-                <div class="col-block col-md-auto resume-picture-holder text-center text-md-start">
-                    <img class="picture h-100" src="assets/images/profile.jpeg" alt="Hossam Magdy Balaha's Avatar">
+                <div class="col mx-auto text-center">
+                    <img class="picture rounded-circle shadow shadow-lg" 
+                        width="200" height="200" 
+                        src="assets/images/profile.jpeg" alt="Hossam Magdy Balaha's Avatar">
                 </div>
+            </div>
+            <div class="row">
                 <div class="col">
                     <div class="row p-4 justify-content-center justify-content-md-between">
                         <div class="primary-info col-auto">
-                            <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">
+                            <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase text-center"
+                                 style="font-size: 2rem;">
                                 Hossam Magdy Balaha
                             </h1>
-                            <div class="title" style="font-size: 1.25rem;">
+                            <div class="title text-center" style="font-size: 1.25rem;">
                                 Lecturer Assistant *
                                 •
                                 Senior Full Stack Web and Cross-platform Mobile Developer/Instructor
@@ -271,8 +278,8 @@
                 </div>
             </div>
 
-            <section class="resume-section summary-section mb-5">
-                <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+            <section class="resume-section summary-section mb-3">
+                <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                     Biography
                 </h2>
                 <div class="resume-section-content">
@@ -294,13 +301,13 @@
 
             <div class="row" id="Official-Job-Grades">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Official Job Grades
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -340,7 +347,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -372,8 +379,8 @@
                     </section>
                 </div>
                 <div class="col-lg-3" id="Scientific-Interests">
-                    <section class="resume-section interests-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section interests-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Sci. Interests
                         </h2>
                         <div class="resume-section-content">
@@ -399,13 +406,13 @@
 
             <div class="row" id="Education">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Education
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -441,7 +448,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -476,8 +483,8 @@
                 </div>
 
                 <div class="col-lg-3" id="Languages">
-                    <section class="resume-section language-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Languages</h2>
+                    <section class="resume-section language-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">Languages</h2>
                         <div class="resume-section-content">
                             <ul class="list-unstyled resume-lang-list">
                                 <li class="mb-2">
@@ -496,16 +503,19 @@
 
             <div class="row" id="Published-Papers">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
-                            Published Papers
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title pb-3 mb-3">
+                            <span class="text-uppercase font-weight-bold">Published Papers</span>
+                            <br>
+                            <a href="assets/files/citations.bib" 
+                                style="font-size:0.8rem !important;"
+                                class="font-weight-normal h5" target="_blank">
+                               (Open or Download BibTeX)
+                            </a>
                         </h2>
-                        <a href="assets/files/citations.bib" class="small" target="_blank">
-                                Open or Download BibTeX
-                        </a>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -546,7 +556,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -586,7 +596,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -629,7 +639,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -669,7 +679,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -713,7 +723,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -756,7 +766,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -801,7 +811,7 @@
                                         </ul>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -849,8 +859,8 @@
                 </div>
 
                 <div class="col-lg-3" id="Codes-&-Datasets">
-                    <section class="resume-section language-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section language-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Codes & Datasets
                         </h2>
                         <div class="resume-section-content">
@@ -932,13 +942,13 @@
 
             <div class="row" id="Peer-Reviews">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Scientific Peer Reviews (As a Reviewer)
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -953,7 +963,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -968,7 +978,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -983,7 +993,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -998,7 +1008,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1013,7 +1023,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1028,7 +1038,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1043,7 +1053,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1058,7 +1068,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1073,7 +1083,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1088,7 +1098,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1111,13 +1121,13 @@
 
             <div class="row" id="Youtube-Courses">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Youtube Courses
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1135,7 +1145,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1153,7 +1163,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1171,7 +1181,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1197,13 +1207,13 @@
 
             <div class="row" id="Recent-Certifications">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Recent Certifications
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1228,7 +1238,7 @@
                         </div>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1253,7 +1263,7 @@
                         </div>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1282,13 +1292,13 @@
 
             <div class="row" id="Career-Certifications-&-Examinations">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Career Certifications & Examinations
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1303,7 +1313,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1318,7 +1328,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1334,7 +1344,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1350,7 +1360,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1366,7 +1376,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1383,7 +1393,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1398,7 +1408,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1414,7 +1424,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1440,13 +1450,13 @@
 
             <div class="row" id="Work-Experience">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Work Experience
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1518,7 +1528,7 @@
                                     </div>
                                 </article>
 
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1570,7 +1580,7 @@
                                     </div>
                                 </article>
 
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1622,7 +1632,7 @@
                                     </div>
                                 </article>
 
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1690,7 +1700,7 @@
                                     </div>
                                 </article>
 
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1746,7 +1756,7 @@
                                     </div>
                                 </article>
 
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1770,7 +1780,7 @@
                                     </div>
                                 </article>
 
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1794,7 +1804,7 @@
                                     </div>
                                 </article>
 
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1858,8 +1868,8 @@
                 </div>
 
                 <div class="col-lg-3" id="Skills-&-Tools">
-                    <section class="resume-section skills-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section skills-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Skills &amp; Tools</h2>
                         <div class="resume-section-content">
                             <div class="resume-skill-item mb-3">
@@ -1937,13 +1947,13 @@
 
             <div class="row" id="Desktop-Web-and-Mobile-Applications">
                 <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section experience-section mb-3">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Desktop, Web, and Mobile Applications
                         </h2>
                         <div class="resume-section-content">
                             <div class="resume-timeline position-relative">
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1961,7 +1971,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1973,7 +1983,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1985,7 +1995,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -1997,7 +2007,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2014,7 +2024,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2032,7 +2042,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2044,7 +2054,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2063,7 +2073,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2081,7 +2091,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2094,7 +2104,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2113,7 +2123,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2131,7 +2141,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2150,7 +2160,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2162,7 +2172,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2174,7 +2184,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2186,7 +2196,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2198,7 +2208,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2210,7 +2220,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2222,7 +2232,7 @@
                                         </div>
                                     </div>
                                 </article>
-                                <article class="resume-timeline-item position-relative pb-5">
+                                <article class="resume-timeline-item position-relative mt-2">
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
@@ -2240,8 +2250,8 @@
                 </div>
 
                 <div class="col-lg-3">
-                    <section class="resume-section skills-section mb-5" id="Freelance">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section skills-section mb-3" id="Freelance">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Freelance
                         </h2>
                         <div class="resume-section-content">
@@ -2277,8 +2287,8 @@
                         </div>
                     </section>
 
-                    <section class="resume-section skills-section mb-5" id="Judgement">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section skills-section mb-3" id="Judgement">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Judgement
                         </h2>
                         <div class="resume-section-content">
@@ -2296,8 +2306,8 @@
                         </div>
                     </section>
 
-                    <section class="resume-section skills-section mb-5" id="Competitions">
-                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                    <section class="resume-section skills-section mb-3" id="Competitions">
+                        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
                             Competitions
                         </h2>
                         <div class="resume-section-content">
@@ -2346,8 +2356,8 @@
 </body>
 </html>
 
-<!--<section class="resume-section education-section mb-5">-->
-<!--    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Education</h2>-->
+<!--<section class="resume-section education-section mb-3">-->
+<!--    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">Education</h2>-->
 <!--    <div class="resume-section-content">-->
 <!--        <ul class="list-unstyled">-->
 <!--            <li class="mb-2">-->
@@ -2364,8 +2374,8 @@
 <!--    </div>-->
 <!--</section>&lt;!&ndash;//education-section&ndash;&gt;-->
 
-<!--<section class="resume-section reference-section mb-5">-->
-<!--    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Awards</h2>-->
+<!--<section class="resume-section reference-section mb-3">-->
+<!--    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">Awards</h2>-->
 <!--    <div class="resume-section-content">-->
 <!--        <ul class="list-unstyled resume-awards-list">-->
 <!--            <li class="mb-2 ps-4 position-relative">-->
@@ -2386,8 +2396,8 @@
 <!--        </ul>-->
 <!--    </div>-->
 <!--</section>-->
-<!--<section class="resume-section interests-section mb-5">-->
-<!--    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Interests</h2>-->
+<!--<section class="resume-section interests-section mb-3">-->
+<!--    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">Interests</h2>-->
 <!--    <div class="resume-section-content">-->
 <!--        <ul class="list-unstyled">-->
 <!--            <li class="mb-1">Climbing</li>-->
