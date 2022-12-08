@@ -45,6 +45,25 @@
             background-color: #fff !important;
             border-color: #80425F !important;
         }
+
+        blockquote {
+          background: #f9f9f9;
+          border-left: 10px solid #ccc;
+          margin: 1.5em 10px;
+          padding: 0.75em 10px;
+          quotes: "\201C""\201D""\2018""\2019";
+        }
+        blockquote:before {
+          color: #ccc;
+          content: open-quote;
+          font-size: 4em;
+          line-height: 0.1em;
+          margin-right: 0.25em;
+          vertical-align: -0.4em;
+        }
+        blockquote p {
+          display: inline;
+        }
     </style>
 </head>
 
@@ -74,7 +93,7 @@
                             <div class="title text-center" style="font-size: 1.25rem;">
                                 Ph.D. student and Graduate Teaching Assistant (GTA) at the Bioengineering Department, Speed School of Engineering, University of Louisville, USA.
                             </div>
-                            <div class="title text-center" style="font-size: 1.0rem;">
+                            <div class="title text-center" style="font-size: 0.8rem;">
                                 Assistant Lecturer with the Computer Engineering and Control Systems Department, Faculty of Engineering, Mansoura University, Egypt.
                             </div>
                             <div class="title text-center" style="font-size: 0.75rem;">
@@ -133,7 +152,7 @@
                                         <li>
                                             <a class="text-link" href="https://scholar.google.com.eg/citations?user=S_EDE0QAAAAJ&hl=en" target="_blank">
                                                 <i class="fa fa-arrow-trend-up fa-fw me-2" data-fa-transform="grow-6"></i>
-                                                H-Index: 9 & Citations: 164 (Until Nov 11)
+                                                H-Index: 10 & Citations: 182 (Until Dec 08 2022)
                                             </a>
                                         </li>
                                     </ul>
@@ -409,9 +428,9 @@
                                                     <b>30 graduation projects</b>
                                                     related to my research and scientific interests.
                                                 </li>
-                                                <li>
+                                                <!-- <li>
                                                     For more information, check my official university page link above.
-                                                </li>
+                                                </li> -->
                                             </ul>
                                         </div>
                                     </div>
@@ -435,12 +454,31 @@
                                             Teaching Assistant with the Computers Engineering and Systems Department,
                                             Faculty of Engineering, Mansoura University, Egypt.
                                         </p>
-                                        <p>
+                                        <div>
+                                            Role description:
+                                            <ul>
+                                                <li>
+                                                    Helping the lecturers/instructors in teaching set of courses related to the
+                                                    Computer Science (CS) and Control Systems fields such as: Computer
+                                                    Programming, Computer Graphics, Artificial Intelligence, Multimedia,
+                                                    and FPGA.
+                                                </li>
+                                                <li>
+                                                    Supervised (as a secondary supervisor) more than
+                                                    <b>30 graduation projects</b>
+                                                    related to my research and scientific interests.
+                                                </li>
+                                                <!-- <li>
+                                                    For more information, check my official university page link above.
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                        <!-- <p>
                                             Role description: Helping the lecturers/instructors
                                             in teaching set of courses related to the Computer Science (CS) and Control
                                             Systems fields such as: Computer Programming, Computer Graphics, Artificial
                                             Intelligence, Multimedia and FPGA.
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </article>
                             </div>
@@ -493,7 +531,7 @@
                                             </div>
                                         </div>
                                         <div class="resume-position-time">
-                                            From: 2022 - To: Present
+                                            From: Fall 2022 - To: Present
                                         </div>
                                     </div>
                                     <div class="resume-timeline-item-desc">
@@ -504,7 +542,35 @@
                                     <div class="resume-timeline-item-header mb-2">
                                         <div class="d-flex flex-column flex-md-row">
                                             <h3 class="resume-position-title font-weight-bold mb-1">
-                                                M.Sc. in Computers and Systems Engineering
+                                                Verified International Academic Qualifications
+                                            </h3>
+                                            <div class="resume-company-name ms-auto">
+                                                World Education Services
+                                            </div>
+                                        </div>
+                                        <div class="resume-position-time">
+                                            Verification Badge: <a href="https://www.credly.com/badges/17bf9556-688b-4805-9367-074e6abc8dbf/public_url" target="_blank">Click to Open</a>
+                                        </div>
+                                        <div class="resume-position-time">
+                                            Badge Evidence: <a href="https://badges.wes.org/Evidence?i=a0741a88-f9ac-4a35-86e7-20e7ffbb4058&type=us" target="_blank">Click to Open</a>
+                                        </div>
+                                    </div>
+                                    <div class="resume-timeline-item-desc text-center">
+                                        <img src="assets/images/WES-Badge.png" width="128" height="128"> 
+                                    </div>
+                                    <div class="resume-timeline-item-desc">
+                                        <blockquote cite="https://www.credly.com/badges/17bf9556-688b-4805-9367-074e6abc8dbf/public_url">
+                                            <p>
+                                                This badge indicates that World Education Services (WES) has evaluated the associated credential on behalf of the holder. Verifies the authenticity of the claimed credential. Provides assurance that the awarding institution and/or program was accredited at the point that the credential was issued Indicates that the associated credential has been assessed for its U.S. equivalency. Please see the evidence link below which is verification of only the credential with which it is associated.
+                                            </p>
+                                        </blockquote>
+                                    </div>
+                                </article>
+                                <article class="resume-timeline-item position-relative mt-2">
+                                    <div class="resume-timeline-item-header mb-2">
+                                        <div class="d-flex flex-column flex-md-row">
+                                            <h3 class="resume-position-title font-weight-bold mb-1">
+                                                M.Sc. in Computer Engineering and Control Systems
                                             </h3>
                                             <div class="resume-company-name ms-auto">
                                                 Mansoura University
@@ -517,21 +583,41 @@
                                     <div class="resume-timeline-item-desc">
                                         <ul class="">
                                             <li class="mb-2">
-                                                Research title: <b>Proposing a Deep Learning Framework Model for Arabic
+                                                Country: <b>Egypt</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Duration: <b>Two Years</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Year: <b>2020</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Major: <b>Computer Engineering and Control Systems</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                U.S. Equivalency: <b>Master's Degree</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Research Title: <b>Proposing a Deep Learning Framework Model for Arabic
                                                 Handwritten Text Recognition</b>.
                                             </li>
                                             <li class="mb-2">
-                                                Prerequisites completed subjects' GPA: <b>(3.95/4.00)</b> or
-                                                (98.75/100%).
+                                                Percentage Score (According to Mansoura University): <b>98.75/100%</b>.
                                             </li>
                                             <li class="mb-2">
-                                                Prerequisites completed subjects: Computer Network, Internet and
+                                                GPA Score (According to WES): <b>4.00/4.00</b> (Credit Hours: <b>28 Hours</b>).
+                                            </li>
+                                            <!-- <li class="mb-2">
+                                                Courses: Computer Network, Internet and
                                                 Computer Programming, Multimedia, Compiler Design, Data Security and
                                                 Protection, Distributed Database Systems and Networks Design and
                                                 Programming.
+                                            </li> -->
+                                            <li class="mb-2">
+                                                Completed Seminar Course Title: <b>Web Scraping Techniques</b>.
                                             </li>
                                             <li class="mb-2">
-                                                Completed seminar subject title: <b>Web Scraping Techniques</b>.
+                                                For my U.S. WES Evaluation, you can contact to retreive it.
                                             </li>
                                         </ul>
                                     </div>
@@ -547,20 +633,39 @@
                                             </div>
                                         </div>
                                         <div class="resume-position-time">
-                                            From: 2021-06 - To: 2016-06
+                                            From: 2011-06 - To: 2016-06
                                         </div>
                                     </div>
                                     <div class="resume-timeline-item-desc">
                                         <ul class="">
                                             <li class="mb-2">
-                                                <b>
-                                                    <b>Excellent with Honour (The First – 94.23%)</b>.
-                                                </b>
+                                                Country: <b>Egypt</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Duration: <b>Five Years</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Year: <b>2016</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Major: <b>Computers and Systems Engineering</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                U.S. Equivalency: <b>Bachelor's Degree</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                Percentage Score (According to Mansoura University): <b>The First – 94.23/100%</b> (Excellent with Honour).
+                                            </li>
+                                            <li class="mb-2">
+                                                GPA Score (According to WES): <b>3.99/4.00</b> (Credit Hours: <b>155.5 Hours</b>).
                                             </li>
                                             <li class="mb-2">
                                                 Graduation Project Title: <b>Automated Attendance and Sharing
                                                 Information Systems using Face Recognition, Control Design, and IoT</b>.
                                                 Grade: <b>Excellent</b>.
+                                            </li>
+                                            <li class="mb-2">
+                                                For my U.S. WES Evaluation, you can contact to retreive it.
                                             </li>
                                         </ul>
                                     </div>
@@ -1302,6 +1407,30 @@
                         </h2>
                         <div class="resume-section-content">
                             <ul class="list-unstyled resume-lang-list">
+                                <li class="mb-3">
+                                    <span class="resume-lang-name font-weight-bold">BE544 AI Techniques in Pathology (Final Course Project Fall 2022)</span>
+                                    <small class="text-muted font-weight-normal">
+                                        <a target="_blank" href="https://github.com/HossamBalaha/BE544-Final-Course-Project-Fall-2022">
+                                            (Link)
+                                        </a>
+                                    </small>
+                                </li>
+                                <li class="mb-3">
+                                    <span class="resume-lang-name font-weight-bold">BE 544: Weakly Supervised Nuclei Segmentation Project</span>
+                                    <small class="text-muted font-weight-normal">
+                                        <a target="_blank" href="https://github.com/HossamBalaha/BE-544-Weakly-Supervised-Nuclei-Segmentation-Project">
+                                            (Link)
+                                        </a>
+                                    </small>
+                                </li>
+                                <li class="mb-3">
+                                    <span class="resume-lang-name font-weight-bold">CNN Hyperparameters Optimization using Metaheuristic Optimizers</span>
+                                    <small class="text-muted font-weight-normal">
+                                        <a target="_blank" href="https://github.com/HossamBalaha/CNN-Hyperparameters-Optimization-using-Metaheuristic-Optimizers">
+                                            (Link)
+                                        </a>
+                                    </small>
+                                </li>
                                 <li class="mb-3">
                                     <span class="resume-lang-name font-weight-bold">HMBD Dataset v1</span>
                                     <small class="text-muted font-weight-normal">
