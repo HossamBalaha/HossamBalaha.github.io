@@ -1,0 +1,1344 @@
+.nav-badge-link {
+    text-decoration: none;
+    /*transition: transform 0.2s ease, box-shadow 0.2s ease;*/
+}
+
+.nav-badge-link:hover {
+    /*transform: translateY(-2px);*/
+    /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);*/
+}
+
+.nav-badge-link .badge {
+    padding: 0.5rem 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+
+.resume-header, .resume-wrapper-inner {
+    border: 0 solid transparent !important;
+    border-top-right-radius: 2rem !important;
+    border-top-left-radius: 2rem !important;
+}
+
+.resume-wrapper-inner {
+    border: 0 solid transparent !important;
+    border-bottom-left-radius: 2rem !important;
+    border-bottom-right-radius: 2rem !important;
+    box-shadow: 0 0 3rem rgba(0, 0, 0, 0.3) !important;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+span.badge {
+    margin: 0.2rem !important;
+    padding: 0.4rem !important;
+}
+
+span.badge:hover {
+    box-shadow: 0 0 3rem rgba(0, 0, 0, 0.75) !important;
+    /*color: #80425F !important;*/
+    color: #024950 !important;
+    background-color: #fff !important;
+    /*border-color: #80425F !important;*/
+    border-color: #024950 !important;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.75em 10px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+}
+
+.resume-header, .badge {
+    /*background: #028c97 !important;*/
+    background: #024950 !important;
+}
+
+.resume-section-title, .fa-container, .resume-section-content, .resume-position-title, .resume-company-name,
+.resume-timeline-item-desc, .resume-timeline-item-header, .resume-timeline-item, .resume-skills-cat {
+    color: #024950 !important;
+}
+
+.resume-position-time, .resume-skill-name, .resume-lang-name {
+    color: rgba(2, 73, 80, 0.9) !important;
+}
+
+.resume-position-time a, .text-muted a, .resume-section-title a,
+.resume-timeline-item-desc a, .resume-company-name a {
+    color: #490000 !important;
+}
+
+
+.resume-position-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+.resume-position-time i {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.time-note {
+    font-size: 0.8rem;
+    color: #888;
+    font-style: italic;
+    margin-left: 5px;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.skill-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 1px 5px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 2rem;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+}
+
+.skill-pill i {
+    /*font-size: 0.95rem;*/
+    opacity: 0.85;
+}
+
+.skill-pill:hover {
+    /*transform: translateY(-2px);*/
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Domain-specific professional palettes */
+.skill-pill.ai {
+    background-color: #e8f0fe;
+    border-color: #c9d8f7;
+    color: #1a56db;
+}
+
+.skill-pill.ai i {
+    color: #1a56db;
+}
+
+.skill-pill.opt {
+    background-color: #fef3cd;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.skill-pill.opt i {
+    color: #92400e;
+}
+
+.skill-pill.dev {
+    background-color: #d1fae5;
+    border-color: #a7f3d0;
+    color: #065f46;
+}
+
+.skill-pill.dev i {
+    color: #065f46;
+}
+
+.skill-pill.infra {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+    color: #374151;
+}
+
+.skill-pill.infra i {
+    color: #4b5563;
+}
+
+/* Print Optimization */
+@media print {
+    .skill-pill {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    .skill-pill i {
+        color: #000 !important;
+    }
+}
+
+.repo-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.repo-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem 10px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.repo-item:last-child {
+    border-bottom: none;
+}
+
+.repo-item:hover {
+    background-color: #f9f9f9;
+}
+
+.repo-icon {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    font-size: 1.1rem;
+}
+
+.repo-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.repo-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #222;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+}
+
+.repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.repo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.repo-link {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.repo-link:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+.repo-link i {
+    font-size: 0.85rem;
+}
+
+/* Category color schemes (muted, professional palette) */
+.repo-icon.research {
+    background-color: #e8f0fe;
+    color: #1a56db;
+}
+
+.repo-badge.research {
+    background-color: #e8f0fe;
+    color: #1a56db;
+    border: 1px solid #c9d8f7;
+}
+
+.repo-icon.course {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.repo-badge.course {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.repo-icon.dataset {
+    background-color: #fef3cd;
+    color: #92400e;
+}
+
+.repo-badge.dataset {
+    background-color: #fef3cd;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.repo-icon.app {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.repo-badge.app {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.repo-icon.tool {
+    background-color: #ede9fe;
+    color: #5b21b6;
+}
+
+.repo-badge.tool {
+    background-color: #ede9fe;
+    color: #5b21b6;
+    border: 1px solid #ddd6fe;
+}
+
+/* Print optimization */
+@media print {
+    .repo-item {
+        border-bottom: 1px solid #000 !important;
+        padding: 0.5rem 0;
+    }
+
+    .repo-icon {
+        background: transparent !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+    }
+
+    .repo-badge {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+    }
+
+    .repo-link {
+        color: #000 !important;
+        text-decoration: none !important;
+    }
+
+    .repo-link::after {
+        content: " [" attr(href) "]";
+        font-size: 0.75rem;
+        color: #333;
+        word-break: break-all;
+    }
+}
+
+/* Extended category styles for new project types */
+.repo-icon.under-review {
+    background-color: #fef9c3;
+    color: #854d0e;
+}
+
+.repo-badge.under-review {
+    background-color: #fef9c3;
+    color: #854d0e;
+    border: 1px solid #fde047;
+}
+
+.repo-icon.utility {
+    background-color: #f5f3ff;
+    color: #5b21b6;
+}
+
+.repo-badge.utility {
+    background-color: #f5f3ff;
+    color: #5b21b6;
+    border: 1px solid #ddd6fe;
+}
+
+.repo-icon.patent {
+    background-color: #ffedd5;
+    color: #9a3412;
+}
+
+.repo-badge.patent {
+    background-color: #ffedd5;
+    color: #9a3412;
+    border: 1px solid #fed7aa;
+}
+
+.doi-link {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px dashed #0d6efd;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.doi-link:hover {
+    color: #0a58ca;
+    border-bottom-style: solid;
+}
+
+.status-notice {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    color: #856404;
+    background-color: #fff3cd;
+    border-left: 3px solid #ffc107;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.volunteer-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.volunteer-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.85rem 10px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.volunteer-item:last-child {
+    border-bottom: none;
+}
+
+.volunteer-item:hover {
+    background-color: #fafafa;
+}
+
+.volunteer-icon {
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.volunteer-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.volunteer-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.35rem;
+}
+
+.volunteer-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #222;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.volunteer-org {
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.volunteer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.4rem;
+}
+
+.volunteer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.volunteer-link {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.volunteer-link:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+.volunteer-link i {
+    font-size: 0.85rem;
+}
+
+.volunteer-desc {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+}
+
+/* Category color schemes (muted, professional palette) */
+.volunteer-icon.campus {
+    background-color: #e8f0fe;
+    color: #1a56db;
+}
+
+.volunteer-badge.campus {
+    background-color: #e8f0fe;
+    color: #1a56db;
+    border: 1px solid #c9d8f7;
+}
+
+.volunteer-icon.community {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.volunteer-badge.community {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.volunteer-icon.health {
+    background-color: #ffedd5;
+    color: #9a3412;
+}
+
+.volunteer-badge.health {
+    background-color: #ffedd5;
+    color: #9a3412;
+    border: 1px solid #fed7aa;
+}
+
+.volunteer-icon.scholarship {
+    background-color: #ede9fe;
+    color: #5b21b6;
+}
+
+.volunteer-badge.scholarship {
+    background-color: #ede9fe;
+    color: #5b21b6;
+    border: 1px solid #ddd6fe;
+}
+
+/* Print optimization */
+@media print {
+    .volunteer-item {
+        border-bottom: 1px solid #000 !important;
+        padding: 0.5rem 0;
+    }
+
+    .volunteer-icon {
+        background: transparent !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+    }
+
+    .volunteer-badge {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+    }
+
+    .volunteer-link {
+        color: #000 !important;
+        text-decoration: none !important;
+    }
+
+    .volunteer-link::after {
+        content: " [" attr(href) "]";
+        font-size: 0.75rem;
+        color: #333;
+        word-break: break-all;
+    }
+}
+
+.skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.skills-category {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+}
+
+.skills-category:last-child {
+    border-bottom: none;
+}
+
+.skills-category-title {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.skills-category-title i {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 1px 3px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    border-radius: 1.5rem;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+    white-space: nowrap;
+}
+
+.skill-tag i {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.skill-tag:hover {
+    /*transform: translateY(-2px);*/
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Category-specific palettes (muted, professional) */
+/* Frontend */
+.cat-frontend .skills-category-title {
+    color: #1a56db;
+}
+
+.cat-frontend .skills-category-title i {
+    color: #1a56db;
+}
+
+.cat-frontend .skill-tag {
+    background-color: #e8f0fe;
+    border-color: #c9d8f7;
+    color: #1e40af;
+}
+
+.cat-frontend .skill-tag i {
+    color: #1e40af;
+}
+
+/* Backend */
+.cat-backend .skills-category-title {
+    color: #065f46;
+}
+
+.cat-backend .skills-category-title i {
+    color: #065f46;
+}
+
+.cat-backend .skill-tag {
+    background-color: #d1fae5;
+    border-color: #a7f3d0;
+    color: #064e3b;
+}
+
+.cat-backend .skill-tag i {
+    color: #064e3b;
+}
+
+/* Mobile */
+.cat-mobile .skills-category-title {
+    color: #7c3aed;
+}
+
+.cat-mobile .skills-category-title i {
+    color: #7c3aed;
+}
+
+.cat-mobile .skill-tag {
+    background-color: #ede9fe;
+    border-color: #ddd6fe;
+    color: #5b21b6;
+}
+
+.cat-mobile .skill-tag i {
+    color: #5b21b6;
+}
+
+/* Languages */
+.cat-languages .skills-category-title {
+    color: #92400e;
+}
+
+.cat-languages .skills-category-title i {
+    color: #92400e;
+}
+
+.cat-languages .skill-tag {
+    background-color: #fef3cd;
+    border-color: #fde68a;
+    color: #78350f;
+}
+
+.cat-languages .skill-tag i {
+    color: #78350f;
+}
+
+/* Technologies */
+.cat-techs .skills-category-title {
+    color: #374151;
+}
+
+.cat-techs .skills-category-title i {
+    color: #374151;
+}
+
+.cat-techs .skill-tag {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+    color: #1f2937;
+}
+
+.cat-techs .skill-tag i {
+    color: #4b5563;
+}
+
+/* Print optimization */
+@media print {
+    .skill-tag {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    .skill-tag i {
+        color: #000 !important;
+    }
+
+    .skills-category {
+        border-bottom: 1px solid #000 !important;
+    }
+
+    .skills-category-title {
+        color: #000 !important;
+    }
+
+    .skills-category-title i {
+        color: #000 !important;
+    }
+}
+
+/* Section Layout */
+.peer-review-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 992px) {
+    .peer-review-grid {
+        grid-template-columns: 1fr 1.8fr;
+    }
+}
+
+/* Card Styling */
+.role-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.role-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /*transform: translateY(-2px);*/
+}
+
+.role-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.role-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.role-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #1f2937;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.role-org {
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin: 0.15rem 0 0 0;
+}
+
+.role-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+/* Journal List Styling */
+.journal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.journal-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    border-left: 3px solid transparent;
+    transition: background-color 0.2s ease, border-left-color 0.2s ease;
+}
+
+.journal-item:hover {
+    background: #f3f4f6;
+}
+
+.journal-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #1f2937;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.journal-publisher {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.375rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #374151;
+    background: #e5e7eb;
+    margin-left: 0.5rem;
+}
+
+.journal-link {
+    color: #0d6efd;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.journal-link:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+/* Color Schemes */
+/* Editor Roles */
+.editor .role-icon {
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+.editor .role-badge {
+    background: #ede9fe;
+    color: #5b21b6;
+    border: 1px solid #ddd6fe;
+}
+
+.editor .journal-item {
+    border-left-color: #7c3aed;
+}
+
+/* Reviewer Roles */
+.reviewer .role-icon {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.reviewer .role-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.reviewer .journal-item {
+    border-left-color: #3b82f6;
+}
+
+/* Publisher Badges */
+.publisher-mdpi {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.publisher-springer {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.publisher-elsevier {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.publisher-ieee {
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+.publisher-tandf {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+.publisher-frontiers {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+
+.publisher-peerj {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.publisher-wiley {
+    background: #f0f9ff;
+    color: #075985;
+}
+
+.publisher-hindawi {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.publisher-other {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* Statistics Bar */
+.stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: #334155;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* ORCID Badge */
+.orcid-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: #a6ce39;
+    color: #fff;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.orcid-badge:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+.orcid-badge i {
+    font-size: 1rem;
+}
+
+/* Print Optimization */
+@media print {
+    .role-card, .journal-item, .stats-bar {
+        box-shadow: none !important;
+        transform: none !important;
+        border: 1px solid #000 !important;
+    }
+
+    .role-icon, .role-badge, .journal-publisher {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+    }
+
+    .journal-link {
+        color: #000 !important;
+        text-decoration: none !important;
+    }
+
+    .journal-link::after {
+        content: " [" attr(href) "]";
+        font-size: 0.7rem;
+        color: #333;
+        word-break: break-all;
+    }
+}
+
+/* Section Layout */
+.courses-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .courses-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Course Card Styling */
+.course-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    height: 100%;
+}
+
+.course-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /*transform: translateY(-2px);*/
+}
+
+.course-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.course-icon {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.course-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.course-link {
+    color: #ff0000;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.course-link:hover {
+    color: #cc0000;
+    text-decoration: underline;
+}
+
+.course-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.course-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.course-desc {
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+}
+
+/* Category Color Schemes */
+/* Technical Tutorials */
+.cat-tutorial .course-icon {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.cat-tutorial .course-badge {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.cat-tutorial .course-card {
+    border-left: 3px solid #f59e0b;
+}
+
+/* University Courses */
+.cat-university .course-icon {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.cat-university .course-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.cat-university .course-card {
+    border-left: 3px solid #3b82f6;
+}
+
+/* Language Badges */
+.lang-ar {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.lang-en {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+/* Statistics Bar */
+.courses-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 0.5rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #e2e8f0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: #334155;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Section Header Enhancement */
+.section-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.channel-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    background: #ff0000;
+    color: #FFFFFF;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.channel-link:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+.channel-link i {
+    font-size: 1rem;
+}
+
+/* Print Optimization */
+@media print {
+    .course-card {
+        box-shadow: none !important;
+        transform: none !important;
+        border: 1px solid #000 !important;
+        border-left: 3px solid #000 !important;
+    }
+
+    .course-icon, .course-badge {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+    }
+
+    .course-link {
+        color: #000 !important;
+        text-decoration: none !important;
+    }
+
+    .course-link::after {
+        content: " [" attr(href) "]";
+        font-size: 0.7rem;
+        color: #333;
+        word-break: break-all;
+    }
+
+    .channel-link {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+    }
+}
