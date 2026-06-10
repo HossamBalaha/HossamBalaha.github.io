@@ -23,9 +23,17 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link id="theme-style" rel="stylesheet" href="assets/css/pillar-6.css">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 </head>
 
 <body>
+
+<div class="FloatingDownloadContainer" id="PdfDownloadContainer">
+  <button id="DownloadPdfButton" class="FloatingDownloadButton" data-tooltip="Download CV as Editable Word (.docx)">
+    <i class="fas fa-file-word"></i>
+  </button>
+</div>
 
 <article class="resume-wrapper text-center position-relative">
   <div class="resume-wrapper-inner mx-auto text-start bg-white">
@@ -123,7 +131,7 @@
                          target="_blank">
                         <i class="fa fa-arrow-trend-up fa-fw me-2"
                            data-fa-transform="grow-6"></i>
-                        H-Index: 29 & Citations: 2,527 (Until Apr 28, 2026)
+                        H-Index: 29 & Citations: 2,616 (Until Jun 9, 2026)
                       </a>
                     </li>
                   </ul>
@@ -134,9 +142,10 @@
               <a class="text-link small" target="_blank" href="https://orcid.org/0000-0002-0686-4411">
                                         <span class="fa-container text-center">
                                             <i class="fab fa-orcid fa-fw"></i></span>
-                ORCiD (<img
-                  src="https://orcid.org/sites/default/files/images/orcid_16x16.png"
-                  alt="ORCID iD icon"/>)
+                ORCiD
+                <!--                 (<img -->
+                <!--                   src="https://orcid.org/sites/default/files/images/orcid_16x16.png" -->
+                <!--                   alt="ORCID iD icon"/>) -->
               </a>
               <span class="mx-1">•</span>
               <a class="text-link small" target="_blank"
@@ -271,94 +280,130 @@
         <div class="col-12">
           <div class="d-flex flex-wrap justify-content-center">
             <a href="#Experience" class="nav-badge-link">
-              <span class="badge rounded-pill bg-primary"><i class="bi bi-briefcase me-1"></i> Experience</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-briefcase me-1"></i> Experience</span>
             </a>
             <a href="#Education" class="nav-badge-link">
-              <span class="badge rounded-pill bg-success"><i class="bi bi-mortarboard-fill me-1"></i> Education</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-mortarboard-fill me-1"></i> Education</span>
             </a>
             <a href="#Patents" class="nav-badge-link">
-              <span class="badge rounded-pill bg-warning text-dark"><i class="bi bi-lightbulb me-1"></i> Patents</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-lightbulb me-1"></i> Patents</span>
             </a>
             <a href="#AuthoredBooks" class="nav-badge-link">
-              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-book me-1"></i> Authored Books</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-book me-1"></i> Authored Books</span>
+            </a>
+            <a href="#GraduateMentorship" class="nav-badge-link">
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-person me-1"></i> Graduate Mentorship</span>
             </a>
             <a href="#Communities" class="nav-badge-link">
               <span class="badge rounded-pill bg-info text-dark"><i
                   class="bi bi-people-fill me-1"></i> Communities</span>
             </a>
             <a href="#Official-Scientific-Awards" class="nav-badge-link">
-              <span class="badge rounded-pill bg-danger"><i class="bi bi-award-fill me-1"></i> Official Scientific Awards</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-award-fill me-1"></i> Official Scientific Awards</span>
             </a>
             <a href="#Scientific-Academies-Workshops" class="nav-badge-link">
-              <span class="badge rounded-pill bg-secondary"><i class="bi bi-building me-1"></i> Scientific Academies and Workshops</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-building me-1"></i> Scientific Academies and Workshops</span>
             </a>
             <a href="#Conferences-Talks" class="nav-badge-link">
-              <span class="badge rounded-pill bg-primary"><i class="bi bi-mic me-1"></i> Conferences and Talks</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-mic me-1"></i> Conferences and Talks</span>
             </a>
             <a href="#Teaching-Experience" class="nav-badge-link">
-              <span class="badge rounded-pill bg-success"><i
+              <span class="badge rounded-pill bg-info text-dark"><i
                   class="bi bi-chalkboard me-1"></i> Teaching Experience</span>
             </a>
             <a href="#Published-Papers" class="nav-badge-link">
               <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-file-earmark-text me-1"></i> Published Journal Articles</span>
             </a>
             <a href="#Published-Conferences" class="nav-badge-link">
-              <span class="badge rounded-pill bg-secondary"><i class="bi bi-file-earmark-richtext me-1"></i> Published Conference Papers</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-file-earmark-richtext me-1"></i> Published Conference Papers</span>
             </a>
             <a href="#Published-Book-Chapters" class="nav-badge-link">
-              <span class="badge rounded-pill bg-dark"><i
+              <span class="badge rounded-pill bg-info text-dark"><i
                   class="bi bi-book-half me-1"></i> Published Book Chapters</span>
             </a>
             <a href="#Posters" class="nav-badge-link">
-              <span class="badge rounded-pill bg-warning text-dark"><i class="bi bi-easel me-1"></i> Posters</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-easel me-1"></i> Posters</span>
             </a>
             <a href="#Recent-Certifications" class="nav-badge-link">
-              <span class="badge rounded-pill bg-success"><i class="bi bi-patch-check-fill me-1"></i> Recent Certifications</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-patch-check-fill me-1"></i> Recent Certifications</span>
             </a>
             <a href="#Career-Certifications-&-Examinations" class="nav-badge-link">
               <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-clipboard2-check me-1"></i> Career Certifications & Examinations</span>
             </a>
             <a href="#Peer-Reviews" class="nav-badge-link">
-              <span class="badge rounded-pill bg-primary"><i class="bi bi-eye me-1"></i> Scientific Peer Reviews (As a Reviewer)</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-eye me-1"></i> Scientific Peer Reviews (As a Reviewer)</span>
             </a>
             <a href="#Work-Experience" class="nav-badge-link">
-              <span class="badge rounded-pill bg-dark"><i class="bi bi-briefcase-fill me-1"></i> Work Experience</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-briefcase-fill me-1"></i> Work Experience</span>
             </a>
             <a href="#Scientific-Interests" class="nav-badge-link">
-              <span class="badge rounded-pill bg-secondary"><i class="bi bi-stars me-1"></i> Scientific Interests</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-stars me-1"></i> Scientific Interests</span>
             </a>
             <a href="#Languages" class="nav-badge-link">
-              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-translate me-1"></i> Languages</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-translate me-1"></i> Languages</span>
             </a>
             <a href="#Activities-Volunteering" class="nav-badge-link">
-              <span class="badge rounded-pill bg-success"><i class="bi bi-hand-thumbs-up-fill me-1"></i> Activities and Volunteering</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-hand-thumbs-up-fill me-1"></i> Activities and Volunteering</span>
             </a>
             <a href="#Codes-&-Datasets" class="nav-badge-link">
-              <span class="badge rounded-pill bg-dark"><i class="bi bi-code-slash me-1"></i> Codes & Datasets</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-code-slash me-1"></i> Codes & Datasets</span>
             </a>
             <a href="#YouTube-Courses" class="nav-badge-link">
-              <span class="badge rounded-pill bg-danger"><i class="bi bi-youtube me-1"></i> YouTube Courses</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-youtube me-1"></i> YouTube Courses</span>
             </a>
             <a href="#Skills-&-Tools" class="nav-badge-link">
-              <span class="badge rounded-pill bg-warning text-dark"><i
+              <span class="badge rounded-pill bg-info text-dark"><i
                   class="bi bi-tools me-1"></i> Skills & Tools</span>
             </a>
             <a href="#Desktop-Web-and-Mobile-Applications" class="nav-badge-link">
-              <span class="badge rounded-pill bg-primary"><i class="bi bi-laptop me-1"></i> Desktop, Web, and Mobile Applications</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-laptop me-1"></i> Desktop, Web, and Mobile Applications</span>
             </a>
             <a href="#Freelance" class="nav-badge-link">
-              <span class="badge rounded-pill bg-secondary"><i class="bi bi-person-workspace me-1"></i> Freelance</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-person-workspace me-1"></i> Freelance</span>
             </a>
             <a href="#Judgment" class="nav-badge-link">
-              <span class="badge rounded-pill bg-dark"><i class="bi bi-balance me-1"></i> Judgment</span>
+              <span class="badge rounded-pill bg-info text-dark"><i class="bi bi-balance me-1"></i> Judgment</span>
             </a>
             <a href="#Competitions" class="nav-badge-link">
-              <span class="badge rounded-pill bg-warning text-dark"><i class="bi bi-trophy-fill me-1"></i> Competitions</span>
+              <span class="badge rounded-pill bg-info text-dark"><i
+                  class="bi bi-trophy-fill me-1"></i> Competitions</span>
             </a>
 
           </div>
         </div>
       </div>
+
+      <!-- Define the Professional Summary section for ATS optimization. -->
+      <section class="resume-section summary-section mb-3" id="ProfessionalSummary">
+        <!-- Add the section title for the Professional Summary. -->
+        <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1 mt-2">
+          Professional Summary
+        </h2>
+        <!-- Create the content wrapper for the summary. -->
+        <div class="resume-section-content">
+          <!-- Add the comprehensive summary paragraph with measurable metrics and keywords. -->
+          <p class="mb-0 text-justify">
+            Innovative AI Engineer and Bioengineering Ph.D. Candidate with 7+ years of experience in computer vision,
+            deep learning, and medical image analysis. Proven track record of developing explainable AI (XAI) frameworks
+            for oncology and neurology, resulting in 50+ peer-reviewed publications in top-tier journals (e.g., Nature
+            Scientific Reports, IEEE Access)
+            and an H-Index of 29. Adept at spearheading full-stack system development and mentoring 30+ students in
+            advanced machine learning pipelines. Recognized among the Top 2% of Scientists Globally (Stanford/Elsevier,
+            2025)
+            for delivering high-impact, clinically translatable AI solutions.
+          </p>
+        </div>
+      </section>
 
       <section class="resume-section summary-section mb-3">
         <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
@@ -558,9 +603,6 @@
                         University of Louisville
                       </div>
                     </div>
-                    <!--                     <div class="resume-position-time"> -->
-                    <!--                       From: 2022-09-19 - To: Present -->
-                    <!--                     </div> -->
                     <div class="resume-position-time">
                       <i class="fa-solid fa-calendar-days"></i>
                       <time datetime="2022-09-19">Sep 19, 2022</time> &ndash;
@@ -568,23 +610,26 @@
                       <span class="time-note">(Scholarship)</span>
                     </div>
                   </div>
+                  <!--                   <div class="resume-timeline-item-desc"> -->
+                  <!--                     <p> -->
+                  <!--                       Graduate Teaching Assistant (GTA) / Research Assistant (RA) -->
+                  <!--                       at the Bioengineering Department, -->
+                  <!--                       J.B. Speed School of Engineering, University of Louisville, USA. -->
+                  <!--                     </p> -->
+                  <!--                   </div> -->
                   <div class="resume-timeline-item-desc">
-                    <p>
-                      Graduate Teaching Assistant (GTA) / Research Assistant (RA)
-                      at the Bioengineering Department,
-                      J.B. Speed School of Engineering, University of Louisville, USA.
-                    </p>
-                    <!--                     <div> -->
-                    <!--                       Role description: -->
-                    <!--                       <ul> -->
-                    <!--                         <li> -->
-                    <!--                           Helping the lecturers/instructors in teaching set of courses related -->
-                    <!--                           to the -->
-                    <!--                           Computer Science (CS) and Bioengineering fields such as: Artificial -->
-                    <!--                           Intelligence, Machine Learning, and Medical Image Processing -->
-                    <!--                         </li> -->
-                    <!--                       </ul> -->
-                    <!--                     </div> -->
+                    <ul class="exp-bullet-list">
+                      <li>Spearheaded research in explainable AI and radiomics, publishing 20+ first-authored papers in
+                        high-impact journals (e.g., IEEE Access, Nature Scientific Reports) and securing a US Patent for
+                        AI-based medical imaging.
+                      </li>
+                      <li>Instructed and mentored 50+ graduate students in AI Techniques in Histopathology and AI &
+                        Radiomics, designing comprehensive curricula and open-sourcing course repositories on GitHub.
+                      </li>
+                      <li>Engineered and optimized deep learning pipelines for multi-modal medical image segmentation,
+                        achieving state-of-the-art accuracy in oncology and neurology diagnostic tasks.
+                      </li>
+                    </ul>
                   </div>
                 </article>
                 <article class="resume-timeline-item position-relative mt-2">
@@ -597,12 +642,6 @@
                         Mansoura University
                       </div>
                     </div>
-                    <!--                     <div class="resume-position-time"> -->
-                    <!--                       <i class="fa-solid fa-calendar-day"></i> -->
-                    <!--                       From: Dec 28, 2020 - -->
-                    <!--                       <i class="fa-solid fa-calendar-day"></i> -->
-                    <!--                       To: Aug 31, 2022 (Present - Hold for Scholarship) -->
-                    <!--                     </div> -->
                     <div class="resume-position-time">
                       <i class="fa-solid fa-calendar-days"></i>
                       <time datetime="2020-12-28">Dec 28, 2020</time> &ndash;
@@ -610,31 +649,24 @@
                       <span class="time-note">(Present as Hold for Scholarship Pursuit)</span>
                     </div>
                   </div>
+                  <!--                   <div class="resume-timeline-item-desc"> -->
+                  <!--                     <p> -->
+                  <!--                       Assistant Lecturer with the Computers Engineering and Systems Department, -->
+                  <!--                       Faculty of Engineering, Mansoura University, Egypt. -->
+                  <!--                     </p> -->
+                  <!--                   </div> -->
                   <div class="resume-timeline-item-desc">
-                    <p>
-                      Assistant Lecturer with the Computers Engineering and Systems Department,
-                      Faculty of Engineering, Mansoura University, Egypt.
-                    </p>
-                    <!--                     <div> -->
-                    <!--                       Role description: -->
-                    <!--                       <ul> -->
-                    <!--                         <li> -->
-                    <!--                           Helping the lecturers/instructors in teaching set of courses related -->
-                    <!--                           to the -->
-                    <!--                           Computer Science (CS) and Control Systems fields such as: Computer -->
-                    <!--                           Programming, Computer Graphics, Artificial Intelligence, Multimedia, -->
-                    <!--                           and FPGA. -->
-                    <!--                         </li> -->
-                    <!--                         <li> -->
-                    <!--                           Supervised (as a secondary supervisor) more than -->
-                    <!--                           <b>30 graduation projects</b> -->
-                    <!--                           related to my research and scientific interests. -->
-                    <!--                         </li> -->
-                    <!--                         &lt;!&ndash; <li> -->
-                    <!--                                                     For more information, check my official university page link above. -->
-                    <!--                                                 </li> &ndash;&gt; -->
-                    <!--                       </ul> -->
-                    <!--                     </div> -->
+                    <ul class="exp-bullet-list">
+                      <li>Directed instructional delivery for 20+ core computer engineering courses, including AI,
+                        Computer Graphics, and FPGA, enhancing student comprehension through hands-on lab sessions.
+                      </li>
+                      <li>Supervised and co-mentored 30+ senior graduation projects, guiding cross-functional teams
+                        through the full software development lifecycle (SDLC) and machine learning model deployment.
+                      </li>
+                      <li>Developed and integrated modern web and IoT curricula, training hundreds of students in
+                        full-stack development and embedded systems.
+                      </li>
+                    </ul>
                   </div>
                 </article>
                 <article class="resume-timeline-item position-relative mt-2">
@@ -652,32 +684,22 @@
                       <time datetime="2017-08-13">Aug 13, 2017</time> &ndash;
                       <time datetime="2020-12-28">Dec 28, 2020</time>
                     </div>
-                    <!--                     <div class="resume-position-time"> -->
-                    <!--                       From: 2017-08-13 - To: 2020-12-28 -->
-                    <!--                     </div> -->
                   </div>
+                  <!--                   <div class="resume-timeline-item-desc"> -->
+                  <!--                     <p> -->
+                  <!--                       Teaching Assistant with the Computers Engineering and Systems Department, -->
+                  <!--                       Faculty of Engineering, Mansoura University, Egypt. -->
+                  <!--                     </p> -->
+                  <!--                   </div> -->
                   <div class="resume-timeline-item-desc">
-                    <p>
-                      Teaching Assistant with the Computers Engineering and Systems Department,
-                      Faculty of Engineering, Mansoura University, Egypt.
-                    </p>
-                    <!--                     <div> -->
-                    <!--                       Role description: -->
-                    <!--                       <ul> -->
-                    <!--                         <li> -->
-                    <!--                           Helping the lecturers/instructors in teaching set of courses related -->
-                    <!--                           to the -->
-                    <!--                           Computer Science (CS) and Control Systems fields such as: Computer -->
-                    <!--                           Programming, Computer Graphics, Artificial Intelligence, Multimedia, -->
-                    <!--                           and FPGA. -->
-                    <!--                         </li> -->
-                    <!--                         <li> -->
-                    <!--                           Supervised (as a secondary supervisor) more than -->
-                    <!--                           <b>30 graduation projects</b> -->
-                    <!--                           related to my research and scientific interests. -->
-                    <!--                         </li> -->
-                    <!--                       </ul> -->
-                    <!--                     </div> -->
+                    <ul class="exp-bullet-list">
+                      <li>Facilitated lab sessions and graded assessments for 15+ undergraduate courses in Computer
+                        Programming, Data Structures, and AI.
+                      </li>
+                      <li>Collaborated with faculty to update course materials, integrating practical coding assignments
+                        and real-world system design projects.
+                      </li>
+                    </ul>
                   </div>
                 </article>
               </div>
@@ -1021,6 +1043,186 @@
 
       </div>
 
+      <div class="row" id="GraduateMentorship">
+        <div class="col-lg-12">
+          <section class="resume-section MentorshipSection mb-3">
+            <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-1">
+              Graduate Mentorship & Co-Supervision
+            </h2>
+            <div class="resume-section-content">
+              <div class="resume-timeline position-relative">
+
+                <article class="resume-timeline-item position-relative mt-2 MentorshipItem">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold StudentName">
+                        Ainhoa Osa-Sanchez (Summer Intern)
+                      </h3>
+                      <div class="resume-company-name ms-auto SupervisorName">
+                        University of Louisville
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <time datetime="2023-05">May 2023</time>
+                      &ndash;
+                      <time datetime="2023-08">Aug 2023</time>
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <p class="font-weight-bold">
+                      Research Focus: Age-Related Macular Degeneration (AMD) Diagnosis and Explainability
+                    </p>
+                    <p class="MentorshipDescription">
+                      Mentored the intern on developing explainable AI models using Vision Transformers and Cross
+                      Attention for AMD diagnosis. Guided the research that led to multiple high-impact publications.
+                    </p>
+                    <ul class="list-unstyled mt-2">
+                      <li><i class="fa fa-file-lines me-1"></i> <i>Pattern Recognition Letters</i> (2026)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>ICPR</i> (2024) - Best Student Paper Award</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>IEEE Access</i> (2024)</li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2 MentorshipItem">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold StudentName">
+                        Margo Sabry (M.Sc. Completed, Ph.D. Candidate)
+                      </h3>
+                      <div class="resume-company-name ms-auto SupervisorName">
+                        University of Louisville
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <time datetime="2022-09">Sep 2022</time>
+                      &ndash;
+                      <time datetime="present">Present</time>
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <p class="font-weight-bold">
+                      Research Focus: Breast Cancer Diagnosis using Vision Transformers and Explainable AI
+                    </p>
+                    <p class="MentorshipDescription">
+                      Acted as a secondary mentor for her M.Sc. and currently for her Ph.D. studies. Provided targeted
+                      guidance on multi-resolution Vision Transformers, robust decision-making, and deep learning
+                      applications in histopathology.
+                    </p>
+                    <ul class="list-unstyled mt-2">
+                      <li><i class="fa fa-file-lines me-1"></i> <i>Cancers</i> (2026)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>IEEE Access</i> (2025)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>ISBI</i> (2024)</li>
+                    </ul>
+                  </div>
+                </article>
+
+
+                <article class="resume-timeline-item position-relative mt-2 MentorshipItem">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold StudentName">
+                        Aya Abd El-Khalek (Ph.D. Student)
+                      </h3>
+                      <div class="resume-company-name ms-auto SupervisorName">
+                        Mansoura University / Collaborator
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <time datetime="2022-01">Jan 2022</time>
+                      &ndash;
+                      <time datetime="present">Present</time>
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <p class="font-weight-bold">
+                      Research Focus: Machine Learning and Vision Transformers for AMD Diagnosis
+                    </p>
+                    <p class="MentorshipDescription">
+                      Mentored the student in designing concentrated machine learning frameworks and explainable Vision
+                      Transformer models for fundus image analysis. Co-authored multiple peer-reviewed journal and
+                      conference papers.
+                    </p>
+                    <ul class="list-unstyled mt-2">
+                      <li><i class="fa fa-file-lines me-1"></i> <i>IEEE Access</i> (2025)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>Scientific Reports</i> (2024)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>Bioengineering</i> (2024)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>ISBI</i> (2024)</li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2 MentorshipItem">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold StudentName">
+                        Mayada Elgendy (M.Sc. Student)
+                      </h3>
+                      <div class="resume-company-name ms-auto SupervisorName">
+                        Mansoura University
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <time datetime="2021-01">Jan 2021</time>
+                      &ndash;
+                      <time datetime="2023-12">Dec 2023</time>
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <p class="font-weight-bold">
+                      Research Focus: AI-Based Neuroimaging for Anosmia Grading in COVID-19
+                    </p>
+                    <p class="MentorshipDescription">
+                      Served as a co-mentor for her M.Sc. research. Guided the development of non-invasive AI systems
+                      and YOLOv8-based CAD frameworks for precise grading of anosmia using neuroimaging data.
+                    </p>
+                    <ul class="list-unstyled mt-2">
+                      <li><i class="fa fa-file-lines me-1"></i> <i>Heliyon</i> (2024)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>ICIP</i> (2024)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>ISBI</i> (2024)</li>
+                      <li><i class="fa fa-file-lines me-1"></i> <i>Frontiers in Bioscience-Landmark</i> (2022)</li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2 MentorshipItem">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold StudentName">
+                        Lab Mates and Research Team (M.Sc. and Ph.D. Candidates)
+                      </h3>
+                      <div class="resume-company-name ms-auto SupervisorName">
+                        University of Louisville & Mansoura University
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <time datetime="2022-09">Sep 2022</time>
+                      &ndash;
+                      <time datetime="present">Present</time>
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <p class="font-weight-bold">
+                      Focus: Collaborative Research, Peer Mentorship, and Team Science
+                    </p>
+                    <p class="MentorshipDescription">
+                      Actively collaborated as a team player with lab mates during their M.Sc. and Ph.D. research.
+                      Provided peer mentorship, assisted in debugging complex deep learning pipelines, co-designed
+                      experiments, and contributed to manuscript preparation for high-impact journal and conference
+                      submissions.
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
 
       <div class="row" id="Communities">
         <div class="col-lg-12">
@@ -1119,7 +1321,7 @@
                     </div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    From: 26th Annual UofL Student Awards
+                    From: Annual UofL Student Awards
                   </div>
                   <div class="resume-position-time">
                     The Outstanding Adult Learner Award recognizes an undergraduate or graduate student, 26 years of age
@@ -1133,7 +1335,7 @@
                   <div class="resume-timeline-item-header mb-2">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
-                        Outstanding Graduate/Professional Student Award (2025)
+                        Graduate Student Ambassador (2026 and 2025)
                       </h3>
                       <div class="resume-company-name ms-auto">
                         University of Louisville
@@ -1141,7 +1343,30 @@
                     </div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    From: 26th Annual UofL Student Awards
+                    From: The Graduate Dean's Reception at University of Louisville
+                  </div>
+                  <div class="resume-position-time">
+                    The Graduate Student Ambassador Award recognizes graduate students who have made significant
+                    contributions to the university community through their leadership, service, and advocacy efforts.
+                    These students have demonstrated a commitment to fostering a positive and inclusive environment for
+                    their peers and have actively engaged in initiatives that promote the well-being and success of
+                    graduate students at UofL.
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        Outstanding Graduate/Professional Student Award (2026 and 2025)
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        University of Louisville
+                      </div>
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    From: Annual UofL Student Awards
                   </div>
                   <div class="resume-position-time">
                     The Outstanding Student of the Year Award recognizes students at every academic level that have
@@ -1163,7 +1388,7 @@
                     </div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    From: 26th Annual UofL Student Awards
+                    From: Annual UofL Student Awards
                   </div>
                   <div class="resume-position-time">
                     The Outstanding Student Employee Award recognizes on-campus student staff for exemplary performance
@@ -1253,7 +1478,7 @@
                   <div class="resume-timeline-item-header mb-2">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
-                        Best Graduate Student Peer-Reviewed Journal Paper Award (2025 and 2024)
+                        Best Graduate Student Peer-Reviewed Journal Paper Award (2026, 2025, and 2024)
                       </h3>
                       <div class="resume-company-name ms-auto">
                         University of Louisville
@@ -2284,7 +2509,11 @@
                          aria-label="View repository on GitHub">
                         <i class="bi bi-github"></i> Repository
                       </a>
-                      <a class="repo-link" target="_blank" href="https://zenodo.org/records/19860290"
+                      <a class="repo-link" target="_blank" href="https://pypi.org/project/hmb-helpers/"
+                         aria-label="View package on PyPI">
+                        <i class="bi bi-book"></i> PyPI (hmb-helpers)
+                      </a>
+                      <a class="repo-link" target="_blank" href="https://doi.org/10.5281/zenodo.20577120"
                          aria-label="View record on Zenodo">
                         <i class="bi bi-archive"></i> Zenodo
                       </a>
@@ -2301,6 +2530,22 @@
                       <a href="https://pypi.org/project/hmb-helpers/" target="_blank">PyPI (hmb-helpers)</a>.
                       Licensed under MIT License.
                     </p>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative repo-item">
+                  <div class="repo-icon utility"><i class="bi bi-database"></i></div>
+                  <div class="repo-content">
+                    <div class="repo-title resume-timeline-item-header">Medical AI Datasets Repository
+                    </div>
+                    <div class="repo-meta">
+                      <span class="repo-badge utility"><i class="bi bi-database"></i> Curated Dataset Collection</span>
+                      <a class="repo-link" target="_blank"
+                         href="https://github.com/HossamBalaha/Medical-Datasets-for-Artificial-Intelligence"
+                         aria-label="View repository on GitHub">
+                        <i class="bi bi-github"></i> Repository
+                      </a>
+                    </div>
                   </div>
                 </article>
 
@@ -2655,6 +2900,181 @@
             </h2>
             <div class="resume-section-content">
               <div class="resume-timeline position-relative">
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        A cascading approach with cross attention for age-related macular degeneration diagnosis and
+                        explainability
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        Pattern Recognition Letters (Elsevier)
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      Published: May, 2026
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <ul class="">
+                      <li class="mb-2">
+                        DOI:
+                        <a target="_blank"
+                           href="https://doi.org/10.1016/j.patrec.2026.05.019">
+                          https://doi.org/10.1016/j.patrec.2026.05.019
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        Advanced computer-aided diagnosis for age-related macular degeneration: integrating segmentation
+                        and feature extraction for precise diagnosis
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        Scientific Reports (Nature)
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      Published: May, 2026
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <ul class="">
+                      <li class="mb-2">
+                        DOI:
+                        <a target="_blank"
+                           href="https://doi.org/10.1038/s41598-026-46569-9">
+                          https://doi.org/10.1038/s41598-026-46569-9
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        AI-Driven Breast Cancer Diagnosis: A Systematic Review of Imaging Modalities, Deep Learning, and
+                        Explainability
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        Cancers (MDPI)
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      Published: April, 2026
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <ul class="">
+                      <li class="mb-2">
+                        DOI:
+                        <a target="_blank"
+                           href="https://doi.org/10.3390/cancers18081305">
+                          https://doi.org/10.3390/cancers18081305
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        Multiclass Classification of Renal Tumor Subtypes: Addressing Diagnostic Challenges Using a
+                        Texture-Informed Deep Hybrid CNN-Transformer
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        Journal of Imaging Informatics in Medicine (Springer)
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      Published: April, 2026
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <ul class="">
+                      <li class="mb-2">
+                        DOI:
+                        <a target="_blank"
+                           href="https://doi.org/10.1007/s10278-026-01898-z">
+                          https://doi.org/10.1007/s10278-026-01898-z
+                        </a>
+                      </li>
+                      <li class="mb-2">
+                        DOI (Correction):
+                        <a target="_blank"
+                           href="https://doi.org/10.1007/s10278-026-02016-9">
+                          https://doi.org/10.1007/s10278-026-02016-9
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        Interpretable Machine Learning-Based Concentric Regional Analysis of OCTA Images for Enhanced
+                        Diabetic Retinopathy Detection
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        Bioengineering (MDPI)
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      Published: April, 2026
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <ul class="">
+                      <li class="mb-2">
+                        DOI:
+                        <a target="_blank"
+                           href="https://doi.org/10.3390/bioengineering13040450">
+                          https://doi.org/10.3390/bioengineering13040450
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        3D Adversarial Segmentation of Kidney-Transplant Across Multiple MRI Sequences Using
+                        Probabilistic and Anatomical Priors
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        Diagnostics (MDPI)
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      Published: April, 2026
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <ul class="">
+                      <li class="mb-2">
+                        DOI:
+                        <a target="_blank"
+                           href="https://doi.org/10.3390/diagnostics16091369">
+                          https://doi.org/10.3390/diagnostics16091369
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
                   <div class="resume-timeline-item-header mb-2">
@@ -4510,21 +4930,6 @@
                           https://doi.org/10.1016/j.eswa.2021.115805
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Balaha, H. M., El-Gendy, E. M., & Saafan, M. M. (2021). CovH2SD: A COVID-19 detection approach based on Harris Hawks Optimization and stacked deep learning. Expert Systems with Applications, 115805.‏
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>
-@article{balaha2021covh2sd,
-  title={CovH2SD: A COVID-19 detection approach based on Harris Hawks Optimization and stacked deep learning},
-  author={Balaha, Hossam Magdy and El-Gendy, Eman M and Saafan, Mahmoud M},
-  journal={Expert Systems with Applications},
-  volume={186},
-  pages={115805},
-  year={2021},
-  publisher={Pergamon}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4552,20 +4957,6 @@
                           https://doi.org/10.1016/j.artmed.2021.102156
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Balaha, H. M., Balaha, M. H., & Ali, H. A. (2021). Hybrid COVID-19 segmentation and recognition framework (HMB-HCF) using deep learning and genetic algorithms. Artificial Intelligence in Medicine, 102156.‏
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>@article{balaha2021hybrid,
-  title={Hybrid COVID-19 segmentation and recognition framework (HMB-HCF) using deep learning and genetic algorithms},
-  author={Balaha, Hossam Magdy and Balaha, Magdy Hassan and Ali, Hesham Arafat},
-  journal={Artificial Intelligence in Medicine},
-  volume={119},
-  pages={102156},
-  year={2021},
-  publisher={Elsevier}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4593,22 +4984,6 @@
                           https://doi.org/10.1007/s11042-021-11185-4
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Balaha, H. M., Ali, H. A., Youssef, E. K., Elsayed, A. E., Samak,
-                                                R. A., Abdelhaleem, M. S., ... & Mohammed, M. M. (2021). Recognizing
-                                                arabic handwritten characters using deep learning and genetic
-                                                algorithms. Multimedia Tools and Applications, 1-37.
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>@article{balaha2021recognizing,
-  title={Recognizing arabic handwritten characters using deep learning and genetic algorithms},
-  author={Balaha, Hossam Magdy and Ali, Hesham Arafat and Youssef, Esraa Khaled and Elsayed, Asmaa Elsayed and Samak, Reem Adel and Abdelhaleem, Mohammed Samy and Tolba, Mohammed Mosa and Shehata, Mahmoud Ragab and Mahmoud, Mahmoud Refa'at and Abdelhameed, Mariam Mahmoud and others},
-  journal={Multimedia Tools and Applications},
-  pages={1--37},
-  year={2021},
-  publisher={Springer US}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4635,20 +5010,6 @@
                           https://doi.org/10.1109/ACCESS.2021.3086668
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Abdulazeem, Y., Balaha, H. M., Bahgat, W. M., & Badawy, M. (2021).
-                                                Human Action Recognition based on Transfer Learning Approach. IEEE
-                                                Access.
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>@article{abdulazeem2021human,
-  title={Human Action Recognition based on Transfer Learning Approach},
-  author={Abdulazeem, Yousry and Balaha, Hossam Magdy and Bahgat, Waleed M and Badawy, Mahmoud},
-  journal={IEEE Access},
-  year={2021},
-  publisher={IEEE}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4676,23 +5037,6 @@
                           https://doi.org/10.7717/peerj-cs.555
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Bahgat, W. M., Balaha, H. M., AbdulAzeem, Y., & Badawy, M. M.
-                                                (2021). An optimized transfer learning-based approach for automatic
-                                                diagnosis of COVID-19 from chest x-ray images. PeerJ Computer Science,
-                                                7, e555.
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>@article{bahgat2021optimized,
-  title={An optimized transfer learning-based approach for automatic diagnosis of COVID-19 from chest x-ray images},
-  author={Bahgat, Waleed M and Balaha, Hossam Magdy and AbdulAzeem, Yousry and Badawy, Mahmoud M},
-  journal={PeerJ Computer Science},
-  volume={7},
-  pages={e555},
-  year={2021},
-  publisher={PeerJ Inc.}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4719,22 +5063,6 @@
                           https://doi.org/10.1109/ACCESS.2021.3060940
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Balaha, H. M., & Saafan, M. M. (2021). Automatic Exam Correction
-                                                Framework (AECF) for the MCQs, Essays, and Equations Matching. IEEE
-                                                Access, 9, 32368-32389.
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>@article{balaha2021aecf,
-  title={Automatic Exam Correction Framework (AECF) for the MCQs, Essays, and Equations Matching},
-  author={Balaha, Hossam Magdy and Saafan, Mahmoud M},
-  journal={IEEE Access},
-  volume={9},
-  pages={32368--32389},
-  year={2021},
-  publisher={IEEE}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4762,24 +5090,6 @@
                           https://doi.org/10.1007/s00521-020-05397-2
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Balaha, H. M., Ali, H. A., Saraya, M., & Badawy, M. (2021). A new
-                                                Arabic handwritten character recognition deep learning system
-                                                (AHCR-DLS). Neural Computing and Applications, 33(11), 6325-6367.
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>
-@article{balaha2021new,
-  title={A new Arabic handwritten character recognition deep learning system (AHCR-DLS)},
-  author={Balaha, Hossam Magdy and Ali, Hesham Arafat and Saraya, Mohamed and Badawy, Mahmoud},
-  journal={Neural Computing and Applications},
-  volume={33},
-  number={11},
-  pages={6325--6367},
-  year={2021},
-  publisher={Springer London}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4807,21 +5117,6 @@
                           https://doi.org/10.1007/s00521-020-05137-6
                         </a>
                       </li>
-                      <!-- <li class="mb-2">
-                                                APA: Balaha, H. M., Ali, H. A., & Badawy, M. (2021). Automatic
-                                                recognition of handwritten Arabic characters: a comprehensive review.
-                                                Neural Computing and Applications, 33(7), 3011-3034.
-                                            </li>
-                                            <li class="mb-2">
-                                                BibTeX: <code>@article{balaha2020automatic,
-  title={Automatic recognition of handwritten Arabic characters: a comprehensive review},
-  author={Balaha, Hossam Magdy and Ali, Hesham Arafat and Badawy, Mahmoud},
-  journal={Neural Computing and Applications},
-  pages={1--24},
-  year={2020},
-  publisher={Springer London}
-}</code>
-                                            </li> -->
                     </ul>
                   </div>
                 </article>
@@ -4839,6 +5134,34 @@
             </h2>
             <div class="resume-section-content">
               <div class="resume-timeline position-relative">
+
+                <article class="resume-timeline-item position-relative mt-2">
+                  <div class="resume-timeline-item-header mb-2">
+                    <div class="d-flex flex-column flex-md-row">
+                      <h3 class="resume-position-title font-weight-bold mb-1">
+                        Deep Multimodal Integration of Whole Slide Images and Pathology Reports for Precise Estrogen
+                        Receptor Classification in Breast Cancer
+                      </h3>
+                      <div class="resume-company-name ms-auto">
+                        2025 IEEE International Conference on Image Processing (ICIP)
+                      </div>
+                    </div>
+                    <div class="resume-position-time">
+                      Published: April, 2026
+                    </div>
+                  </div>
+                  <div class="resume-timeline-item-desc">
+                    <ul class="">
+                      <li class="mb-2">
+                        DOI:
+                        <a target="_blank"
+                           href="https://doi.org/10.1109/ISBI61048.2026.11515817">
+                          https://doi.org/10.1109/ISBI61048.2026.11515817
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
                   <div class="resume-timeline-item-header mb-2">
@@ -7474,7 +7797,7 @@
             <div class="resume-section-content">
               <div class="resume-timeline position-relative">
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Full Stack Web and IoT Instructor
@@ -7488,65 +7811,30 @@
                     </div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p>
+                    <p class="mb-2">
                       Full Stack Web and IoT Instructor at Technical and Laboratory
                       Services Center (TLSC), Faculty of Engineering, Mansoura University,
                       Mansoura, Egypt, from July 2019 to May 2020. Graduated groups: 2.
                     </p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                HTML/HTML5
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                CSS/CSS3
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Bootstrap
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                JavaScript
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                jQuery
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                PHP
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                MySQL
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Laravel
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Python
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Raspberry Pi
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Arduino
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">HTML/HTML5</span>
+                      <span class="badge bg-secondary badge-pill">CSS/CSS3</span>
+                      <span class="badge bg-secondary badge-pill">Bootstrap</span>
+                      <span class="badge bg-secondary badge-pill">JavaScript</span>
+                      <span class="badge bg-secondary badge-pill">jQuery</span>
+                      <span class="badge bg-secondary badge-pill">PHP</span>
+                      <span class="badge bg-secondary badge-pill">MySQL</span>
+                      <span class="badge bg-secondary badge-pill">Laravel</span>
+                      <span class="badge bg-secondary badge-pill">Python</span>
+                      <span class="badge bg-secondary badge-pill">Raspberry Pi</span>
+                      <span class="badge bg-secondary badge-pill">Arduino</span>
+                    </p>
                   </div>
                 </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Full Stack Web Instructor
@@ -7556,49 +7844,22 @@
                     <div class="resume-position-time">January 2020 to February 2020</div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p></p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                HTML/HTML5
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                CSS/CSS3
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Bootstrap
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                JavaScript
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                jQuery
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                PHP
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                MySQL
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Laravel
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">HTML/HTML5</span>
+                      <span class="badge bg-secondary badge-pill">CSS/CSS3</span>
+                      <span class="badge bg-secondary badge-pill">Bootstrap</span>
+                      <span class="badge bg-secondary badge-pill">JavaScript</span>
+                      <span class="badge bg-secondary badge-pill">jQuery</span>
+                      <span class="badge bg-secondary badge-pill">PHP</span>
+                      <span class="badge bg-secondary badge-pill">MySQL</span>
+                      <span class="badge bg-secondary badge-pill">Laravel</span>
+                    </p>
                   </div>
                 </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Full Stack Web Instructor
@@ -7608,49 +7869,22 @@
                     <div class="resume-position-time">December 2019 to January 2020</div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p></p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                HTML/HTML5
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                CSS/CSS3
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Bootstrap
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                JavaScript
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                jQuery
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                PHP
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                MySQL
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Laravel
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">HTML/HTML5</span>
+                      <span class="badge bg-secondary badge-pill">CSS/CSS3</span>
+                      <span class="badge bg-secondary badge-pill">Bootstrap</span>
+                      <span class="badge bg-secondary badge-pill">JavaScript</span>
+                      <span class="badge bg-secondary badge-pill">jQuery</span>
+                      <span class="badge bg-secondary badge-pill">PHP</span>
+                      <span class="badge bg-secondary badge-pill">MySQL</span>
+                      <span class="badge bg-secondary badge-pill">Laravel</span>
+                    </p>
                   </div>
                 </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Full Stack Web and Cross-platform Mobile Instructor
@@ -7660,65 +7894,26 @@
                     <div class="resume-position-time">August 2019 to December 2019</div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p></p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                HTML/HTML5
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                CSS/CSS3
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Bootstrap
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                JavaScript
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                jQuery
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                PHP
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                MySQL
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Laravel
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                SASS
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                ECMAScript/ES6
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                React
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                React Native
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">HTML/HTML5</span>
+                      <span class="badge bg-secondary badge-pill">CSS/CSS3</span>
+                      <span class="badge bg-secondary badge-pill">Bootstrap</span>
+                      <span class="badge bg-secondary badge-pill">JavaScript</span>
+                      <span class="badge bg-secondary badge-pill">jQuery</span>
+                      <span class="badge bg-secondary badge-pill">PHP</span>
+                      <span class="badge bg-secondary badge-pill">MySQL</span>
+                      <span class="badge bg-secondary badge-pill">Laravel</span>
+                      <span class="badge bg-secondary badge-pill">SASS</span>
+                      <span class="badge bg-secondary badge-pill">ECMAScript/ES6</span>
+                      <span class="badge bg-secondary badge-pill">React</span>
+                      <span class="badge bg-secondary badge-pill">React Native</span>
+                    </p>
                   </div>
                 </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Full Stack Web and Cross-platform Mobile Instructor
@@ -7730,99 +7925,60 @@
                     <div class="resume-position-time">February 2018 to November 2019</div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p>
-                      Graduated groups: 9.
-                    </p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <p class="mb-2">Graduated groups: 9</p>
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                HTML/HTML5
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                CSS/CSS3
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Bootstrap
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                JavaScript
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                jQuery
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                PHP
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                MySQL
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Laravel
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">HTML/HTML5</span>
+                      <span class="badge bg-secondary badge-pill">CSS/CSS3</span>
+                      <span class="badge bg-secondary badge-pill">Bootstrap</span>
+                      <span class="badge bg-secondary badge-pill">JavaScript</span>
+                      <span class="badge bg-secondary badge-pill">jQuery</span>
+                      <span class="badge bg-secondary badge-pill">PHP</span>
+                      <span class="badge bg-secondary badge-pill">MySQL</span>
+                      <span class="badge bg-secondary badge-pill">Laravel</span>
+                    </p>
                   </div>
                 </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Full Stack Web Instructor
                       </h3>
                       <div class="resume-company-name ms-auto">ITI (Mansoura Branch)</div>
                     </div>
-                    <div class="resume-position-time">2 days</div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p></p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <div class="resume-position-time">2 days</div>
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                ES6
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">ES6</span>
+                    </p>
                   </div>
                 </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Full Stack Web Instructor
                       </h3>
                       <div class="resume-company-name ms-auto">ITI (Kafr El-Sheikh Branch)</div>
                     </div>
-                    <div class="resume-position-time">5 days</div>
+
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p></p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <div class="resume-position-time mb-0">5 days</div>
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                PHP
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">PHP</span>
+                    </p>
                   </div>
                 </article>
 
                 <article class="resume-timeline-item position-relative mt-2">
-                  <div class="resume-timeline-item-header mb-2">
+                  <div class="resume-timeline-item-header">
                     <div class="d-flex flex-column flex-md-row">
                       <h3 class="resume-position-title font-weight-bold mb-1">
                         Remote Part-time Full Stack Web Developer / SEO Specialist
@@ -7832,51 +7988,22 @@
                     <div class="resume-position-time">January 2019 to April 2019</div>
                   </div>
                   <div class="resume-timeline-item-desc">
-                    <p>
+                    <p class="mb-2">
                       Remote Part-time Full Stack Web Developer / SEO Specialist at Panorama
                       Al-Qasim company.
                     </p>
-                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">
+                    <p class="font-weight-bold">
                       Technologies:
-                    </h4>
-                    <ul class="list-inline">
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                HTML/HTML5
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                CSS/CSS3
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Bootstrap
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                JavaScript
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                jQuery
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                PHP
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                MySQL
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                Laravel
-                                            </span>
-                      </li>
-                      <li class="list-inline-item"><span class="badge bg-secondary badge-pill">
-                                                SEO
-                                            </span>
-                      </li>
-                    </ul>
+                      <span class="badge bg-secondary badge-pill">HTML/HTML5</span>
+                      <span class="badge bg-secondary badge-pill">CSS/CSS3</span>
+                      <span class="badge bg-secondary badge-pill">Bootstrap</span>
+                      <span class="badge bg-secondary badge-pill">JavaScript</span>
+                      <span class="badge bg-secondary badge-pill">jQuery</span>
+                      <span class="badge bg-secondary badge-pill">PHP</span>
+                      <span class="badge bg-secondary badge-pill">MySQL</span>
+                      <span class="badge bg-secondary badge-pill">Laravel</span>
+                      <span class="badge bg-secondary badge-pill">SEO</span>
+                    </p>
                   </div>
                 </article>
               </div>
@@ -8358,137 +8485,7 @@
 
 
 </body>
-
-<!-- <script> -->
-<!--   $(document).ready(function () { -->
-<!--     $('.owl-carousel').owlCarousel({ -->
-<!--       loop: true, -->
-<!--       margin: 10, -->
-<!--       // nav: true, -->
-<!--       autoWidth: true, -->
-<!--       items: 3, -->
-<!--       lazyLoad: true, // enable owl's lazy loading -->
-<!--     }); -->
-
-<!--     // Simple custom lightbox implementation (avoids external dependency) -->
-<!--     (function () { -->
-<!--       // create overlay HTML and styles -->
-<!--       var css = ` -->
-<!--             #simple-lightbox{position:fixed;left:0;top:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;z-index:20000} -->
-<!--             #simple-lightbox .sl-bg{position:absolute;inset:0;background:rgba(0,0,0,0.85)} -->
-<!--             #simple-lightbox .sl-content{position:relative;max-width:95%;max-height:95%;display:flex;align-items:center;justify-content:center} -->
-<!--             #simple-lightbox img{max-width:100%;max-height:100%;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,0.6)} -->
-<!--             #simple-lightbox .sl-caption{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;color:#fff;font-size:0.95rem;text-align:center;max-width:90%} -->
-<!--             #simple-lightbox .sl-close, #simple-lightbox .sl-prev, #simple-lightbox .sl-next{position:absolute;background:transparent;border:0;color:#fff;font-size:2rem;padding:8px;cursor:pointer} -->
-<!--             #simple-lightbox .sl-close{right:8px;top:8px} -->
-<!--             #simple-lightbox .sl-prev{left:8px;top:50%;transform:translateY(-50%)} -->
-<!--             #simple-lightbox .sl-next{right:8px;top:50%;transform:translateY(-50%)} -->
-<!--             #simple-lightbox .sl-spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:sl-spin 1s linear infinite;position:absolute} -->
-<!--             @keyframes sl-spin{to{transform:rotate(360deg)}} -->
-<!--           `; -->
-<!--       $('<style>').text(css).appendTo('head'); -->
-
-<!--       var $lb = $( -->
-<!--           '<div id="simple-lightbox">' + -->
-<!--           '<div class="sl-bg"></div>' + -->
-<!--           '<div class="sl-content">' + -->
-<!--           '<button class="sl-close" aria-label="Close">&times;</button>' + -->
-<!--           '<button class="sl-prev" aria-label="Previous">&#10094;</button>' + -->
-<!--           '<button class="sl-next" aria-label="Next">&#10095;</button>' + -->
-<!--           '<div class="sl-spinner" style="display:none"></div>' + -->
-<!--           '<img class="sl-img" src="" alt="" style="display:none"/>' + -->
-<!--           '<div class="sl-caption"></div>' + -->
-<!--           '</div>' + -->
-<!--           '</div>' -->
-<!--       ).appendTo('body'); -->
-
-<!--       var $img = $lb.find('.sl-img'); -->
-<!--       var $caption = $lb.find('.sl-caption'); -->
-<!--       var $spinner = $lb.find('.sl-spinner'); -->
-<!--       var items = $('a.gallery-item').toArray(); -->
-<!--       var currentIndex = -1; -->
-
-<!--       function showOverlay() { -->
-<!--         $lb.css('display', 'flex'); -->
-<!--       } -->
-
-<!--       function hideOverlay() { -->
-<!--         $lb.hide(); -->
-<!--         $img.hide().attr('src', ''); -->
-<!--       } -->
-
-<!--       function loadAt(index) { -->
-<!--         if (index < 0 || index >= items.length) return; -->
-<!--         currentIndex = index; -->
-<!--         var href = items[index].getAttribute('href'); -->
-<!--         var title = items[index].getAttribute('title') || items[index].querySelector('img')?.getAttribute('alt') || ''; -->
-<!--         $spinner.show(); -->
-<!--         $img.hide(); -->
-<!--         $caption.text(''); -->
-<!--         var tmp = new Image(); -->
-<!--         tmp.onload = function () { -->
-<!--           $img.attr('src', href).attr('alt', title).fadeIn(200); -->
-<!--           $spinner.hide(); -->
-<!--           $caption.text(title); -->
-<!--         }; -->
-<!--         tmp.onerror = function () { -->
-<!--           $spinner.hide(); -->
-<!--           $caption.text('Failed to load image'); -->
-<!--         }; -->
-<!--         tmp.src = href; -->
-<!--       } -->
-
-<!--       function openByEl(el) { -->
-<!--         items = $('a.gallery-item').toArray(); -->
-<!--         var idx = items.indexOf(el); -->
-<!--         if (idx === -1) return; -->
-<!--         showOverlay(); -->
-<!--         loadAt(idx); -->
-<!--       } -->
-
-<!--       $lb.on('click', '.sl-bg, .sl-close', function () { -->
-<!--         hideOverlay(); -->
-<!--       }); -->
-<!--       $lb.on('click', '.sl-prev', function (e) { -->
-<!--         e.stopPropagation(); -->
-<!--         loadAt((currentIndex - 1 + items.length) % items.length); -->
-<!--       }); -->
-<!--       $lb.on('click', '.sl-next', function (e) { -->
-<!--         e.stopPropagation(); -->
-<!--         loadAt((currentIndex + 1) % items.length); -->
-<!--       }); -->
-<!--       $(document).on('keydown.simplelightbox', function (e) { -->
-<!--         if ($lb.is(':visible')) { -->
-<!--           if (e.key === 'Escape') hideOverlay(); -->
-<!--           if (e.key === 'ArrowLeft') loadAt((currentIndex - 1 + items.length) % items.length); -->
-<!--           if (e.key === 'ArrowRight') loadAt((currentIndex + 1) % items.length); -->
-<!--         } -->
-<!--       }); -->
-
-<!--       // Delegate click on gallery items -->
-<!--       $(document).on('click', 'a.gallery-item', function (e) { -->
-<!--         e.preventDefault(); -->
-<!--         openByEl(this); -->
-<!--       }); -->
-
-<!--       // // Optional hover-to-open behavior (600ms) -->
-<!--       // var hoverTimers = new WeakMap(); -->
-<!--       // $(document).on('mouseenter', 'a.gallery-item', function () { -->
-<!--       //   var el = this; -->
-<!--       //   var t = setTimeout(function () { -->
-<!--       //     $(el).trigger('click'); -->
-<!--       //   }, 600); -->
-<!--       //   hoverTimers.set(this, t); -->
-<!--       // }).on('mouseleave', 'a.gallery-item', function () { -->
-<!--       //   var t = hoverTimers.get(this); -->
-<!--       //   if (t) { -->
-<!--       //     clearTimeout(t); -->
-<!--       //     hoverTimers.delete(this); -->
-<!--       //   } -->
-<!--       // }); -->
-<!--     })(); -->
-<!--   }); -->
-<!-- </script> -->
+<script src="assets/js/scripts.js"></script>
 </html>
 
 <!--<section class="resume-section education-section mb-3">-->
