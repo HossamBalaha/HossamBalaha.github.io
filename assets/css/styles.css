@@ -261,6 +261,12 @@ blockquote p {
     font-size: 0.75rem;
     font-weight: 500;
     white-space: nowrap;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.repo-badge:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
 }
 
 .repo-link {
@@ -338,6 +344,28 @@ blockquote p {
     border: 1px solid #ddd6fe;
 }
 
+.repo-badge.ai {
+    background-color: #e8f0fe;
+    color: #1a56db;
+    border: 1px solid #c9d8f7;
+}
+
+.repo-icon.ai {
+    background-color: #e8f0fe;
+    color: #1a56db;
+}
+
+.repo-icon.management {
+    background-color: #ddfadd;
+    color: #065a46;
+}
+
+.repo-badge.management {
+    background-color: #ddfadd;
+    color: #065a46;
+    border: 1px solid #a7f3d0;
+}
+
 /* Print optimization */
 @media print {
     .repo-item {
@@ -368,6 +396,24 @@ blockquote p {
         color: #333;
         word-break: break-all;
     }
+
+    .repo-badge.under-review,
+    .repo-badge.utility,
+    .repo-badge.patent,
+    .repo-badge.opt {
+        background: transparent !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+    }
+
+    .repo-icon.under-review,
+    .repo-icon.utility,
+    .repo-icon.patent,
+    .repo-icon.opt {
+        background: transparent !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+    }
 }
 
 /* Extended category styles for new project types */
@@ -391,6 +437,17 @@ blockquote p {
     background-color: #f5f3ff;
     color: #5b21b6;
     border: 1px solid #ddd6fe;
+}
+
+.repo-badge.opt {
+    background-color: #fef3cd;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.repo-icon.opt {
+    background-color: #fef3cd;
+    color: #92400e;
 }
 
 .repo-icon.patent {
