@@ -18,14 +18,17 @@
  * Bump CACHE_VERSION whenever you ship a new build to invalidate old caches.
  */
 
-const CACHE_VERSION = "cv-improved-v2-20261030";
-const API_CACHE_VERSION = "cv-api-v2-20261030";
+// audit-fix: bumped cache version after Bootstrap 5.3 upgrade + new features
+const CACHE_VERSION = "cv-final-v15-20261031";
+const API_CACHE_VERSION = "cv-api-v15-20261031";
 
 const PRECACHE_URLS = [
   "./",
   "./index.html",
   "./assets/css/styles.latest.min.css",
   "./assets/css/pillar-6.css",
+  "./assets/css/bootstrap-5.3.3.min.css",
+  "./assets/css/pillar-theme.css",
   "./assets/js/scripts.latest.min.js",
   "./export-worker.js",
   "./manifest.json",
