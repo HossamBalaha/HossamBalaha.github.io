@@ -1,13 +1,23 @@
 // audit-fix P3-1: Gate console logging behind a DEBUG flag.
 // In production, set DEBUG=false to silence console.error/warn/log.
 // Override by setting localStorage.cv_debug = '1' in DevTools.
-var CV_DEBUG = (function() {
-  try { return localStorage.getItem('cv_debug') === '1'; } catch (e) { return false; }
+var CV_DEBUG = (function () {
+  try {
+    return localStorage.getItem('cv_debug') === '1';
+  } catch (e) {
+    return false;
+  }
 })();
 var CVLog = {
-  error: function() { if (CV_DEBUG) console.error.apply(console, arguments); },
-  warn:  function() { if (CV_DEBUG) console.warn.apply(console, arguments); },
-  log:   function() { if (CV_DEBUG) console.log.apply(console, arguments); }
+  error: function () {
+    if (CV_DEBUG) console.error.apply(console, arguments);
+  },
+  warn: function () {
+    if (CV_DEBUG) console.warn.apply(console, arguments);
+  },
+  log: function () {
+    if (CV_DEBUG) console.log.apply(console, arguments);
+  }
 };
 // Define the global mapping of section IDs to user-friendly names.
 const SectionMapping = {
@@ -140,6 +150,7 @@ const SectionMapping = {
     "Id": "Competitions"
   }
 };
+
 // Define a helper function to safely read a SweetAlert input value.
 function GetSwalValue(elementId) {
   // Get the element by its ID.
@@ -147,6 +158,7 @@ function GetSwalValue(elementId) {
   // Return the value if the element exists, otherwise return an empty string.
   return (element) ? (element.value) : ("");
 }
+
 // Define a helper function to safely read a SweetAlert checkbox state.
 function GetSwalChecked(elementId) {
   // Get the element by its ID.
@@ -158,6 +170,7 @@ function GetSwalChecked(elementId) {
   // Return the checked state of the element.
   return element.checked;
 }
+
 // Define a helper function to build select option HTML from a configuration array.
 function BuildSelectOptionsHtml(options) {
   // Initialize the HTML string for the options.
@@ -172,6 +185,7 @@ function BuildSelectOptionsHtml(options) {
   // Return the constructed options HTML.
   return optionsHtml;
 }
+
 // Define a helper function to build a checkbox block for the modal with detailed tooltips.
 function BuildModalCheckbox(id, labelText, helpText, isChecked) {
   // Determine if the checked attribute should be added.
@@ -179,6 +193,7 @@ function BuildModalCheckbox(id, labelText, helpText, isChecked) {
   // Return the HTML string for the checkbox block.
   return "<div class=\"form-check mb-3\" title=\"" + helpText + "\">" + "<input class=\"form-check-input\" type=\"checkbox\" id=\"" + id + "\" title=\"" + helpText + "\" " + checkedAttribute + ">" + "<label class=\"form-check-label fw-bold\" for=\"" + id + "\" title=\"" + helpText + "\">" + labelText + "</label>" + "<small class=\"form-text text-muted d-block mt-1\" style=\"font-size: 0.75rem;\">" + helpText + "</small>" + "</div>";
 }
+
 // Define a helper function to create a fallback paragraph for failed images.
 function CreateImageFallbackParagraph(imgElement) {
   // Get the alt text or default to "Image".
@@ -198,6 +213,7 @@ function CreateImageFallbackParagraph(imgElement) {
   // Replace the broken image with the fallback paragraph.
   imgElement.replaceWith(fallbackParagraph);
 }
+
 // Define the asynchronous function to convert images to base64.
 async function ConvertImagesToBase64(element) {
   // audit-fix: On file:// protocol, fetch() of local images fails with CORS errors.
@@ -227,13 +243,13 @@ async function ConvertImagesToBase64(element) {
           // Create a new FileReader instance.
           const reader = new FileReader();
           // Create a promise to handle the asynchronous file reading.
-          const dataUrl = await new Promise(function(resolve, reject) {
+          const dataUrl = await new Promise(function (resolve, reject) {
             // Set the onloadend event handler to resolve with the result.
-            reader.onloadend = function() {
+            reader.onloadend = function () {
               resolve(reader.result);
             };
             // Set the onerror event handler to reject with an error.
-            reader.onerror = function() {
+            reader.onerror = function () {
               reject(new Error("Failed to read file."));
             };
             // Read the blob as a data URL.
@@ -252,6 +268,7 @@ async function ConvertImagesToBase64(element) {
     }
   }
 }
+
 // Define a helper function to extract a meaningful label for a hyperlink.
 function ExtractLinkLabel(linkElement) {
   // Get the trimmed text content of the link.
@@ -319,6 +336,7 @@ function ExtractLinkLabel(linkElement) {
   // Return the cleaned text.
   return cleanText;
 }
+
 // Define the function to convert margin strings into Word-compatible point values.
 function ConvertMarginToPoints(marginStr) {
   // Check if the margin string contains inches.
@@ -348,6 +366,7 @@ function ConvertMarginToPoints(marginStr) {
   // Return the original string if no unit matches.
   return marginStr;
 }
+
 // Define the function to generate Word-compatible ATS-friendly styles.
 function GetWordFriendlyStyles(options) {
   // Set the default font family.
@@ -550,6 +569,7 @@ function GetWordFriendlyStyles(options) {
   // Return the complete CSS string.
   return "@page { size: " + paperSize + "; margin: " + marginPt + "; } " + "@page WordSection1 { size: " + paperSize + "; margin: " + marginPt + "; mso-page-margin-top: " + marginPt + "; mso-page-margin-bottom: " + marginPt + "; mso-page-margin-left: " + marginPt + "; mso-page-margin-right: " + marginPt + "; mso-header-margin: 36pt; mso-footer-margin: 36pt; } " + "div.WordSection1 { page: WordSection1; margin: 0; padding: 0; } " + "html, body { margin: 0; padding: 0; } " + "body { font-family: " + fontFamily + "; font-size: " + fontSize + "; line-height: " + bodyLineHeight + "; color: #000000; text-align: left; } " + "h1 { font-size: " + h1Size + "; font-weight: bold; margin: " + h1Margin + "; text-align: center; color: " + accentColor + "; } " + "h2 { font-size: " + h2Size + "; font-weight: bold; margin: " + h2Margin + "; text-transform: " + h2Transform + "; border-bottom: " + h2Border + "; padding-bottom: " + h2Padding + "; text-align: left; color: " + accentColor + "; } " + "h3 { font-size: " + h3Size + "; font-weight: bold; margin: " + h3Margin + "; text-align: left; color: #000000; } " + "h4 { font-size: " + h4Size + "; font-weight: bold; margin: " + h4Margin + "; text-align: left; color: #000000; } " + "p { font-size: " + fontSize + "; margin: " + pMargin + "; line-height: " + bodyLineHeight + "; text-align: " + textAlign + "; } " + bulletCss + "li { font-size: " + fontSize + "; margin-bottom: " + liMargin + "; line-height: " + bodyLineHeight + "; text-align: " + textAlign + "; } " + linkCss + doiCss + noUnderlinesCss + kerningCss + orphanCss + bwLinkCss + monoBadgesCss + consistentIndentCss + itemDividersCss + removeShadowsCss + stableTablesCss + highContrastCss + grayscaleCss + pageBreakCss + ".row, .col-lg-9, .col-lg-3, .col-lg-12, .col-auto, .d-flex, .flex-column, .flex-md-row, .col-12, .col-md-6 { display: block !important; width: 100% !important; float: none !important; margin: 0 !important; padding: 0 !important; } " + "button, .btn, #PdfDownloadContainer, .FloatingDownloadContainer, nav, .nav-badge-link, #Posters, #All-Photos, #Photos, .stats-bar, .courses-stats, .swal2-container { display: none !important; } " + "i[class*=\"fa\"], i[class*=\"bi\"], svg, .fa-container { display: none !important; } " + ".tech-tag, .skill-tag, .skill-pill, .repo-badge, .volunteer-badge, .course-badge, .role-badge, .repo-desc, .journal-publisher { display: inline !important; background: none !important; color: #000000 !important; padding: 0 !important; margin-right: 4pt !important; font-size: 10pt !important; border: none !important; } " + ".resume-timeline-item { margin-bottom: " + timelineMargin + "; padding: " + timelinePadding + "; border-left: none !important; background-color: transparent !important; } " + ".resume-timeline-item-header { margin-bottom: 2pt !important; } " + ".resume-position-title { margin: 0 0 1pt 0; font-size: 11.5pt; font-weight: bold; } " + ".resume-company-name { margin: 0 0 1pt 0; font-size: 11pt; font-style: italic; } " + ".resume-position-time { margin: " + timeMargin + "; font-weight: normal; color: #333333; font-size: 10pt; } " + "img { max-width: 100%; height: auto; border: none; } " + "ul, ol { margin-top: 0 !important; padding-top: 0 !important; } " + "li:first-child { margin-top: 0 !important; padding-top: 0 !important; } " + "p:first-child { margin-top: 0 !important; } " + ".journal-item { margin-bottom: 4pt !important; } " + ".journal-name { margin: 0 !important; } " + ".resume-timeline-item-desc > ul { margin-top: 0 !important; } " + "table { border-collapse: collapse; width: 100%; margin-bottom: 6pt; } " + "td, th { border: 1px solid #000000; padding: 4pt; } " + "a[href*=\"doi.org\"], a[href*=\"DOI\"], .doi-link, li:has(a[href*=\"doi.org\"]) { text-align: left !important; word-break: break-all !important; } ";
 }
+
 // Define the function to build the configuration modal HTML.
 function BuildConfigurationModalHtml() {
   // Define font options.
@@ -1359,6 +1379,7 @@ function BuildConfigurationModalHtml() {
   const twoPanelHtml = '<div class="export-two-panel"><div class="export-config-panel">' + modalHtml + '</div>' + previewPanelHtml + '</div>';
   return modalCss + twoPanelHtml;
 }
+
 // Define a helper function to collect all options from the modal.
 function GetModalOptions() {
   // Get the selected font.
@@ -1523,7 +1544,7 @@ function GetModalOptions() {
   // Get the job description text.
   const jobDesc = GetSwalValue("swal-job-desc");
   // Get the selected sections.
-  const selectedSections = Array.from(document.querySelectorAll(".section-checkbox:checked")).map(function(checkbox) {
+  const selectedSections = Array.from(document.querySelectorAll(".section-checkbox:checked")).map(function (checkbox) {
     return checkbox.value;
   });
   // Return the collected options object.
@@ -1610,10 +1631,13 @@ function GetModalOptions() {
     "JobDesc": jobDesc
   };
 }
+
 async function ProcessResumeElement(clonedElement, options) {
   // Altmetric badges: remove unless explicitly opted in.
   if (!options || !options.IncludeAltmetric) {
-    clonedElement.querySelectorAll(".altmetric-embed").forEach(function(el) { el.remove(); });
+    clonedElement.querySelectorAll(".altmetric-embed").forEach(function (el) {
+      el.remove();
+    });
   }
   // Revert web-only tables back to original lists for Preview/DOCX export
   clonedElement.querySelectorAll(".web-only-pub-table").forEach(el => el.remove());
@@ -1626,11 +1650,11 @@ async function ProcessResumeElement(clonedElement, options) {
   // each custom list into a SIMPLE HTML list where each item shows as a
   // plain text line with a link, matching the design of the Published
   // Journal Articles timeline (which renders cleanly in Word).
-  clonedElement.querySelectorAll("ul.journal-list, ul.repo-list, ul.volunteer-list, ul.course-list").forEach(function(ul) {
+  clonedElement.querySelectorAll("ul.journal-list, ul.repo-list, ul.volunteer-list, ul.course-list").forEach(function (ul) {
     // Extract text from each <li> and rebuild as a simple list.
     const items = ul.querySelectorAll("li");
     let simpleHTML = "";
-    items.forEach(function(li) {
+    items.forEach(function (li) {
       // Get the main name text — use the .journal-name element but
       // EXCLUDE the publisher badge text to avoid duplication.
       const nameEl = li.querySelector(".journal-name, .repo-title, .resume-position-title, .volunteer-title, .role-title, .course-title");
@@ -1668,7 +1692,7 @@ async function ProcessResumeElement(clonedElement, options) {
   });
   // Also flatten role-card / volunteer-card / course-card layouts into
   // simple text blocks for Word export.
-  clonedElement.querySelectorAll(".role-card, .volunteer-card, .course-card, .repo-item:not(li)").forEach(function(card) {
+  clonedElement.querySelectorAll(".role-card, .volunteer-card, .course-card, .repo-item:not(li)").forEach(function (card) {
     // Get title, org, meta, description.
     const title = card.querySelector(".role-title, .volunteer-title, .course-title, .repo-title") || card.querySelector("h4, h3");
     const org = card.querySelector(".role-org, .volunteer-org, .course-org");
@@ -1680,7 +1704,9 @@ async function ProcessResumeElement(clonedElement, options) {
     if (meta.length > 0) {
       simpleText += "<br/><span style='font-size:9pt;color:#64748b;'>";
       const metaTexts = [];
-      meta.forEach(function(m) { metaTexts.push(m.textContent.trim()); });
+      meta.forEach(function (m) {
+        metaTexts.push(m.textContent.trim());
+      });
       simpleText += metaTexts.join(" | ");
       simpleText += "</span>";
     }
@@ -1694,14 +1720,14 @@ async function ProcessResumeElement(clonedElement, options) {
   });
   // Also flatten the peer-review-grid (two-column flex layout) into a
   // simple vertical stack for Word.
-  clonedElement.querySelectorAll(".peer-review-grid").forEach(function(grid) {
+  clonedElement.querySelectorAll(".peer-review-grid").forEach(function (grid) {
     grid.setAttribute("style", "display:block;");
     // Remove the grid-template-columns inline style if present.
     grid.removeAttribute("style");
     grid.setAttribute("style", "display:block;");
   });
   // Flatten the editor/reviewer column wrappers.
-  clonedElement.querySelectorAll(".peer-review-grid > .editor, .peer-review-grid > .reviewer").forEach(function(col) {
+  clonedElement.querySelectorAll(".peer-review-grid > .editor, .peer-review-grid > .reviewer").forEach(function (col) {
     col.setAttribute("style", "display:block;width:100%;margin-bottom:15pt;");
   });
   // Featured Publications: convert the web carousel into a Word-friendly
@@ -1719,7 +1745,7 @@ async function ProcessResumeElement(clonedElement, options) {
     }
     // Extract data from each card.
     const rows = [];
-    cards.forEach(function(card, idx) {
+    cards.forEach(function (card, idx) {
       const rank = idx + 1;
       const titleEl = card.querySelector(".featured-pub-title");
       const venueEl = card.querySelector(".featured-pub-venue");
@@ -1736,24 +1762,24 @@ async function ProcessResumeElement(clonedElement, options) {
       }
       const year = yearEl ? yearEl.textContent.trim() : "";
       const doiHref = doiLink ? doiLink.getAttribute("href") : "";
-      rows.push({ rank: rank, title: title, venue: venue, year: year, citations: citations, doiHref: doiHref });
+      rows.push({rank: rank, title: title, venue: venue, year: year, citations: citations, doiHref: doiHref});
     });
     // audit-fix: Build a list (matching other publication sections) instead of a styled table.
     // Each featured pub becomes an <article> with title, venue, year, citations, DOI —
     // exactly like the Published Journal Articles section.
     if (rows.length > 0) {
       let listHtml = '';
-      rows.forEach(function(r) {
+      rows.forEach(function (r) {
         const rankBadge = r.rank <= 3 ? ' <strong style="color:' + (r.rank === 1 ? '#c9a227' : r.rank === 2 ? '#8a8a8a' : '#a47148') + ';">(#' + r.rank + ')</strong>' : '';
         listHtml +=
           '<article style="margin-bottom:10pt;padding-bottom:8pt;border-bottom:1pt solid #e5e7eb;">' +
-            '<div style="font-weight:bold;font-size:11pt;color:#1a202c;margin-bottom:2pt;">' + r.title + rankBadge + '</div>' +
-            '<div style="font-size:10pt;color:#4b5563;margin-bottom:1pt;">' +
-              '<em style="color:#024950;">' + r.venue + '</em>' +
-              ' &mdash; ' + r.year +
-              ' &mdash; <strong style="color:#0d6efd;">' + r.citations + ' citations</strong>' +
-            '</div>' +
-            (r.doiHref ? '<div style="font-size:9pt;color:#6b7280;">DOI: <a href="' + r.doiHref + '" style="color:#0d6efd;text-decoration:underline;">' + r.doiHref + '</a></div>' : '') +
+          '<div style="font-weight:bold;font-size:11pt;color:#1a202c;margin-bottom:2pt;">' + r.title + rankBadge + '</div>' +
+          '<div style="font-size:10pt;color:#4b5563;margin-bottom:1pt;">' +
+          '<em style="color:#024950;">' + r.venue + '</em>' +
+          ' &mdash; ' + r.year +
+          ' &mdash; <strong style="color:#0d6efd;">' + r.citations + ' citations</strong>' +
+          '</div>' +
+          (r.doiHref ? '<div style="font-size:9pt;color:#6b7280;">DOI: <a href="' + r.doiHref + '" style="color:#0d6efd;text-decoration:underline;">' + r.doiHref + '</a></div>' : '') +
           '</article>';
       });
       // Replace the carousel with the list.
@@ -1845,7 +1871,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all stats bars and course stats.
     const statsBars = clonedElement.querySelectorAll(".stats-bar, .courses-stats");
     // Iterate over each stats bar.
-    statsBars.forEach(function(el) {
+    statsBars.forEach(function (el) {
       // Remove the stats bar.
       el.remove();
     });
@@ -1857,13 +1883,13 @@ async function ProcessResumeElement(clonedElement, options) {
     // Get the current year.
     const currentYear = new Date().getFullYear();
     // Iterate over each publication section.
-    pubSections.forEach(function(sec) {
+    pubSections.forEach(function (sec) {
       // Select all timeline items in the section.
       const items = sec.querySelectorAll(".resume-timeline-item");
       // Initialize the kept count.
       let keptCount = 0;
       // Iterate over each item.
-      items.forEach(function(item) {
+      items.forEach(function (item) {
         // Find the time element.
         const timeEl = item.querySelector(".resume-position-time");
         // Get the text content of the time element.
@@ -1961,7 +1987,7 @@ async function ProcessResumeElement(clonedElement, options) {
       "Value": "1 US"
     }];
     // Iterate over each stat.
-    stats.forEach(function(stat) {
+    stats.forEach(function (stat) {
       // Create a table cell.
       const td = document.createElement("td");
       // Center align the cell.
@@ -1987,7 +2013,7 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select all time elements.
   const timeElements = clonedElement.querySelectorAll(".resume-position-time");
   // Iterate over each time element.
-  timeElements.forEach(function(el) {
+  timeElements.forEach(function (el) {
     // Get the text content.
     const text = el.textContent;
     // Skip if the text contains Present.
@@ -2045,7 +2071,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Define a list of stop words to ignore.
     const stopWords = ["the", "and", "for", "with", "that", "this", "from", "will", "are", "our", "you", "your", "have", "has", "was", "were", "been", "being", "can", "may", "might", "shall", "should", "must", "need", "dare", "ought", "used", "about", "above", "after", "again", "all", "also", "am", "an", "any", "as", "at", "be", "because", "before", "below", "between", "both", "but", "by", "could", "did", "do", "does", "doing", "down", "during", "each", "few", "further", "get", "got", "had", "he", "her", "here", "hers", "herself", "him", "himself", "his", "how", "i", "if", "in", "into", "is", "it", "its", "itself", "just", "let", "like", "ll", "me", "more", "most", "my", "myself", "no", "nor", "not", "now", "of", "off", "on", "once", "only", "or", "other", "out", "over", "own", "re", "s", "same", "she", "so", "some", "such", "t", "than", "their", "them", "themselves", "then", "there", "these", "they", "thing", "those", "through", "to", "too", "under", "until", "up", "ve", "very", "we", "what", "when", "where", "which", "while", "who", "whom", "why", "would", "y", "yet", "you", "your", "yours", "yourself", "yourselves"];
     // Filter and deduplicate keywords.
-    const keywords = [...new Set(words.filter(function(w) {
+    const keywords = [...new Set(words.filter(function (w) {
       return w.length > 3 && !stopWords.includes(w);
     }))];
     // Highlight matching skills if enabled.
@@ -2053,13 +2079,13 @@ async function ProcessResumeElement(clonedElement, options) {
       // Select all skill tags.
       const skillTags = clonedElement.querySelectorAll(".skill-tag, .skill-pill, .tech-tag");
       // Iterate over each skill tag.
-      skillTags.forEach(function(tag) {
+      skillTags.forEach(function (tag) {
         // Get the text content.
         const text = tag.textContent.trim().toLowerCase();
         // Check if any keyword matches.
-        if (keywords.some(function(kw) {
-            return text.includes(kw);
-          })) {
+        if (keywords.some(function (kw) {
+          return text.includes(kw);
+        })) {
           // Set the font weight to bold.
           tag.style.fontWeight = "bold";
           // Set the text color.
@@ -2086,7 +2112,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all list items.
     const listItems = clonedElement.querySelectorAll("li");
     // Iterate over each list item.
-    listItems.forEach(function(li) {
+    listItems.forEach(function (li) {
       // Get the first child node.
       const firstChild = li.firstChild;
       // Check if the first child is a text node.
@@ -2123,11 +2149,11 @@ async function ProcessResumeElement(clonedElement, options) {
     // Define the hard skills array.
     const hardSkills = ["Python", "PyTorch", "TensorFlow", "Computer Vision", "Deep Learning", "Machine Learning", "Laravel", "React", "SQL", "MATLAB", "OpenCV", "YOLO", "SHAP"];
     // Iterate over each skill tag.
-    skillTags.forEach(function(tag) {
+    skillTags.forEach(function (tag) {
       // Get the trimmed text content.
       const text = tag.textContent.trim();
       // Iterate over each hard skill.
-      hardSkills.forEach(function(skill) {
+      hardSkills.forEach(function (skill) {
         // Check if the tag text includes the hard skill.
         if (text.toLowerCase().includes(skill.toLowerCase())) {
           // Set the font weight to bold.
@@ -2167,7 +2193,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all section headings to build the TOC.
     const headings = clonedElement.querySelectorAll("h2.resume-section-title");
     // Iterate over each heading to create a TOC entry.
-    headings.forEach(function(h2, index) {
+    headings.forEach(function (h2, index) {
       // Generate a unique section ID for the bookmark.
       const sectionId = "toc_section" + index;
       // Create an anchor element to act as a bookmark.
@@ -2306,7 +2332,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all text links.
     const dobElements = clonedElement.querySelectorAll("a.text-link");
     // Iterate over each element.
-    dobElements.forEach(function(el) {
+    dobElements.forEach(function (el) {
       // Check if the text includes the date of birth.
       if (el.textContent.includes("June 12, 1993")) {
         // Find the closest parent list item.
@@ -2323,7 +2349,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all primary info links.
     const primaryLinks = clonedElement.querySelectorAll(".primary-info a.text-link");
     // Iterate over each link.
-    primaryLinks.forEach(function(el) {
+    primaryLinks.forEach(function (el) {
       // Check if the text includes demographics.
       if ((el.textContent.includes("Pronouns")) || (el.textContent.includes("Military")) || (el.textContent.includes("Muslim"))) {
         // Find the closest parent list item.
@@ -2340,7 +2366,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all DOI links in publications.
     const doiLinks = clonedElement.querySelectorAll("#Published-Papers a[href*='doi.org'], #Published-Conferences a[href*='doi.org']");
     // Iterate over each link.
-    doiLinks.forEach(function(link) {
+    doiLinks.forEach(function (link) {
       // Find the closest parent list item.
       const parentLi = link.closest("li");
       // Remove the list item if it exists.
@@ -2356,7 +2382,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Check if the table exists.
     if (snapshotTable) {
       // Extract the text from each cell.
-      const cellTexts = Array.from(snapshotTable.querySelectorAll("td")).map(function(td) {
+      const cellTexts = Array.from(snapshotTable.querySelectorAll("td")).map(function (td) {
         return td.textContent.trim().replace(/\s+/g, " ");
       });
       // Create a paragraph for the flattened text.
@@ -2376,7 +2402,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all external links.
     const externalLinks = clonedElement.querySelectorAll("a[href*='github.com'], a[href*='youtube.com']");
     // Iterate over each link.
-    externalLinks.forEach(function(link) {
+    externalLinks.forEach(function (link) {
       // Remove the link.
       link.remove();
     });
@@ -2400,7 +2426,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all publication descriptions.
     const pubDescs = clonedElement.querySelectorAll("#Published-Papers .resume-timeline-item-desc, #Published-Conferences .resume-timeline-item-desc");
     // Iterate over each description.
-    pubDescs.forEach(function(desc) {
+    pubDescs.forEach(function (desc) {
       // Get the inner HTML.
       let html = desc.innerHTML;
       // Replace the candidate name with a bolded version.
@@ -2416,7 +2442,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all education list items.
     const eduListItems = clonedElement.querySelectorAll("#Education li");
     // Iterate over each list item.
-    eduListItems.forEach(function(li) {
+    eduListItems.forEach(function (li) {
       // Get the text content.
       const text = li.textContent;
       // Check if the text includes details to remove.
@@ -2431,7 +2457,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all education list items.
     const courseItems = clonedElement.querySelectorAll("#Education li");
     // Iterate over each list item.
-    courseItems.forEach(function(li) {
+    courseItems.forEach(function (li) {
       // Check if the text includes the seminar course.
       if (li.textContent.includes("Completed Seminar Course")) {
         // Remove the list item.
@@ -2449,14 +2475,14 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all time elements with datetime='present'.
     const presentEls = clonedElement.querySelectorAll("time[datetime=\"present\"]");
     // Iterate over each element.
-    presentEls.forEach(function(el) {
+    presentEls.forEach(function (el) {
       // Update the text content.
       el.textContent = currentDate;
     });
     // Select all time text elements.
     const timeTextEls = clonedElement.querySelectorAll(".resume-position-time");
     // Iterate over each element.
-    timeTextEls.forEach(function(el) {
+    timeTextEls.forEach(function (el) {
       // Check if the text includes Present.
       if (el.textContent.includes("Present")) {
         // Replace Present with the current date.
@@ -2471,7 +2497,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all anchor elements.
     const allAnchors = clonedElement.querySelectorAll("a");
     // Iterate over each anchor.
-    allAnchors.forEach(function(a) {
+    allAnchors.forEach(function (a) {
       // Get the trimmed text content.
       const txt = a.textContent.trim();
       // Check if the text is redundant.
@@ -2493,7 +2519,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all section headings.
     const sectionHeadings = clonedElement.querySelectorAll("h2.resume-section-title");
     // Iterate over each heading.
-    sectionHeadings.forEach(function(h2, index) {
+    sectionHeadings.forEach(function (h2, index) {
       // Check if a Roman numeral exists for the index.
       if (roman[index]) {
         // Prepend the Roman numeral to the heading text.
@@ -2514,7 +2540,7 @@ async function ProcessResumeElement(clonedElement, options) {
       // Set the top margin.
       ul.style.marginTop = "10pt";
       // Iterate over each sentence.
-      sentences.forEach(function(sentence) {
+      sentences.forEach(function (sentence) {
         // Create a list item.
         const li = document.createElement("li");
         // Set the text content.
@@ -2533,7 +2559,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all more photos links.
     const morePhotosLinks = clonedElement.querySelectorAll("a[href=\"#All-Photos\"]");
     // Iterate over each link.
-    morePhotosLinks.forEach(function(a) {
+    morePhotosLinks.forEach(function (a) {
       // Find the closest parent paragraph.
       const p = a.closest("p");
       // Remove the paragraph if it exists, otherwise remove the link.
@@ -2549,7 +2575,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all time elements.
     const timeEls = clonedElement.querySelectorAll(".resume-position-time");
     // Iterate over each element.
-    timeEls.forEach(function(el) {
+    timeEls.forEach(function (el) {
       // Replace dashes with the word 'to'.
       el.innerHTML = el.innerHTML.replace(/–/g, " to ").replace(/ - /g, " to ");
     });
@@ -2559,7 +2585,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all list items.
     const listItems = clonedElement.querySelectorAll("li");
     // Iterate over each list item.
-    listItems.forEach(function(li) {
+    listItems.forEach(function (li) {
       // Check if the text content is empty or too short.
       if ((li.textContent.trim() === "") || (li.textContent.trim().length < 2)) {
         // Remove the list item.
@@ -2572,7 +2598,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all time notes.
     const timeNotes = clonedElement.querySelectorAll(".time-note");
     // Iterate over each note.
-    timeNotes.forEach(function(note) {
+    timeNotes.forEach(function (note) {
       // Remove the note.
       note.remove();
     });
@@ -2597,7 +2623,7 @@ async function ProcessResumeElement(clonedElement, options) {
       // Initialize the skills array.
       const skills = [];
       // Iterate over each tag.
-      tags.forEach(function(tag) {
+      tags.forEach(function (tag) {
         // Get the trimmed text.
         const text = tag.innerText.trim();
         // Add the text to the array if it exists.
@@ -2614,7 +2640,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all publications.
     const pubs = clonedElement.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item");
     // Iterate over each publication.
-    pubs.forEach(function(pub) {
+    pubs.forEach(function (pub) {
       // Find the description element.
       const desc = pub.querySelector(".resume-timeline-item-desc");
       // Check if the description exists.
@@ -2638,7 +2664,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all time elements.
     const timeEls = clonedElement.querySelectorAll(".resume-position-time, time");
     // Iterate over each element.
-    timeEls.forEach(function(el) {
+    timeEls.forEach(function (el) {
       // Get the inner HTML.
       let text = el.innerHTML;
       // Remove month and day information.
@@ -2663,7 +2689,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all resume sections.
     const sections = clonedElement.querySelectorAll(".resume-section");
     // Iterate over each section.
-    sections.forEach(function(sec) {
+    sections.forEach(function (sec) {
       // Find the content container.
       const content = sec.querySelector(".resume-section-content");
       // Check if the content exists.
@@ -2684,7 +2710,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all date format elements.
     const dateFormatElements = clonedElement.querySelectorAll(".resume-position-time, time");
     // Iterate over each element.
-    dateFormatElements.forEach(function(el) {
+    dateFormatElements.forEach(function (el) {
       // Get the text content.
       const text = el.textContent;
       // Match the date pattern.
@@ -2746,13 +2772,13 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all lists.
     const lists = clonedElement.querySelectorAll("ul, ol");
     // Iterate over each list.
-    lists.forEach(function(list) {
+    lists.forEach(function (list) {
       // Select all list items.
       const items = list.querySelectorAll("li");
       // Create a wrapper div.
       const wrapperDiv = document.createElement("div");
       // Iterate over each item.
-      items.forEach(function(li) {
+      items.forEach(function (li) {
         // Create a paragraph.
         const p = document.createElement("p");
         // Set the margin.
@@ -2775,7 +2801,7 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select all journal items.
   const journalItems = clonedElement.querySelectorAll(".journal-item");
   // Iterate over each journal item.
-  journalItems.forEach(function(item) {
+  journalItems.forEach(function (item) {
     // Find the name and link elements.
     const nameEl = item.querySelector(".journal-name");
     const linkEl = item.querySelector(".journal-link");
@@ -2815,11 +2841,11 @@ async function ProcessResumeElement(clonedElement, options) {
     // Define the top-tier publishers.
     const topTier = ["IEEE", "Nature", "Elsevier", "Springer", "MDPI", "Oxford University Press", "Wiley", "Frontiers", "Taylor & Francis", "PeerJ", "SAGE", "IOPScience"];
     // Iterate over each publisher.
-    publishers.forEach(function(pub) {
+    publishers.forEach(function (pub) {
       // Get the text content.
       const text = pub.textContent;
       // Iterate over each top-tier publisher.
-      topTier.forEach(function(tier) {
+      topTier.forEach(function (tier) {
         // Check if the text includes the tier.
         if (text.includes(tier)) {
           // Set the font weight to bold.
@@ -2851,7 +2877,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Select all links.
     const allLinks = clonedElement.querySelectorAll("a");
     // Iterate over each link.
-    allLinks.forEach(function(a) {
+    allLinks.forEach(function (a) {
       // Get the trimmed text content.
       let text = a.textContent.trim();
       // Remove http:// prefix.
@@ -2970,7 +2996,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Check if any acronyms were found.
     if (foundAcronyms.length > 0) {
       // Sort the found acronyms alphabetically.
-      foundAcronyms.sort(function(a, b) {
+      foundAcronyms.sort(function (a, b) {
         return a["Acronym"].localeCompare(b["Acronym"]);
       });
       // Create a div for the glossary.
@@ -2996,7 +3022,7 @@ async function ProcessResumeElement(clonedElement, options) {
       // Collapse the borders.
       table.style.borderCollapse = "collapse";
       // Iterate over each found acronym.
-      foundAcronyms.forEach(function(item) {
+      foundAcronyms.forEach(function (item) {
         // Create a table row.
         const tr = document.createElement("tr");
         // Create a cell for the acronym.
@@ -3070,7 +3096,7 @@ async function ProcessResumeElement(clonedElement, options) {
       // Create a map to store unique URLs.
       const uniqueUrls = new Map();
       // Iterate over each link.
-      links.forEach(function(a) {
+      links.forEach(function (a) {
         // Get the href attribute.
         const href = a.getAttribute("href");
         // Extract the link label.
@@ -3081,7 +3107,7 @@ async function ProcessResumeElement(clonedElement, options) {
         }
       });
       // Iterate over the unique URLs.
-      uniqueUrls.forEach(function(text, href) {
+      uniqueUrls.forEach(function (text, href) {
         // Create a list item.
         const li = document.createElement("li");
         // Set the bottom margin.
@@ -3102,14 +3128,14 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select sections to remove.
   const sectionsToRemove = clonedElement.querySelectorAll("#Photos, #Posters, #All-Photos, .nav-badge-link, #PdfDownloadContainer, .FloatingDownloadContainer");
   // Iterate over each section to remove.
-  sectionsToRemove.forEach(function(el) {
+  sectionsToRemove.forEach(function (el) {
     // Remove the element.
     el.remove();
   });
   // Select empty containers.
   const emptyContainers = clonedElement.querySelectorAll(".d-flex.flex-wrap.justify-content-center");
   // Iterate over each empty container.
-  emptyContainers.forEach(function(container) {
+  emptyContainers.forEach(function (container) {
     // Remove the container if it has no children.
     if (container.children.length === 0) {
       container.remove();
@@ -3118,13 +3144,13 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select contact lists.
   const contactLists = clonedElement.querySelectorAll(".primary-info ul.list-unstyled");
   // Iterate over each contact list.
-  contactLists.forEach(function(list) {
+  contactLists.forEach(function (list) {
     // Select all list items.
     const items = list.querySelectorAll("li");
     // Initialize the contact parts array.
     const contactParts = [];
     // Iterate over each item.
-    items.forEach(function(li) {
+    items.forEach(function (li) {
       // Get the trimmed text.
       const text = li.innerText.trim().replace(/\s+/g, " ");
       // Skip pronouns.
@@ -3180,7 +3206,7 @@ async function ProcessResumeElement(clonedElement, options) {
     // Initialize the social links array.
     const socialLinks = [];
     // Iterate over each link.
-    links.forEach(function(a) {
+    links.forEach(function (a) {
       // Get the trimmed text.
       const text = a.innerText.trim();
       // Get the href attribute.
@@ -3201,7 +3227,7 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select all section titles.
   const sectionTitles = clonedElement.querySelectorAll("h2.resume-section-title");
   // Iterate over each section title.
-  sectionTitles.forEach(function(h2) {
+  sectionTitles.forEach(function (h2) {
     // Get the trimmed and uppercased text.
     const text = h2.innerText.trim().toUpperCase();
     // Rename Experience to Work Experience.
@@ -3216,13 +3242,13 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select all skills sections.
   const skillsSections = clonedElement.querySelectorAll(".skills-container, .skills-tags");
   // Iterate over each skills section.
-  skillsSections.forEach(function(container) {
+  skillsSections.forEach(function (container) {
     // Select all skill pills and tags.
     const tags = container.querySelectorAll(".skill-pill, .skill-tag");
     // Initialize the skills list array.
     const skillsList = [];
     // Iterate over each tag.
-    tags.forEach(function(tag) {
+    tags.forEach(function (tag) {
       // Get the trimmed text.
       const text = tag.innerText.trim();
       // Add the text to the list if it exists.
@@ -3239,7 +3265,7 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select all icons.
   const icons = clonedElement.querySelectorAll("i[class*=\"fa\"], i[class*=\"bi\"], svg, .fa-container");
   // Iterate over each icon.
-  icons.forEach(function(icon) {
+  icons.forEach(function (icon) {
     // Remove the icon.
     icon.remove();
   });
@@ -3248,7 +3274,7 @@ async function ProcessResumeElement(clonedElement, options) {
   // Select all images.
   const allImages = clonedElement.querySelectorAll("img");
   // Iterate over each image.
-  allImages.forEach(function(img) {
+  allImages.forEach(function (img) {
     // Check if the parent is a paragraph.
     if (img.parentNode.tagName.toLowerCase() === "p") {
       // Center align the paragraph.
@@ -3268,7 +3294,7 @@ async function ProcessResumeElement(clonedElement, options) {
   });
   // audit-fix: Insert comma+space separators after each tech-tag and skill-tag
   // so they don't concatenate in the Word/PDF export (Word ignores inline margins).
-  clonedElement.querySelectorAll(".tech-tag, .skill-tag, .skill-pill").forEach(function(tag) {
+  clonedElement.querySelectorAll(".tech-tag, .skill-tag, .skill-pill").forEach(function (tag) {
     // Only skip if the next sibling is a text node that starts with a comma.
     // Whitespace-only text nodes (newlines, spaces) do NOT count as separators
     // because Word collapses them.
@@ -3287,6 +3313,7 @@ async function ProcessResumeElement(clonedElement, options) {
     clonedElement.innerHTML = clonedElement.innerHTML.replace(/>\s+</g, "><");
   }
 }
+
 // Define the asynchronous function to handle the preview button click.
 async function HandlePreviewClick() {
   // Collect the selected options from the modal.
@@ -3330,7 +3357,7 @@ async function HandlePreviewClick() {
   // Set the overlay styles.
   overlay.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;";
   // Add click event listener to close the overlay.
-  overlay.addEventListener("click", function(clickEvent) {
+  overlay.addEventListener("click", function (clickEvent) {
     // Check if the click target is the overlay itself.
     if (clickEvent.target === overlay) {
       // Remove the overlay from the DOM.
@@ -3350,7 +3377,7 @@ async function HandlePreviewClick() {
   // Set the back button styles.
   backBtn.style.cssText = "background: #f1f5f9; color: #475569; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; box-shadow: 0 4px 6px rgba(0,0,0, 0.1);";
   // Add click event listener to the back button.
-  backBtn.addEventListener("click", function() {
+  backBtn.addEventListener("click", function () {
     // Remove the overlay from the DOM.
     overlay.remove();
   });
@@ -3383,6 +3410,7 @@ async function HandlePreviewClick() {
   // Close the iframe document to finish rendering.
   frameDoc.close();
 }
+
 // Define the function to initialize the Word generator.
 function InitializeWordGenerator() {
   // Find the download button.
@@ -3392,6 +3420,7 @@ function InitializeWordGenerator() {
     downloadButton.addEventListener("click", HandleWordDownloadClick);
   }
 }
+
 // Define the asynchronous function to handle the Word download click event.
 async function HandleWordDownloadClick(event) {
   // Check if SweetAlert2 is loaded.
@@ -3411,7 +3440,7 @@ async function HandleWordDownloadClick(event) {
     "focusConfirm": false,
     "width": "min(1800px, 96vw)",
     "footer": '<div style="font-size: 0.75rem; color: #888888; text-align: center; width: 100%;">This customization is designed by <strong style="color: #333333;">Hossam Magdy Balaha</strong></div>',
-    "didOpen": function() {
+    "didOpen": function () {
       // Find the actions container.
       const actionsContainer = document.querySelector(".swal2-actions");
       // Check if the actions container exists.
@@ -3429,7 +3458,7 @@ async function HandleWordDownloadClick(event) {
         jsonBtn.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)";
         jsonBtn.style.marginRight = "10px";
         // Add a click event listener to the JSON button.
-        jsonBtn.addEventListener("click", function() {
+        jsonBtn.addEventListener("click", function () {
           Swal.close();
           ExportToJSONResume();
         });
@@ -3448,7 +3477,7 @@ async function HandleWordDownloadClick(event) {
         bibtexBtn.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.3)";
         bibtexBtn.style.marginRight = "10px";
         // Add a click event listener to the BibTeX button.
-        bibtexBtn.addEventListener("click", function() {
+        bibtexBtn.addEventListener("click", function () {
           Swal.close();
           ExportToBibTeX();
         });
@@ -3462,7 +3491,7 @@ async function HandleWordDownloadClick(event) {
         mdBtn.style.background = "linear-gradient(135deg, #08636a 0%, #024950 100%)";
         mdBtn.style.boxShadow = "0 4px 12px rgba(2, 73, 80, 0.3)";
         mdBtn.style.marginRight = "10px";
-        mdBtn.addEventListener("click", function() {
+        mdBtn.addEventListener("click", function () {
           Swal.close();
           ExportToMarkdown();
         });
@@ -3480,7 +3509,7 @@ async function HandleWordDownloadClick(event) {
         pdfBtn.style.boxShadow = "0 4px 12px rgba(239, 68, 68, 0.3)";
         pdfBtn.style.marginRight = "10px";
         // Add a click event listener to the PDF button.
-        pdfBtn.addEventListener("click", function() {
+        pdfBtn.addEventListener("click", function () {
           Swal.close();
           ExportToPDF();
         });
@@ -3503,17 +3532,17 @@ async function HandleWordDownloadClick(event) {
       // Select all tab links.
       const tabLinks = document.querySelectorAll(".export-tab-link");
       // Iterate over each tab link.
-      tabLinks.forEach(function(link) {
+      tabLinks.forEach(function (link) {
         // Add a click event listener to each tab link.
-        link.addEventListener("click", function(clickEvent) {
+        link.addEventListener("click", function (clickEvent) {
           // Prevent the default action.
           clickEvent.preventDefault();
           // Remove the active class from all tab links.
-          document.querySelectorAll(".export-tab-link").forEach(function(tabLink) {
+          document.querySelectorAll(".export-tab-link").forEach(function (tabLink) {
             tabLink.classList.remove("active");
           });
           // Remove the active class from all tab panes.
-          document.querySelectorAll(".export-tab-pane").forEach(function(pane) {
+          document.querySelectorAll(".export-tab-pane").forEach(function (pane) {
             pane.classList.remove("active");
           });
           // Add the active class to the clicked tab link.
@@ -3525,14 +3554,14 @@ async function HandleWordDownloadClick(event) {
         });
       });
       // Add a click event listener to the select all button.
-      document.getElementById("swal-select-all").addEventListener("click", function() {
-        document.querySelectorAll(".section-checkbox").forEach(function(checkbox) {
+      document.getElementById("swal-select-all").addEventListener("click", function () {
+        document.querySelectorAll(".section-checkbox").forEach(function (checkbox) {
           checkbox.checked = true;
         });
       });
       // Add a click event listener to the deselect all button.
-      document.getElementById("swal-deselect-all").addEventListener("click", function() {
-        document.querySelectorAll(".section-checkbox").forEach(function(checkbox) {
+      document.getElementById("swal-deselect-all").addEventListener("click", function () {
+        document.querySelectorAll(".section-checkbox").forEach(function (checkbox) {
           checkbox.checked = false;
         });
       });
@@ -3546,7 +3575,7 @@ async function HandleWordDownloadClick(event) {
         accentPicker.value = accentSelect.value;
         accentPreview.style.background = accentSelect.value;
         // Add a change event listener to the select.
-        accentSelect.addEventListener("change", function() {
+        accentSelect.addEventListener("change", function () {
           // Get the selected value.
           const selectedValue = accentSelect.value;
           // Update the picker and preview if the value is not custom.
@@ -3556,7 +3585,7 @@ async function HandleWordDownloadClick(event) {
           }
         });
         // Add an input event listener to the picker.
-        accentPicker.addEventListener("input", function() {
+        accentPicker.addEventListener("input", function () {
           // Get the custom color.
           const customColor = accentPicker.value;
           // Update the preview background.
@@ -3597,6 +3626,7 @@ async function HandleWordDownloadClick(event) {
       let livePreviewTimer = null;
       let livePreviewRunning = false;
       let livePreviewQueued = false;
+
       async function updateLivePreview() {
         // If a preview is already generating, queue another update for after.
         if (livePreviewRunning) {
@@ -3665,6 +3695,7 @@ async function HandleWordDownloadClick(event) {
           }
         }
       }
+
       // Debounced wrapper — waits 400ms after the last change before updating.
       function debouncedUpdateLivePreview() {
         if (livePreviewTimer) clearTimeout(livePreviewTimer);
@@ -3675,22 +3706,23 @@ async function HandleWordDownloadClick(event) {
         if (loaderElEarly) loaderElEarly.style.display = "flex";
         livePreviewTimer = setTimeout(updateLivePreview, 400);
       }
+
       // Attach listeners to all config inputs (checkboxes, selects, color picker).
       const configInputs = document.querySelectorAll('.swal2-html-container input, .swal2-html-container select, .swal2-html-container textarea');
-      configInputs.forEach(function(input) {
+      configInputs.forEach(function (input) {
         input.addEventListener('change', debouncedUpdateLivePreview);
         if (input.type === 'color' || input.type === 'text' || input.type === 'textarea') {
           input.addEventListener('input', debouncedUpdateLivePreview);
         }
       });
       // Also update when tab changes (the preview should reflect the current state).
-      document.querySelectorAll('.export-tab-link').forEach(function(link) {
+      document.querySelectorAll('.export-tab-link').forEach(function (link) {
         link.addEventListener('click', debouncedUpdateLivePreview);
       });
       // Kick off the first preview after a short delay (let the modal render first).
       setTimeout(debouncedUpdateLivePreview, 600);
     },
-    "preConfirm": function() {
+    "preConfirm": function () {
       // Get the modal options.
       const options = GetModalOptions();
       // Check if at least one section is selected.
@@ -3708,56 +3740,198 @@ async function HandleWordDownloadClick(event) {
     await GenerateWordDocument(result.value);
   }
 }
+
 // Initialize the UI enhancements on page load.
 function InitializeUIEnhancements() {
   // Setup the reading progress bar (rAF-throttled).
-  try { SetupProgressbar(); } catch (e) { CVLog.error('SetupProgressbar() failed:', e); }
+  try {
+    SetupProgressbar();
+  } catch (e) {
+    CVLog.error('SetupProgressbar() failed:', e);
+  }
   // Setup the dark mode toggle (respects prefers-color-scheme).
-  try { SetupDarkMode(); } catch (e) { CVLog.error('SetupDarkMode() failed:', e); }
+  try {
+    SetupDarkMode();
+  } catch (e) {
+    CVLog.error('SetupDarkMode() failed:', e);
+  }
   // Setup the global search functionality (XSS-safe).
-  try { SetupGlobalSearch(); } catch (e) { CVLog.error('SetupGlobalSearch() failed:', e); }
+  try {
+    SetupGlobalSearch();
+  } catch (e) {
+    CVLog.error('SetupGlobalSearch() failed:', e);
+  }
   // Setup semantic HTML tags.
-  try { SetupSemanticHTML(); } catch (e) { CVLog.error('SetupSemanticHTML() failed:', e); }
+  try {
+    SetupSemanticHTML();
+  } catch (e) {
+    CVLog.error('SetupSemanticHTML() failed:', e);
+  }
   // Setup lazy loading for images.
-  try { SetupLazyLoading(); } catch (e) { CVLog.error('SetupLazyLoading() failed:', e); }
+  try {
+    SetupLazyLoading();
+  } catch (e) {
+    CVLog.error('SetupLazyLoading() failed:', e);
+  }
   // Setup the pass-1 accessibility / UX features.
-  try { SetupBackToTop(); } catch (e) { CVLog.error('SetupBackToTop() failed:', e); }
-  try { SetupMobileToc(); } catch (e) { CVLog.error('SetupMobileToc() failed:', e); }
-  try { SetupCopyToClipboard(); } catch (e) { CVLog.error('SetupCopyToClipboard() failed:', e); }
-  try { SetupScrollReveal(); } catch (e) { CVLog.error('SetupScrollReveal() failed:', e); }
+  try {
+    SetupBackToTop();
+  } catch (e) {
+    CVLog.error('SetupBackToTop() failed:', e);
+  }
+  try {
+    SetupMobileToc();
+  } catch (e) {
+    CVLog.error('SetupMobileToc() failed:', e);
+  }
+  try {
+    SetupCopyToClipboard();
+  } catch (e) {
+    CVLog.error('SetupCopyToClipboard() failed:', e);
+  }
+  try {
+    SetupScrollReveal();
+  } catch (e) {
+    CVLog.error('SetupScrollReveal() failed:', e);
+  }
   // Setup the pass-2 live data integrations.
-  try { SetupQRCode(); } catch (e) { CVLog.error('SetupQRCode() failed:', e); }
-  try { SetupSchemaOrgJSONLD(); } catch (e) { CVLog.error('SetupSchemaOrgJSONLD() failed:', e); }
-  try { SetupCitationBadges(); } catch (e) { CVLog.error('SetupCitationBadges() failed:', e); }
-  try { SetupAltmetricBadges(); } catch (e) { CVLog.error('SetupAltmetricBadges() failed:', e); }
-  try { SetupGitHubStats(); } catch (e) { CVLog.error('SetupGitHubStats() failed:', e); }
-  try { SetupFeaturedPubs(); } catch (e) { CVLog.error('SetupFeaturedPubs() failed:', e); }
-  try { SetupCoAuthorGraph(); } catch (e) { CVLog.error('SetupCoAuthorGraph() failed:', e); }
-  try { SetupORCIDSync(); } catch (e) { CVLog.error('SetupORCIDSync() failed:', e); }
+  try {
+    SetupQRCode();
+  } catch (e) {
+    CVLog.error('SetupQRCode() failed:', e);
+  }
+  try {
+    SetupSchemaOrgJSONLD();
+  } catch (e) {
+    CVLog.error('SetupSchemaOrgJSONLD() failed:', e);
+  }
+  try {
+    SetupCitationBadges();
+  } catch (e) {
+    CVLog.error('SetupCitationBadges() failed:', e);
+  }
+  try {
+    SetupAltmetricBadges();
+  } catch (e) {
+    CVLog.error('SetupAltmetricBadges() failed:', e);
+  }
+  try {
+    SetupGitHubStats();
+  } catch (e) {
+    CVLog.error('SetupGitHubStats() failed:', e);
+  }
+  try {
+    SetupFeaturedPubs();
+  } catch (e) {
+    CVLog.error('SetupFeaturedPubs() failed:', e);
+  }
+  try {
+    SetupORCIDSync();
+  } catch (e) {
+    CVLog.error('SetupORCIDSync() failed:', e);
+  }
   // Setup the pass-2 accessibility extras.
-  try { SetupFontSizeControls(); } catch (e) { CVLog.error('SetupFontSizeControls() failed:', e); }
-  try { SetupAccessibilityMenu(); } catch (e) { CVLog.error('SetupAccessibilityMenu() failed:', e); }
-  try { SetupDyslexiaFont(); } catch (e) { CVLog.error('SetupDyslexiaFont() failed:', e); }
-  try { SetupTextToSpeech(); } catch (e) { CVLog.error('SetupTextToSpeech() failed:', e); }
-  try { SetupShortcuts(); } catch (e) { CVLog.error('SetupShortcuts() failed:', e); }
-  try { SetupHighContrastMode(); } catch (e) { CVLog.error('SetupHighContrastMode() failed:', e); }
-  try { SetupReadingGuide(); } catch (e) { CVLog.error('SetupReadingGuide() failed:', e); }
+  try {
+    SetupFontSizeControls();
+  } catch (e) {
+    CVLog.error('SetupFontSizeControls() failed:', e);
+  }
+  try {
+    SetupAccessibilityMenu();
+  } catch (e) {
+    CVLog.error('SetupAccessibilityMenu() failed:', e);
+  }
+  try {
+    SetupDyslexiaFont();
+  } catch (e) {
+    CVLog.error('SetupDyslexiaFont() failed:', e);
+  }
+  try {
+    SetupTextToSpeech();
+  } catch (e) {
+    CVLog.error('SetupTextToSpeech() failed:', e);
+  }
+  try {
+    SetupShortcuts();
+  } catch (e) {
+    CVLog.error('SetupShortcuts() failed:', e);
+  }
+  try {
+    SetupHighContrastMode();
+  } catch (e) {
+    CVLog.error('SetupHighContrastMode() failed:', e);
+  }
+  try {
+    SetupReadingGuide();
+  } catch (e) {
+    CVLog.error('SetupReadingGuide() failed:', e);
+  }
   // Setup the pass-2 analytics & engagement.
-  try { SetupAnalytics(); } catch (e) { CVLog.error('SetupAnalytics() failed:', e); }
-  try { SetupAvailabilityIndicator(); } catch (e) { CVLog.error('SetupAvailabilityIndicator() failed:', e); }
-  try { SetupCalendly(); } catch (e) { CVLog.error('SetupCalendly() failed:', e); }
-  try { SetupScheduleMeetingPopup(); } catch (e) { CVLog.error('SetupScheduleMeetingPopup() failed:', e); }
-  try { SetupQrSharePopup(); } catch (e) { CVLog.error('SetupQrSharePopup() failed:', e); }
-  try { SetupFabMenu(); } catch (e) { CVLog.error('SetupFabMenu() failed:', e); }
-  try { SetupDownloadWordFab(); } catch (e) { CVLog.error('SetupDownloadWordFab() failed:', e); }
-  try { SetupCoAuthorModal(); } catch (e) { CVLog.error('SetupCoAuthorModal() failed:', e); }
-  try { SetupAvatarLightbox(); } catch (e) { CVLog.error('SetupAvatarLightbox() failed:', e); }
-  try { SetupLazyFlickr(); } catch (e) { CVLog.error('SetupLazyFlickr() failed:', e); }
+  try {
+    SetupAnalytics();
+  } catch (e) {
+    CVLog.error('SetupAnalytics() failed:', e);
+  }
+  try {
+    SetupAvailabilityIndicator();
+  } catch (e) {
+    CVLog.error('SetupAvailabilityIndicator() failed:', e);
+  }
+  try {
+    SetupCalendly();
+  } catch (e) {
+    CVLog.error('SetupCalendly() failed:', e);
+  }
+  try {
+    SetupScheduleMeetingPopup();
+  } catch (e) {
+    CVLog.error('SetupScheduleMeetingPopup() failed:', e);
+  }
+  try {
+    SetupQrSharePopup();
+  } catch (e) {
+    CVLog.error('SetupQrSharePopup() failed:', e);
+  }
+  try {
+    SetupFabMenu();
+  } catch (e) {
+    CVLog.error('SetupFabMenu() failed:', e);
+  }
+  try {
+    SetupDownloadWordFab();
+  } catch (e) {
+    CVLog.error('SetupDownloadWordFab() failed:', e);
+  }
+  try {
+    SetupAvatarLightbox();
+  } catch (e) {
+    CVLog.error('SetupAvatarLightbox() failed:', e);
+  }
+  try {
+    SetupLazyFlickr();
+  } catch (e) {
+    CVLog.error('SetupLazyFlickr() failed:', e);
+  }
   // audit-fix: Per-block copy + read-aloud buttons on every section/item.
-  try { SetupPerBlockActions(); } catch (e) { CVLog.error('SetupPerBlockActions() failed:', e); }
+  try {
+    SetupPerBlockActions();
+  } catch (e) {
+    CVLog.error('SetupPerBlockActions() failed:', e);
+  }
+  // Accessibility-menu toggles that show/hide the per-block buttons.
+  try {
+    SetupBlockActionToggles();
+  } catch (e) {
+    CVLog.error('SetupBlockActionToggles() failed:', e);
+  }
   // audit-fix Enh 4: Wrap acronyms in <abbr> tags for screen readers.
-  try { SetupAbbrAcronyms(); } catch (e) { CVLog.error('SetupAbbrAcronyms() failed:', e); }
+  try {
+    SetupAbbrAcronyms();
+  } catch (e) {
+    CVLog.error('SetupAbbrAcronyms() failed:', e);
+  }
 }
+
 // Setup the reading progress bar at the top of the viewport.
 function SetupProgressbar() {
   const progressBar = document.getElementById("reading-progress-bar");
@@ -3767,6 +3941,7 @@ function SetupProgressbar() {
   // Throttle layout writes with requestAnimationFrame so the handler
   // never runs more than once per frame.
   let ticking = false;
+
   function update() {
     ticking = false;
     const scrollTop = window.scrollY;
@@ -3774,18 +3949,20 @@ function SetupProgressbar() {
     const scrollPercent = (docHeight > 0) ? ((scrollTop / docHeight) * 100) : (0);
     progressBar.style.width = scrollPercent + "%";
   }
+
   // passive: true tells the browser the handler will never call preventDefault,
   // allowing it to scroll on the compositor thread without blocking.
-  window.addEventListener("scroll", function() {
+  window.addEventListener("scroll", function () {
     if (!ticking) {
       ticking = true;
       window.requestAnimationFrame(update);
     }
-  }, { passive: true });
+  }, {passive: true});
   // Also update on resize and on initial load.
-  window.addEventListener("resize", Debounce(update, 200), { passive: true });
+  window.addEventListener("resize", Debounce(update, 200), {passive: true});
   update();
 }
+
 // Setup the dark mode toggle functionality.
 function SetupDarkMode() {
   // The dark mode toggle moved into the Accessibility menu; both IDs work.
@@ -3799,6 +3976,7 @@ function SetupDarkMode() {
     document.body.classList.toggle("dark-mode", isDark);
     document.documentElement.setAttribute("data-bs-theme", isDark ? "dark" : "light");
   }
+
   // Sync the toggle's visual state to the current body state on every page load.
   function syncToggle() {
     const isDark = document.body.classList.contains("dark-mode");
@@ -3810,6 +3988,7 @@ function SetupDarkMode() {
       toggle.setAttribute("aria-pressed", isDark ? "true" : "false");
     }
   }
+
   // Decide the initial dark-mode state. Priority:
   //   1. Saved user preference in localStorage.
   //   2. OS-level prefers-color-scheme: dark.
@@ -3825,7 +4004,7 @@ function SetupDarkMode() {
   // React to OS theme changes ONLY when the user has not explicitly chosen.
   if (window.matchMedia) {
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
-    const mqListener = function(e) {
+    const mqListener = function (e) {
       if (localStorage.getItem("cv-dark-mode") === null) {
         applyDarkMode(e.matches);
         syncToggle();
@@ -3838,7 +4017,7 @@ function SetupDarkMode() {
       mql.addListener(mqListener);
     }
   }
-  toggle.addEventListener("click", function() {
+  toggle.addEventListener("click", function () {
     const nowDark = !document.body.classList.contains("dark-mode");
     applyDarkMode(nowDark);
     localStorage.setItem("cv-dark-mode", nowDark);
@@ -3847,6 +4026,7 @@ function SetupDarkMode() {
   // Also update the toggle if any other code path changes dark-mode state.
   document.addEventListener("cv:dark-mode-changed", syncToggle);
 }
+
 // Setup the global search and highlight functionality.
 function SetupGlobalSearch() {
   const searchInput = document.getElementById("global-search");
@@ -3854,12 +4034,14 @@ function SetupGlobalSearch() {
   const statusRegion = document.getElementById("search-match-status");
   if (!searchInput) return;
   let searchTimeout;
+
   function announce(message) {
     if (!statusRegion) return;
     statusRegion.textContent = message;
   }
+
   function clearHighlights() {
-    document.querySelectorAll("mark.search-highlight").forEach(function(mark) {
+    document.querySelectorAll("mark.search-highlight").forEach(function (mark) {
       const parent = mark.parentNode;
       // Replace the <mark> with its text content and re-normalize
       // the parent so adjacent text nodes merge back together.
@@ -3870,6 +4052,7 @@ function SetupGlobalSearch() {
       parent.normalize();
     });
   }
+
   function highlight(query) {
     const content = document.querySelector(".resume-wrapper-inner");
     if (!content) return 0;
@@ -3877,7 +4060,7 @@ function SetupGlobalSearch() {
     const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const regex = new RegExp("(" + escapedQuery + ")", "gi");
     const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, {
-      acceptNode: function(node) {
+      acceptNode: function (node) {
         // Skip text inside <script>, <style>, <mark>, and elements with contenteditable.
         const parent = node.parentNode;
         if (!parent) return NodeFilter.FILTER_REJECT;
@@ -3899,8 +4082,11 @@ function SetupGlobalSearch() {
     const MAX_HIGHLIGHTS = 150;
     let matchCount = 0;
     let capped = false;
-    nodesToWrap.forEach(function(textNode) {
-      if (matchCount >= MAX_HIGHLIGHTS) { capped = true; return; }
+    nodesToWrap.forEach(function (textNode) {
+      if (matchCount >= MAX_HIGHLIGHTS) {
+        capped = true;
+        return;
+      }
       const text = textNode.nodeValue;
       const lowerText = text.toLowerCase();
       let pos = lowerText.indexOf(lowerQuery);
@@ -3919,7 +4105,10 @@ function SetupGlobalSearch() {
         mark.textContent = text.slice(pos, pos + query.length);
         fragment.appendChild(mark);
         matchCount++;
-        if (matchCount >= MAX_HIGHLIGHTS) { capped = true; break; }
+        if (matchCount >= MAX_HIGHLIGHTS) {
+          capped = true;
+          break;
+        }
         lastIdx = pos + query.length;
         pos = lowerText.indexOf(lowerQuery, lastIdx);
       }
@@ -3937,7 +4126,8 @@ function SetupGlobalSearch() {
     }
     return matchCount;
   }
-  searchInput.addEventListener("input", function() {
+
+  searchInput.addEventListener("input", function () {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
       const query = this.value.trim();
@@ -3948,12 +4138,12 @@ function SetupGlobalSearch() {
       const count = highlight(query);
       const firstMatch = document.querySelector("mark.search-highlight");
       if (firstMatch) {
-        firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+        firstMatch.scrollIntoView({behavior: "smooth", block: "center"});
       }
     }, 300);
   });
   if (clearBtn) {
-    clearBtn.addEventListener("click", function() {
+    clearBtn.addEventListener("click", function () {
       searchInput.value = "";
       clearHighlights();
       announce("");
@@ -3962,7 +4152,7 @@ function SetupGlobalSearch() {
     });
   }
   // Keyboard shortcut: '/' focuses the search input.
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     if (e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
       e.preventDefault();
       searchInput.focus();
@@ -3989,7 +4179,7 @@ function SetupLoadMorePubs() {
     return;
   }
   // Iterate over each publication.
-  pubs.forEach(function(pub, index) {
+  pubs.forEach(function (pub, index) {
     // Hide publications beyond the first 10.
     if (index >= 10) {
       pub.style.display = "none";
@@ -3998,19 +4188,20 @@ function SetupLoadMorePubs() {
   // Display the load more button.
   btn.style.display = "inline-block";
   // Add a click event listener to the button.
-  btn.addEventListener("click", function() {
+  btn.addEventListener("click", function () {
     // Iterate over each publication to show them all.
-    pubs.forEach(function(pub) {
+    pubs.forEach(function (pub) {
       pub.style.display = "";
     });
     // Hide the load more button.
     btn.style.display = "none";
   });
 }
+
 // Setup semantic HTML tags for better accessibility and ATS parsing.
 function SetupSemanticHTML() {
   // Select all timeline items.
-  document.querySelectorAll(".resume-timeline-item").forEach(function(item) {
+  document.querySelectorAll(".resume-timeline-item").forEach(function (item) {
     // Check if the element is not already an article tag.
     if (item.tagName.toLowerCase() !== "article") {
       // Create a new article element.
@@ -4024,10 +4215,11 @@ function SetupSemanticHTML() {
     }
   });
 }
+
 // Setup lazy loading for all images on the page.
 function SetupLazyLoading() {
   // Select all image elements.
-  document.querySelectorAll("img").forEach(function(img) {
+  document.querySelectorAll("img").forEach(function (img) {
     // Check if the loading attribute is not already set.
     if (!img.hasAttribute("loading")) {
       // Set the loading attribute to lazy.
@@ -4035,6 +4227,7 @@ function SetupLazyLoading() {
     }
   });
 }
+
 // Track analytics events using a placeholder for Umami/Plausible.
 function TrackAnalyticsEvent(category, action) {
   // Check if the Umami analytics object exists.
@@ -4047,12 +4240,14 @@ function TrackAnalyticsEvent(category, action) {
   // Log the event to the console for debugging.
   CVLog.log("Analytics Event:", category, action);
 }
+
 // audit-fix P2-5: Removed dead TriggerDownloadWebhook stub (commented-out Make.com
 // webhook placeholder was misleading). The 8 call sites below now call this no-op
 // wrapper so existing code paths remain intact; set window.ENABLE_DOWNLOAD_WEBHOOK
 // = true and replace DOWNLOAD_WEBHOOK_URL to re-enable.
 var DOWNLOAD_WEBHOOK_URL = ""; // e.g. "https://hook.us1.make.com/REAL_WEBHOOK_ID"
 var ENABLE_DOWNLOAD_WEBHOOK = false;
+
 function TriggerDownloadWebhook(type) {
   if (!ENABLE_DOWNLOAD_WEBHOOK || !DOWNLOAD_WEBHOOK_URL) {
     CVLog.log("Webhook skipped (disabled):", type);
@@ -4060,10 +4255,13 @@ function TriggerDownloadWebhook(type) {
   }
   fetch(DOWNLOAD_WEBHOOK_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ type: type, timestamp: new Date().toISOString() })
-  }).catch(function(err) { CVLog.warn("Webhook failed:", err); });
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({type: type, timestamp: new Date().toISOString()})
+  }).catch(function (err) {
+    CVLog.warn("Webhook failed:", err);
+  });
 }
+
 // Initialize the sticky Table of Contents aside.
 function InitializeStickyToc() {
   // Get the TOC container element.
@@ -4077,7 +4275,7 @@ function InitializeStickyToc() {
   // Clear existing content and add the header.
   tocContainer.innerHTML = "<h6 class=\"toc-header\">Table of Contents</h6>";
   // Iterate over each heading to build the TOC.
-  headings.forEach(function(heading, index) {
+  headings.forEach(function (heading, index) {
     // Ensure the heading has an ID.
     const targetId = heading.id || ("section-" + index);
     heading.id = targetId;
@@ -4101,7 +4299,7 @@ function InitializeStickyToc() {
       }
     }
     // Add smooth scroll behavior on click.
-    link.addEventListener("click", function(event) {
+    link.addEventListener("click", function (event) {
       event.preventDefault();
       document.getElementById(targetId).scrollIntoView({
         behavior: "smooth"
@@ -4111,12 +4309,12 @@ function InitializeStickyToc() {
     tocContainer.appendChild(link);
   });
   // Setup Intersection Observer for active state highlighting.
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         const activeId = entry.target.id;
         // Remove active class from all links.
-        document.querySelectorAll(".toc-link").forEach(function(link) {
+        document.querySelectorAll(".toc-link").forEach(function (link) {
           link.classList.remove("active");
           link.removeAttribute("aria-current");
           // Add active class + aria-current to the matching link.
@@ -4131,291 +4329,297 @@ function InitializeStickyToc() {
     rootMargin: "-10% 0px -75% 0px"
   });
   // Observe all headings.
-  headings.forEach(function(heading) {
+  headings.forEach(function (heading) {
     observer.observe(heading);
   });
 }
+
 // Export the publication list to a BibTeX file.
 function ExportToBibTeX() {
   try {
 
-  // Track the analytics event.
-  TrackAnalyticsEvent("Export", "BibTeX");
-  // Trigger the download webhook.
-  TriggerDownloadWebhook("BibTeX");
-  let bibtex = "";
-  // Select all publication items.
-  // audit-fix: Deduplicate by title to prevent doubled entries.
-  const _seenBib = {};
-  const pubs = document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item");
-  let bibIndex = 0;
-  pubs.forEach(function(pub, index) {
-    const _titleCheck = pub.querySelector(".resume-position-title")?.textContent.trim() || "";
-    if (_seenBib[_titleCheck]) return;
-    _seenBib[_titleCheck] = true;
-    // Extract title from the correct heading class.
-    const titleEl = pub.querySelector(".resume-position-title");
-    const title = titleEl ? titleEl.textContent.trim().replace(/\s+/g, " ") : "Unknown Title";
-    // Extract journal/conference name from the correct subheading class.
-    const journalEl = pub.querySelector(".resume-company-name");
-    const journal = journalEl ? journalEl.textContent.trim().replace(/\s+/g, " ") : "Unknown Journal";
-    // Extract year from the time element.
-    const timeEl = pub.querySelector(".resume-position-time");
-    const timeText = timeEl ? timeEl.textContent.trim() : "";
-    const yearMatch = timeText.match(/(\d{4})/);
-    const year = yearMatch ? yearMatch[1] : "2024";
-    // Extract DOI cleanly.
-    const doiEl = pub.querySelector("a[href*='doi.org']");
-    const doi = doiEl ? doiEl.getAttribute("href").replace("https://doi.org/", "").replace("https://doi.org/", "") : "";
-    // Determine entry type and generate key.
-    const key = "balaha" + year + bibIndex; bibIndex++;
-    const type = pub.closest("#Published-Conferences") ? "@inproceedings" : "@article";
-    // Build the BibTeX entry.
-    bibtex += type + "{" + key + ",\n";
-    bibtex += "  title={" + title + "},\n";
-    bibtex += "  author={Balaha, Hossam Magdy and others},\n";
-    bibtex += "  journal={" + journal + "},\n";
-    bibtex += "  year={" + year + "}";
-    if (doi) {
-      bibtex += ",\n  doi={" + doi + "}";
-    }
-    bibtex += "\n}\n\n";
-  });
-  // Create and trigger the download.
-  const blob = new Blob([bibtex], {
-    type: "text/plain;charset=utf-8"
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "Hossam_Magdy_Balaha_Publications.bib";
-  a.click();
-  URL.revokeObjectURL(url);
-  // Show completion alert.
-  Swal.fire({
-    icon: "success",
-    title: "BibTeX Export Complete",
-    text: "Your publications have been successfully exported to BibTeX format."
-  });
+    // Track the analytics event.
+    TrackAnalyticsEvent("Export", "BibTeX");
+    // Trigger the download webhook.
+    TriggerDownloadWebhook("BibTeX");
+    let bibtex = "";
+    // Select all publication items.
+    // audit-fix: Deduplicate by title to prevent doubled entries.
+    const _seenBib = {};
+    const pubs = document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item");
+    let bibIndex = 0;
+    pubs.forEach(function (pub, index) {
+      const _titleCheck = pub.querySelector(".resume-position-title")?.textContent.trim() || "";
+      if (_seenBib[_titleCheck]) return;
+      _seenBib[_titleCheck] = true;
+      // Extract title from the correct heading class.
+      const titleEl = pub.querySelector(".resume-position-title");
+      const title = titleEl ? titleEl.textContent.trim().replace(/\s+/g, " ") : "Unknown Title";
+      // Extract journal/conference name from the correct subheading class.
+      const journalEl = pub.querySelector(".resume-company-name");
+      const journal = journalEl ? journalEl.textContent.trim().replace(/\s+/g, " ") : "Unknown Journal";
+      // Extract year from the time element.
+      const timeEl = pub.querySelector(".resume-position-time");
+      const timeText = timeEl ? timeEl.textContent.trim() : "";
+      const yearMatch = timeText.match(/(\d{4})/);
+      const year = yearMatch ? yearMatch[1] : "2024";
+      // Extract DOI cleanly.
+      const doiEl = pub.querySelector("a[href*='doi.org']");
+      const doi = doiEl ? doiEl.getAttribute("href").replace("https://doi.org/", "").replace("https://doi.org/", "") : "";
+      // Determine entry type and generate key.
+      const key = "balaha" + year + bibIndex;
+      bibIndex++;
+      const type = pub.closest("#Published-Conferences") ? "@inproceedings" : "@article";
+      // Build the BibTeX entry.
+      bibtex += type + "{" + key + ",\n";
+      bibtex += "  title={" + title + "},\n";
+      bibtex += "  author={Balaha, Hossam Magdy and others},\n";
+      bibtex += "  journal={" + journal + "},\n";
+      bibtex += "  year={" + year + "}";
+      if (doi) {
+        bibtex += ",\n  doi={" + doi + "}";
+      }
+      bibtex += "\n}\n\n";
+    });
+    // Create and trigger the download.
+    const blob = new Blob([bibtex], {
+      type: "text/plain;charset=utf-8"
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Hossam_Magdy_Balaha_Publications.bib";
+    a.click();
+    URL.revokeObjectURL(url);
+    // Show completion alert.
+    Swal.fire({
+      icon: "success",
+      title: "BibTeX Export Complete",
+      text: "Your publications have been successfully exported to BibTeX format."
+    });
   } catch (err) {
     CVLog.error("ExportToBibTeX failed:", err);
     ExportErrorToast("ExportToBibTeX", err);
   }
 }
+
 // Export the resume data to the standard JSON Resume format.
 function ExportToJSONResume() {
   try {
 
-  // Track the analytics event.
-  TrackAnalyticsEvent("Export", "JSON Resume");
-  // Trigger the download webhook.
-  TriggerDownloadWebhook("JSON");
-  const jsonResume = {
-    "basics": {
-      "name": "Hossam Magdy Balaha",
-      "label": "AI Engineer & Bioengineering Ph.D. Candidate",
-      "email": "hmbala01@louisville.edu",
-      "phone": "+1 502-767-9991",
-      "url": "https://hossambalaha.github.io/",
-      "summary": document.querySelector("#ProfessionalSummary p") ? document.querySelector("#ProfessionalSummary p").textContent.trim().replace(/\s+/g, " ") : ""
-    },
-    "work": [],
-    "education": [],
-    "publications": [],
-    "skills": [],
-    "rankings": [],
-  };
-  // Extract Work Experience using accurate selectors.
-  // audit-fix: Deduplicate by position+company to prevent doubled entries.
-  const _seenWork = {};
-  document.querySelectorAll("#Experience .resume-timeline-item").forEach(function(item) {
-    const position = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
-    const company = item.querySelector(".resume-company-name")?.textContent.trim().replace(/\s+/g, " ") || "";
-    const dedupKey = position + "|" + company;
-    if (_seenWork[dedupKey]) return;
-    _seenWork[dedupKey] = true;
-    const timeText = item.querySelector(".resume-position-time")?.textContent.trim() || "";
-    const dateMatch = timeText.match(/([A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})\s*[–-]\s*(Present|[A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})/);
-    jsonResume.work.push({
-      "position": position,
-      "company": company,
-      "startDate": dateMatch ? dateMatch[1].trim() : "",
-      "endDate": dateMatch ? dateMatch[2].trim() : "",
-      "summary": item.querySelector(".resume-timeline-item-desc")?.textContent.trim().replace(/\s+/g, " ") || ""
+    // Track the analytics event.
+    TrackAnalyticsEvent("Export", "JSON Resume");
+    // Trigger the download webhook.
+    TriggerDownloadWebhook("JSON");
+    const jsonResume = {
+      "basics": {
+        "name": "Hossam Magdy Balaha",
+        "label": "AI Engineer & Bioengineering Ph.D. Candidate",
+        "email": "hmbala01@louisville.edu",
+        "phone": "+1 502-767-9991",
+        "url": "https://hossambalaha.github.io/",
+        "summary": document.querySelector("#ProfessionalSummary p") ? document.querySelector("#ProfessionalSummary p").textContent.trim().replace(/\s+/g, " ") : ""
+      },
+      "work": [],
+      "education": [],
+      "publications": [],
+      "skills": [],
+      "rankings": [],
+    };
+    // Extract Work Experience using accurate selectors.
+    // audit-fix: Deduplicate by position+company to prevent doubled entries.
+    const _seenWork = {};
+    document.querySelectorAll("#Experience .resume-timeline-item").forEach(function (item) {
+      const position = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
+      const company = item.querySelector(".resume-company-name")?.textContent.trim().replace(/\s+/g, " ") || "";
+      const dedupKey = position + "|" + company;
+      if (_seenWork[dedupKey]) return;
+      _seenWork[dedupKey] = true;
+      const timeText = item.querySelector(".resume-position-time")?.textContent.trim() || "";
+      const dateMatch = timeText.match(/([A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})\s*[–-]\s*(Present|[A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})/);
+      jsonResume.work.push({
+        "position": position,
+        "company": company,
+        "startDate": dateMatch ? dateMatch[1].trim() : "",
+        "endDate": dateMatch ? dateMatch[2].trim() : "",
+        "summary": item.querySelector(".resume-timeline-item-desc")?.textContent.trim().replace(/\s+/g, " ") || ""
+      });
     });
-  });
-  // Extract Education using accurate selectors.
-  // audit-fix: Deduplicate by institution+area to prevent doubled entries.
-  const _seenEdu = {};
-  document.querySelectorAll("#Education .resume-timeline-item").forEach(function(item) {
-    const area = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
-    const institution = item.querySelector(".resume-company-name")?.textContent.trim().replace(/\s+/g, " ") || "";
-    const dedupKey = institution + "|" + area;
-    if (_seenEdu[dedupKey]) return;
-    _seenEdu[dedupKey] = true;
-    const timeText = item.querySelector(".resume-position-time")?.textContent.trim() || "";
-    const dateMatch = timeText.match(/([A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})\s*[–-]\s*(Present|[A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})/);
-    jsonResume.education.push({
-      "institution": institution,
-      "area": area,
-      "studyType": "Degree",
-      "startDate": dateMatch ? dateMatch[1].trim() : "",
-      "endDate": dateMatch ? dateMatch[2].trim() : ""
+    // Extract Education using accurate selectors.
+    // audit-fix: Deduplicate by institution+area to prevent doubled entries.
+    const _seenEdu = {};
+    document.querySelectorAll("#Education .resume-timeline-item").forEach(function (item) {
+      const area = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
+      const institution = item.querySelector(".resume-company-name")?.textContent.trim().replace(/\s+/g, " ") || "";
+      const dedupKey = institution + "|" + area;
+      if (_seenEdu[dedupKey]) return;
+      _seenEdu[dedupKey] = true;
+      const timeText = item.querySelector(".resume-position-time")?.textContent.trim() || "";
+      const dateMatch = timeText.match(/([A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})\s*[–-]\s*(Present|[A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|[A-Za-z]+\s+\d{4}|\d{4})/);
+      jsonResume.education.push({
+        "institution": institution,
+        "area": area,
+        "studyType": "Degree",
+        "startDate": dateMatch ? dateMatch[1].trim() : "",
+        "endDate": dateMatch ? dateMatch[2].trim() : ""
+      });
     });
-  });
-  // Extract Publications using accurate selectors.
-  // audit-fix: Deduplicate by title+year to prevent doubled entries.
-  const _seenPubs = {};
-  document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item").forEach(function(item) {
-    const title = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
-    const publisher = item.querySelector(".resume-company-name")?.textContent.trim().replace(/\s+/g, " ") || "";
-    const dedupKey = title;
-    if (_seenPubs[dedupKey]) return;
-    _seenPubs[dedupKey] = true;
-    const timeText = item.querySelector(".resume-position-time")?.textContent.trim() || "";
-    const yearMatch = timeText.match(/(\d{4})/);
-    const doiEl = item.querySelector("a[href*='doi.org']");
-    jsonResume.publications.push({
-      "name": title,
-      "publisher": publisher,
-      "releaseDate": yearMatch ? yearMatch[1] : "",
-      "url": doiEl ? doiEl.getAttribute("href") : ""
+    // Extract Publications using accurate selectors.
+    // audit-fix: Deduplicate by title+year to prevent doubled entries.
+    const _seenPubs = {};
+    document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item").forEach(function (item) {
+      const title = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
+      const publisher = item.querySelector(".resume-company-name")?.textContent.trim().replace(/\s+/g, " ") || "";
+      const dedupKey = title;
+      if (_seenPubs[dedupKey]) return;
+      _seenPubs[dedupKey] = true;
+      const timeText = item.querySelector(".resume-position-time")?.textContent.trim() || "";
+      const yearMatch = timeText.match(/(\d{4})/);
+      const doiEl = item.querySelector("a[href*='doi.org']");
+      jsonResume.publications.push({
+        "name": title,
+        "publisher": publisher,
+        "releaseDate": yearMatch ? yearMatch[1] : "",
+        "url": doiEl ? doiEl.getAttribute("href") : ""
+      });
     });
-  });
-  // Extract Skills.
-  document.querySelectorAll(".skill-tag, .skill-pill").forEach(function(tag) {
-    const name = tag.textContent.trim().replace(/\s+/g, " ");
-    if (name && !jsonResume.skills.find(function(s) {
+    // Extract Skills.
+    document.querySelectorAll(".skill-tag, .skill-pill").forEach(function (tag) {
+      const name = tag.textContent.trim().replace(/\s+/g, " ");
+      if (name && !jsonResume.skills.find(function (s) {
         return s.name === name;
       })) {
-      jsonResume.skills.push({
-        "name": name
-      });
-    }
-  });
-  // Extract Scholar Rankings using accurate table selectors.
-  // audit-fix: Deduplicate by topic+window to prevent doubled entries.
-  const _seenRank = {};
-  document.querySelectorAll(".ranking-table tbody tr").forEach(function(row) {
-    const cells = row.querySelectorAll("td");
-    if (cells.length >= 9) {
-      const _rankKey = cells[0].textContent.trim() + "|" + cells[1].textContent.trim();
-      if (_seenRank[_rankKey]) return;
-      _seenRank[_rankKey] = true;
-      jsonResume.rankings.push({
-        "topic": cells[0].textContent.trim().replace(/\s+/g, " "),
-        "window": cells[1].textContent.trim(),
-        "worldRank": cells[2].textContent.trim(),
-        "nationalRank": cells[3].textContent.trim(),
-        "percentile": cells[4].textContent.trim(),
-        "impactScore": cells[5].textContent.trim(),
-        "dIndex": cells[6].textContent.trim(),
-        "hIndex": cells[7].textContent.trim(),
-        "certificate": cells[8].querySelector("a") ? cells[8].querySelector("a").getAttribute("href") : ""
-      });
-    }
-  });
-  // Create and trigger the download.
-  const blob = new Blob([JSON.stringify(jsonResume, null, 2)], {
-    type: "application/json"
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "Hossam_Magdy_Balaha_Resume.json";
-  a.click();
-  URL.revokeObjectURL(url);
-  // Show completion alert.
-  Swal.fire({
-    icon: "success",
-    title: "JSON Export Complete",
-    text: "Your resume has been successfully exported to JSON Resume format."
-  });
+        jsonResume.skills.push({
+          "name": name
+        });
+      }
+    });
+    // Extract Scholar Rankings using accurate table selectors.
+    // audit-fix: Deduplicate by topic+window to prevent doubled entries.
+    const _seenRank = {};
+    document.querySelectorAll(".ranking-table tbody tr").forEach(function (row) {
+      const cells = row.querySelectorAll("td");
+      if (cells.length >= 9) {
+        const _rankKey = cells[0].textContent.trim() + "|" + cells[1].textContent.trim();
+        if (_seenRank[_rankKey]) return;
+        _seenRank[_rankKey] = true;
+        jsonResume.rankings.push({
+          "topic": cells[0].textContent.trim().replace(/\s+/g, " "),
+          "window": cells[1].textContent.trim(),
+          "worldRank": cells[2].textContent.trim(),
+          "nationalRank": cells[3].textContent.trim(),
+          "percentile": cells[4].textContent.trim(),
+          "impactScore": cells[5].textContent.trim(),
+          "dIndex": cells[6].textContent.trim(),
+          "hIndex": cells[7].textContent.trim(),
+          "certificate": cells[8].querySelector("a") ? cells[8].querySelector("a").getAttribute("href") : ""
+        });
+      }
+    });
+    // Create and trigger the download.
+    const blob = new Blob([JSON.stringify(jsonResume, null, 2)], {
+      type: "application/json"
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Hossam_Magdy_Balaha_Resume.json";
+    a.click();
+    URL.revokeObjectURL(url);
+    // Show completion alert.
+    Swal.fire({
+      icon: "success",
+      title: "JSON Export Complete",
+      text: "Your resume has been successfully exported to JSON Resume format."
+    });
   } catch (err) {
     CVLog.error("ExportToJSONResume failed:", err);
     ExportErrorToast("ExportToJSONResume", err);
   }
 }
+
 // Export the resume to a PDF file.
 async function ExportToPDF() {
   // audit-fix: Temporarily suppress html2canvas console spam during PDF export.
   // html2canvas logs every image it processes, creating hundreds of console lines.
   const _origLog = console.log;
   const _origInfo = console.info;
-  console.log = function() {};
-  console.info = function() {};
+  console.log = function () {
+  };
+  console.info = function () {
+  };
   try {
 
-  // Track the analytics event.
-  TrackAnalyticsEvent("Export", "PDF");
-  // Trigger the download webhook.
-  TriggerDownloadWebhook("PDF");
-  const resumeElement = document.querySelector(".resume-wrapper-inner");
-  if (!resumeElement) {
-    return;
-  }
-  const clonedElement = resumeElement.cloneNode(true);
-  clonedElement.style.padding = "20px";
-  clonedElement.style.background = "#ffffff";
-  clonedElement.style.color = "#000000";
-  // Add a faint generation-timestamp watermark.
-  const wm = document.createElement("div");
-  wm.style.cssText = "position:fixed;bottom:8px;right:12px;font-size:8px;color:#999;font-family:Roboto,sans-serif;pointer-events:none;z-index:9999";
-  wm.textContent = "Generated " + new Date().toISOString().split("T")[0] + " — hossambalaha.github.io";
-  clonedElement.appendChild(wm);
-  const opt = {
-    margin: [0.5, 0.5, 0.5, 0.5],
-    filename: "Hossam_Magdy_Balaha_CV.pdf",
-    docInfo: {
-      title: "Hossam Magdy Balaha — Curriculum Vitae",
-      author: "Hossam Magdy Balaha",
-      subject: "Academic CV — AI Researcher & Full-Stack Engineer",
-      keywords: "CV, Hossam Balaha, AI, Machine Learning, Bioengineering, Ph.D.",
-      creator: "Hossam Balaha CV Generator"
-    },    image: {
-      type: "jpeg",
-      quality: 0.95
-    },
-    html2canvas: {
-      scale: 1.2,
-      useCORS: true,
-      letterRendering: true,
-      scrollY: 0
-    },
-    jsPDF: {
-      unit: "in",
-      format: "letter",
-      orientation: "portrait"
-    },
-    pagebreak: {
-      mode: ["avoid-all", "css", "legacy"]
+    // Track the analytics event.
+    TrackAnalyticsEvent("Export", "PDF");
+    // Trigger the download webhook.
+    TriggerDownloadWebhook("PDF");
+    const resumeElement = document.querySelector(".resume-wrapper-inner");
+    if (!resumeElement) {
+      return;
     }
-  };
-  const tempDiv = document.createElement("div");
-  tempDiv.style.position = "absolute";
-  tempDiv.style.left = "-9999px";
-  tempDiv.style.width = "8.5in";
-  tempDiv.appendChild(clonedElement);
-  document.body.appendChild(tempDiv);
-  try {
-    if (typeof html2pdf !== "undefined") {
-      await html2pdf().set(opt).from(clonedElement).save();
-      // Show completion alert on success.
-      Swal.fire({
-        icon: "success",
-        title: "PDF Export Complete",
-        text: "Your CV has been successfully exported to PDF format."
-      });
-    } else {
-      throw new Error("html2pdf library not found");
+    const clonedElement = resumeElement.cloneNode(true);
+    clonedElement.style.padding = "20px";
+    clonedElement.style.background = "#ffffff";
+    clonedElement.style.color = "#000000";
+    // Add a faint generation-timestamp watermark.
+    const wm = document.createElement("div");
+    wm.style.cssText = "position:fixed;bottom:8px;right:12px;font-size:8px;color:#999;font-family:Roboto,sans-serif;pointer-events:none;z-index:9999";
+    wm.textContent = "Generated " + new Date().toISOString().split("T")[0] + " — hossambalaha.github.io";
+    clonedElement.appendChild(wm);
+    const opt = {
+      margin: [0.5, 0.5, 0.5, 0.5],
+      filename: "Hossam_Magdy_Balaha_CV.pdf",
+      docInfo: {
+        title: "Hossam Magdy Balaha — Curriculum Vitae",
+        author: "Hossam Magdy Balaha",
+        subject: "Academic CV — AI Researcher & Full-Stack Engineer",
+        keywords: "CV, Hossam Balaha, AI, Machine Learning, Bioengineering, Ph.D.",
+        creator: "Hossam Balaha CV Generator"
+      }, image: {
+        type: "jpeg",
+        quality: 0.95
+      },
+      html2canvas: {
+        scale: 1.2,
+        useCORS: true,
+        letterRendering: true,
+        scrollY: 0
+      },
+      jsPDF: {
+        unit: "in",
+        format: "letter",
+        orientation: "portrait"
+      },
+      pagebreak: {
+        mode: ["avoid-all", "css", "legacy"]
+      }
+    };
+    const tempDiv = document.createElement("div");
+    tempDiv.style.position = "absolute";
+    tempDiv.style.left = "-9999px";
+    tempDiv.style.width = "8.5in";
+    tempDiv.appendChild(clonedElement);
+    document.body.appendChild(tempDiv);
+    try {
+      if (typeof html2pdf !== "undefined") {
+        await html2pdf().set(opt).from(clonedElement).save();
+        // Show completion alert on success.
+        Swal.fire({
+          icon: "success",
+          title: "PDF Export Complete",
+          text: "Your CV has been successfully exported to PDF format."
+        });
+      } else {
+        throw new Error("html2pdf library not found");
+      }
+    } catch (e) {
+      CVLog.warn("HTML2PDF failed or canvas limit reached. Falling back to native browser print.", e);
+      alert("Direct PDF generation encountered a length limit. Falling back to the browser's native 'Save as PDF' dialog.");
+      window.print();
+    } finally {
+      document.body.removeChild(tempDiv);
     }
-  } catch (e) {
-    CVLog.warn("HTML2PDF failed or canvas limit reached. Falling back to native browser print.", e);
-    alert("Direct PDF generation encountered a length limit. Falling back to the browser's native 'Save as PDF' dialog.");
-    window.print();
-  } finally {
-    document.body.removeChild(tempDiv);
-  }
   } catch (err) {
     CVLog.error("ExportToPDF failed:", err);
     ExportErrorToast("ExportToPDF", err);
@@ -4425,87 +4629,89 @@ async function ExportToPDF() {
     console.info = _origInfo;
   }
 }
+
 // Define the main asynchronous function to generate and download the Word document.
 async function GenerateWordDocument(options) {
   try {
 
-  // Find the resume wrapper element.
-  const resumeElement = document.querySelector(".resume-wrapper-inner");
-  // Check if the resume wrapper exists.
-  if (!resumeElement) {
-    CVLog.error("Resume wrapper element not found.");
-    return;
-  }
-  // Find the download button.
-  const downloadButton = document.getElementById("DownloadPdfButton");
-  // Disable the download button.
-  if (downloadButton) {
-    downloadButton.disabled = true;
-  }
-  try {
-    // Clone the resume element.
-    const clonedElement = resumeElement.cloneNode(true);
-    // Process the cloned element.
-    await ProcessResumeElement(clonedElement, options);
-    // Get the Word-friendly styles.
-    const wordStyles = GetWordFriendlyStyles(options);
-    // Initialize the watermark VML.
-    let watermarkVml = "";
-    // Check if a watermark is selected.
-    if (options.Watermark !== "none") {
-      const wmText = options.Watermark.toUpperCase();
-      watermarkVml = "<v:shape id=\"Watermark\" type=\"#x0000_t136\" style=\"position:absolute;left:0;top:0;width:650pt;height:150pt;rotation:315;z-index:-251658752;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:center;mso-position-vertical-relative:margin\" fillcolor=\"#C0C0C0\" stroked=\"f\" o:allowincell=\"f\">" + "<v:fill opacity=\".15\"/>" + "<v:textbox style=\"mso-fit-shape-to-text:t\" inset=\"0,0,0,0\">" + "<w:txbxContent>" + "<p class=\"MsoNormal\" align=\"center\"><span style=\"font-size:88pt;font-family:Calibri,sans-serif;color:#C0C0C0;font-weight:bold;\">" + wmText + "</span></p>" + "</w:txbxContent>" + "</v:textbox>" + "</v:shape>";
-    }
-    // Define the document metadata.
-    const documentMetadata = {
-      "Title": "Hossam_Magdy_Balaha_CV",
-      "Charset": "utf-8",
-      "Language": options.DocumentLanguage || "en-US"
-    };
-    // Build the full HTML string.
-    const fullHtml = "<!DOCTYPE html>" + "<html lang=\"" + documentMetadata["Language"] + "\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns=\"https://www.w3.org/TR/REC-html40\">" + "<head>" + "<meta charset=\"" + documentMetadata["Charset"] + "\">" + "<title>" + documentMetadata["Title"] + "</title>" + "<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->" + "<style>v:* {behavior:url(#default#VML);} " + wordStyles + "</style>" + "</head>" + "<body>" + watermarkVml + "<div class=\"WordSection1\">" + clonedElement.innerHTML + "</div></body>" + "</html>";
-    // Check if html-docx-js is loaded.
-    if (typeof htmlDocx === "undefined") {
-      CVLog.error("html-docx-js library is not loaded.");
+    // Find the resume wrapper element.
+    const resumeElement = document.querySelector(".resume-wrapper-inner");
+    // Check if the resume wrapper exists.
+    if (!resumeElement) {
+      CVLog.error("Resume wrapper element not found.");
       return;
     }
-    // Convert the HTML to a Blob.
-    const convertedBlob = htmlDocx.asBlob(fullHtml);
-    // Define the base file name.
-    let baseFileName = "Hossam_Magdy_Balaha_CV";
-    // Append the filename suffix if provided.
-    if (options.FilenameSuffix) {
-      const cleanSuffix = options.FilenameSuffix.replace(/[^a-zA-Z0-9_]/g, "");
-      baseFileName = baseFileName + "_" + cleanSuffix;
-    }
-    // Define the output file name.
-    const outputFileName = baseFileName + ".docx";
-    // Trigger download webhook.
-    TriggerDownloadWebhook("DOCX");
-    // Check if FileSaver.js is loaded.
-    if (typeof saveAs === "undefined") {
-      CVLog.error("FileSaver.js library is not loaded.");
-      return;
-    }
-    // Save the file.
-    saveAs(convertedBlob, outputFileName);
-    // Show completion alert on success.
-    Swal.fire({
-      icon: "success",
-      title: "DOCX Export Complete",
-      text: "Your CV has been successfully exported to Word format."
-    });
-  } finally {
-    // Re-enable the download button.
+    // Find the download button.
+    const downloadButton = document.getElementById("DownloadPdfButton");
+    // Disable the download button.
     if (downloadButton) {
-      downloadButton.disabled = false;
+      downloadButton.disabled = true;
     }
-  }
+    try {
+      // Clone the resume element.
+      const clonedElement = resumeElement.cloneNode(true);
+      // Process the cloned element.
+      await ProcessResumeElement(clonedElement, options);
+      // Get the Word-friendly styles.
+      const wordStyles = GetWordFriendlyStyles(options);
+      // Initialize the watermark VML.
+      let watermarkVml = "";
+      // Check if a watermark is selected.
+      if (options.Watermark !== "none") {
+        const wmText = options.Watermark.toUpperCase();
+        watermarkVml = "<v:shape id=\"Watermark\" type=\"#x0000_t136\" style=\"position:absolute;left:0;top:0;width:650pt;height:150pt;rotation:315;z-index:-251658752;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:center;mso-position-vertical-relative:margin\" fillcolor=\"#C0C0C0\" stroked=\"f\" o:allowincell=\"f\">" + "<v:fill opacity=\".15\"/>" + "<v:textbox style=\"mso-fit-shape-to-text:t\" inset=\"0,0,0,0\">" + "<w:txbxContent>" + "<p class=\"MsoNormal\" align=\"center\"><span style=\"font-size:88pt;font-family:Calibri,sans-serif;color:#C0C0C0;font-weight:bold;\">" + wmText + "</span></p>" + "</w:txbxContent>" + "</v:textbox>" + "</v:shape>";
+      }
+      // Define the document metadata.
+      const documentMetadata = {
+        "Title": "Hossam_Magdy_Balaha_CV",
+        "Charset": "utf-8",
+        "Language": options.DocumentLanguage || "en-US"
+      };
+      // Build the full HTML string.
+      const fullHtml = "<!DOCTYPE html>" + "<html lang=\"" + documentMetadata["Language"] + "\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns=\"https://www.w3.org/TR/REC-html40\">" + "<head>" + "<meta charset=\"" + documentMetadata["Charset"] + "\">" + "<title>" + documentMetadata["Title"] + "</title>" + "<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->" + "<style>v:* {behavior:url(#default#VML);} " + wordStyles + "</style>" + "</head>" + "<body>" + watermarkVml + "<div class=\"WordSection1\">" + clonedElement.innerHTML + "</div></body>" + "</html>";
+      // Check if html-docx-js is loaded.
+      if (typeof htmlDocx === "undefined") {
+        CVLog.error("html-docx-js library is not loaded.");
+        return;
+      }
+      // Convert the HTML to a Blob.
+      const convertedBlob = htmlDocx.asBlob(fullHtml);
+      // Define the base file name.
+      let baseFileName = "Hossam_Magdy_Balaha_CV";
+      // Append the filename suffix if provided.
+      if (options.FilenameSuffix) {
+        const cleanSuffix = options.FilenameSuffix.replace(/[^a-zA-Z0-9_]/g, "");
+        baseFileName = baseFileName + "_" + cleanSuffix;
+      }
+      // Define the output file name.
+      const outputFileName = baseFileName + ".docx";
+      // Trigger download webhook.
+      TriggerDownloadWebhook("DOCX");
+      // Check if FileSaver.js is loaded.
+      if (typeof saveAs === "undefined") {
+        CVLog.error("FileSaver.js library is not loaded.");
+        return;
+      }
+      // Save the file.
+      saveAs(convertedBlob, outputFileName);
+      // Show completion alert on success.
+      Swal.fire({
+        icon: "success",
+        title: "DOCX Export Complete",
+        text: "Your CV has been successfully exported to Word format."
+      });
+    } finally {
+      // Re-enable the download button.
+      if (downloadButton) {
+        downloadButton.disabled = false;
+      }
+    }
   } catch (err) {
     CVLog.error("GenerateWordDocument failed:", err);
     ExportErrorToast("GenerateWordDocument", err);
   }
 }
+
 // ---------------------------------------------------------------------------
 // New export formats (RIS, CSV, Markdown) + cover letter generator.
 // Added 2026-10-30.
@@ -4514,20 +4720,20 @@ async function GenerateWordDocument(options) {
 // Shared helper: collect all publications from the DOM as structured objects.
 function CollectPublications() {
   const pubs = [];
-  document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item").forEach(function(pub, idx) {
+  document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item").forEach(function (pub, idx) {
     const titleEl = pub.querySelector(".resume-position-title");
     const venueEl = pub.querySelector(".resume-company-name");
-    const timeEl  = pub.querySelector(".resume-position-time");
-    const doiEl   = pub.querySelector("a[href*='doi.org']");
-    const descEl  = pub.querySelector(".resume-timeline-item-desc");
+    const timeEl = pub.querySelector(".resume-position-time");
+    const doiEl = pub.querySelector("a[href*='doi.org']");
+    const descEl = pub.querySelector(".resume-timeline-item-desc");
     const type = pub.closest("#Published-Conferences") ? "inproceedings" : "article";
     pubs.push({
       index: idx + 1,
       title: titleEl ? titleEl.textContent.trim().replace(/\s+/g, " ") : "Untitled",
       venue: venueEl ? venueEl.textContent.trim().replace(/\s+/g, " ") : "",
-      year:  timeEl  ? (timeEl.textContent.match(/(\d{4})/) || ["", ""])[1] : "",
+      year: timeEl ? (timeEl.textContent.match(/(\d{4})/) || ["", ""])[1] : "",
       rawDate: timeEl ? timeEl.textContent.trim() : "",
-      doi:   doiEl   ? doiEl.getAttribute("href").replace(/^https?:\/\/(dx\.)?doi\.org\//, "") : "",
+      doi: doiEl ? doiEl.getAttribute("href").replace(/^https?:\/\/(dx\.)?doi\.org\//, "") : "",
       abstract: descEl ? descEl.textContent.trim().replace(/\s+/g, " ").substring(0, 500) : "",
       type: type,
       authors: "Balaha, Hossam Magdy"
@@ -4542,9 +4748,11 @@ function ExportToRIS() {
     TrackAnalyticsEvent("Export", "RIS");
     TriggerDownloadWebhook("RIS");
     const pubs = CollectPublications();
-    if (pubs.length === 0) { throw new Error("No publications found on the page."); }
+    if (pubs.length === 0) {
+      throw new Error("No publications found on the page.");
+    }
     let ris = "";
-    pubs.forEach(function(pub) {
+    pubs.forEach(function (pub) {
       ris += "TY  - " + (pub.type === "inproceedings" ? "CONF" : "JOUR") + "\r\n";
       ris += "AU  - " + pub.authors + "\r\n";
       ris += "TI  - " + pub.title + "\r\n";
@@ -4554,14 +4762,18 @@ function ExportToRIS() {
       if (pub.abstract) ris += "AB  - " + pub.abstract + "\r\n";
       ris += "ER  - \r\n\r\n";
     });
-    const blob = new Blob([ris], { type: "application/x-research-info-systems;charset=utf-8" });
+    const blob = new Blob([ris], {type: "application/x-research-info-systems;charset=utf-8"});
     if (typeof saveAs !== "undefined") {
       saveAs(blob, "Hossam_Balaha_Publications.ris");
     } else {
       throw new Error("FileSaver library not loaded.");
     }
     if (typeof Swal !== "undefined") {
-      Swal.fire({ icon: "success", title: "RIS Export Complete", text: "Exported " + pubs.length + " publications to RIS format." });
+      Swal.fire({
+        icon: "success",
+        title: "RIS Export Complete",
+        text: "Exported " + pubs.length + " publications to RIS format."
+      });
     }
   } catch (err) {
     CVLog.error("ExportToRIS failed:", err);
@@ -4575,26 +4787,34 @@ function ExportToCSV() {
     TrackAnalyticsEvent("Export", "CSV");
     TriggerDownloadWebhook("CSV");
     const pubs = CollectPublications();
-    if (pubs.length === 0) { throw new Error("No publications found."); }
+    if (pubs.length === 0) {
+      throw new Error("No publications found.");
+    }
     const headers = ["#", "Year", "Title", "Venue", "Type", "DOI", "Authors"];
     const rows = [headers.join(",")];
-    pubs.forEach(function(pub) {
+    pubs.forEach(function (pub) {
       // Escape CSV fields: wrap in quotes, double internal quotes.
-      const esc = function(s) { return '"' + String(s).replace(/"/g, '""') + '"'; };
+      const esc = function (s) {
+        return '"' + String(s).replace(/"/g, '""') + '"';
+      };
       rows.push([
         pub.index, pub.year, esc(pub.title), esc(pub.venue),
         pub.type, esc(pub.doi), esc(pub.authors)
       ].join(","));
     });
     const csv = "\uFEFF" + rows.join("\r\n");  // BOM for Excel UTF-8 detection
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
     if (typeof saveAs !== "undefined") {
       saveAs(blob, "Hossam_Balaha_Publications.csv");
     } else {
       throw new Error("FileSaver library not loaded.");
     }
     if (typeof Swal !== "undefined") {
-      Swal.fire({ icon: "success", title: "CSV Export Complete", text: "Exported " + pubs.length + " publications to CSV." });
+      Swal.fire({
+        icon: "success",
+        title: "CSV Export Complete",
+        text: "Exported " + pubs.length + " publications to CSV."
+      });
     }
   } catch (err) {
     CVLog.error("ExportToCSV failed:", err);
@@ -4616,39 +4836,39 @@ function ExportToMarkdown() {
     md += "_Generated: " + today + "_\n\n";
     md += "---\n\n";
     const sections = document.querySelectorAll(".resume-section");
-    sections.forEach(function(section) {
+    sections.forEach(function (section) {
       const heading = section.querySelector(".resume-section-title");
       if (!heading) return;
       md += "## " + heading.textContent.trim() + "\n\n";
       const items = section.querySelectorAll(".resume-timeline-item");
       if (items.length > 0) {
-        items.forEach(function(item) {
+        items.forEach(function (item) {
           const title = item.querySelector(".resume-position-title");
           const venue = item.querySelector(".resume-company-name");
-          const time  = item.querySelector(".resume-position-time");
-          const doi   = item.querySelector("a[href*='doi.org']");
+          const time = item.querySelector(".resume-position-time");
+          const doi = item.querySelector("a[href*='doi.org']");
           if (title) md += "- **" + title.textContent.trim() + "**";
           if (venue) md += " _" + venue.textContent.trim() + "_";
-          if (time)  md += " (" + time.textContent.trim() + ")";
-          if (doi)   md += " [DOI](" + doi.getAttribute("href") + ")";
+          if (time) md += " (" + time.textContent.trim() + ")";
+          if (doi) md += " [DOI](" + doi.getAttribute("href") + ")";
           md += "\n";
         });
         md += "\n";
       } else {
         const paras = section.querySelectorAll("p");
-        paras.forEach(function(p) {
+        paras.forEach(function (p) {
           md += p.textContent.trim() + "\n\n";
         });
       }
     });
-    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    const blob = new Blob([md], {type: "text/markdown;charset=utf-8"});
     if (typeof saveAs !== "undefined") {
       saveAs(blob, "Hossam_Balaha_CV.md");
     } else {
       throw new Error("FileSaver library not loaded.");
     }
     if (typeof Swal !== "undefined") {
-      Swal.fire({ icon: "success", title: "Markdown Export Complete", text: "CV exported to Markdown." });
+      Swal.fire({icon: "success", title: "Markdown Export Complete", text: "CV exported to Markdown."});
     }
   } catch (err) {
     CVLog.error("ExportToMarkdown failed:", err);
@@ -4683,7 +4903,7 @@ function CoverLetterGenerator() {
     confirmButtonText: "Generate Cover Letter",
     confirmButtonColor: "#0d6efd",
     width: 640,
-    preConfirm: function() {
+    preConfirm: function () {
       const jd = document.getElementById("cover-letter-jd").value.trim();
       if (jd.length < 50) {
         Swal.showValidationMessage("Please paste at least 50 characters of the job description.");
@@ -4697,7 +4917,7 @@ function CoverLetterGenerator() {
         company: document.getElementById("cover-letter-company").value.trim()
       };
     }
-  }).then(function(result) {
+  }).then(function (result) {
     if (!result.isConfirmed) return;
     GenerateCoverLetter(result.value);
   });
@@ -4710,43 +4930,59 @@ function GenerateCoverLetter(opts) {
     TriggerDownloadWebhook("CoverLetter");
     const jd = opts.jd;
     // Extract keywords from the JD (top 15 frequent non-stopwords, length >= 4).
-    const stopwords = new Set(["the","and","for","with","that","this","will","have","from","your","you","are","our","their","they","them","what","when","where","which","while","about","into","than","then","also","more","such","very","some","must","should","would","could","may","can","all","any","who","how","why","was","were","been","being","has","had","did","does","done","made","make","makes","making","get","got","put","use","used","uses","using","like","just","each","both","most","other","into","over","only","own","same","too","here","there","now","via","per","etc"]);
+    const stopwords = new Set(["the", "and", "for", "with", "that", "this", "will", "have", "from", "your", "you", "are", "our", "their", "they", "them", "what", "when", "where", "which", "while", "about", "into", "than", "then", "also", "more", "such", "very", "some", "must", "should", "would", "could", "may", "can", "all", "any", "who", "how", "why", "was", "were", "been", "being", "has", "had", "did", "does", "done", "made", "make", "makes", "making", "get", "got", "put", "use", "used", "uses", "using", "like", "just", "each", "both", "most", "other", "into", "over", "only", "own", "same", "too", "here", "there", "now", "via", "per", "etc"]);
     const words = jd.toLowerCase().match(/\b[a-z][a-z\-]{3,}\b/g) || [];
     const freq = {};
-    words.forEach(function(w) { if (!stopwords.has(w)) { freq[w] = (freq[w]||0)+1; } });
-    const keywords = Object.keys(freq).sort(function(a,b){ return freq[b]-freq[a]; }).slice(0, 15);
+    words.forEach(function (w) {
+      if (!stopwords.has(w)) {
+        freq[w] = (freq[w] || 0) + 1;
+      }
+    });
+    const keywords = Object.keys(freq).sort(function (a, b) {
+      return freq[b] - freq[a];
+    }).slice(0, 15);
 
     // Score publications by keyword matches in title/venue.
     const pubs = CollectPublications();
-    const scoredPubs = pubs.map(function(p) {
+    const scoredPubs = pubs.map(function (p) {
       const text = (p.title + " " + p.venue + " " + p.abstract).toLowerCase();
-      const score = keywords.reduce(function(acc, kw) { return acc + (text.includes(kw) ? 1 : 0); }, 0);
-      return { pub: p, score: score };
-    }).sort(function(a, b) { return b.score - a.score; });
-    let topPubs = scoredPubs.filter(function(s){ return s.score > 0; }).slice(0, 3);
+      const score = keywords.reduce(function (acc, kw) {
+        return acc + (text.includes(kw) ? 1 : 0);
+      }, 0);
+      return {pub: p, score: score};
+    }).sort(function (a, b) {
+      return b.score - a.score;
+    });
+    let topPubs = scoredPubs.filter(function (s) {
+      return s.score > 0;
+    }).slice(0, 3);
     if (topPubs.length < 3) {
       // Pad with highest-citation papers (proxy: most recent year).
-      const fillers = scoredPubs.slice(0, 3).filter(function(s){ return s.score === 0; });
+      const fillers = scoredPubs.slice(0, 3).filter(function (s) {
+        return s.score === 0;
+      });
       topPubs = topPubs.concat(fillers).slice(0, 3);
     }
 
     // Score skills similarly.
     const skillElements = document.querySelectorAll(".resume-skill-name, .skill-pill");
     const allSkills = [];
-    skillElements.forEach(function(el) {
+    skillElements.forEach(function (el) {
       const name = el.textContent.trim();
       if (name) allSkills.push(name);
     });
-    let matchedSkills = allSkills.filter(function(s) {
+    let matchedSkills = allSkills.filter(function (s) {
       const lower = s.toLowerCase();
-      return keywords.some(function(kw) { return lower.includes(kw); });
+      return keywords.some(function (kw) {
+        return lower.includes(kw);
+      });
     }).slice(0, 8);
     if (matchedSkills.length < 4) {
       matchedSkills = allSkills.slice(0, 6);
     }
 
     // Compose the cover letter HTML.
-    const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    const today = new Date().toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"});
     let html = "";
     html += '<p style="text-align:right;font-family:Roboto,sans-serif">' + today + '</p>';
     if (opts.targetCompany && opts.company) {
@@ -4762,7 +4998,7 @@ function GenerateCoverLetter(opts) {
     if (opts.includePubs && topPubs.length > 0) {
       html += '<p style="font-family:Roboto,sans-serif"><strong>Selected publications most relevant to your needs:</strong></p>';
       html += '<ol style="font-family:Roboto,sans-serif">';
-      topPubs.forEach(function(s) {
+      topPubs.forEach(function (s) {
         const p = s.pub;
         html += '<li>' + p.title;
         if (p.venue) html += '. <em>' + p.venue + '</em>';
@@ -4773,7 +5009,7 @@ function GenerateCoverLetter(opts) {
       html += '</ol>';
     }
 
-    html += '<p style="font-family:Roboto,sans-serif">I would welcome the opportunity to discuss how my background in ' + (keywords.slice(0,3).join(", ")) + ' can contribute to your team. Thank you for your consideration.</p>';
+    html += '<p style="font-family:Roboto,sans-serif">I would welcome the opportunity to discuss how my background in ' + (keywords.slice(0, 3).join(", ")) + ' can contribute to your team. Thank you for your consideration.</p>';
     html += '<p style="font-family:Roboto,sans-serif">Sincerely,<br/><strong>Hossam Magdy Balaha</strong><br/>hmbala01@louisville.edu · +1 502-767-9991</p>';
 
     // Convert to .docx using html-docx-js.
@@ -4785,7 +5021,7 @@ function GenerateCoverLetter(opts) {
       }
     } else {
       // Fallback: download as .html
-      const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
+      const blob = new Blob([fullHtml], {type: "text/html;charset=utf-8"});
       if (typeof saveAs !== "undefined") {
         saveAs(blob, "Hossam_Balaha_Cover_Letter.html");
       }
@@ -4794,9 +5030,9 @@ function GenerateCoverLetter(opts) {
       Swal.fire({
         icon: "success",
         title: "Cover Letter Generated",
-        html: "<p>Top keywords matched: <strong>" + keywords.slice(0,5).join(", ") + "</strong></p>" +
-              "<p>Publications selected: " + topPubs.length + "</p>" +
-              "<p>Skills matched: " + matchedSkills.length + "</p>"
+        html: "<p>Top keywords matched: <strong>" + keywords.slice(0, 5).join(", ") + "</strong></p>" +
+          "<p>Publications selected: " + topPubs.length + "</p>" +
+          "<p>Skills matched: " + matchedSkills.length + "</p>"
       });
     }
   } catch (err) {
@@ -4922,7 +5158,7 @@ function InitializePublicationTables() {
           doiText = "Link";
         }
       }
-      rows.push({ title, venue, year, doiLink, doiText });
+      rows.push({title, venue, year, doiLink, doiText});
     });
     if (rows.length === 0) return;
     // Hide original timeline for web view.
@@ -5006,10 +5242,12 @@ function InitializePublicationTables() {
     // Insert the toggle bar BEFORE the tableContainer so it sits above
     // everything and stays visible in both views.
     timeline.parentNode.insertBefore(toggleBar, tableContainer);
-    toggleBar.querySelectorAll("button").forEach(function(btn) {
-      btn.addEventListener("click", function() {
+    toggleBar.querySelectorAll("button").forEach(function (btn) {
+      btn.addEventListener("click", function () {
         const view = btn.getAttribute("data-view");
-        toggleBar.querySelectorAll("button").forEach(function(b) { b.classList.remove("active"); });
+        toggleBar.querySelectorAll("button").forEach(function (b) {
+          b.classList.remove("active");
+        });
         btn.classList.add("active");
         if (view === "table") {
           // Show the entire table container (search + controls + table);
@@ -5111,7 +5349,7 @@ function SortTable(tableId, columnIndex) {
   table.setAttribute("data-sort-dir", isAscending ? "desc" : "asc");
   const tbody = table.querySelector("tbody");
   const rowsArray = Array.from(tbody.querySelectorAll("tr"));
-  rowsArray.sort(function(rowA, rowB) {
+  rowsArray.sort(function (rowA, rowB) {
     const textA = rowA.cells[columnIndex].textContent.trim();
     const textB = rowB.cells[columnIndex].textContent.trim();
     if (columnIndex === 2) { // Year column numeric sort
@@ -5125,6 +5363,7 @@ function SortTable(tableId, columnIndex) {
   rowsArray.forEach(row => tbody.appendChild(row));
   UpdatePubPagination(tableId);
 }
+
 // ---------------------------------------------------------------------------
 // New helpers added by the improvement pass.
 // ---------------------------------------------------------------------------
@@ -5133,10 +5372,12 @@ function SortTable(tableId, columnIndex) {
 // since the last call. Useful for resize / search input handlers.
 function Debounce(fn, wait) {
   let timer = null;
-  return function() {
+  return function () {
     const ctx = this, args = arguments;
     clearTimeout(timer);
-    timer = setTimeout(function() { fn.apply(ctx, args); }, wait);
+    timer = setTimeout(function () {
+      fn.apply(ctx, args);
+    }, wait);
   };
 }
 
@@ -5150,20 +5391,25 @@ function ExportErrorToast(operationName, err) {
       icon: "error",
       title: operationName + " failed",
       html: "<p>The " + operationName + " operation could not be completed.</p>" +
-            "<p style=\"font-size:0.85rem;color:#666\">" + msg + "</p>" +
-            "<p style=\"font-size:0.85rem\">You can retry, or use your browser's Print dialog (Ctrl/Cmd+P) to save a copy.</p>",
+        "<p style=\"font-size:0.85rem;color:#666\">" + msg + "</p>" +
+        "<p style=\"font-size:0.85rem\">You can retry, or use your browser's Print dialog (Ctrl/Cmd+P) to save a copy.</p>",
       showCancelButton: true,
       confirmButtonText: "Retry " + operationName,
       cancelButtonText: "Use Print instead",
       confirmButtonColor: "#0d6efd",
       cancelButtonColor: "#6c757d"
-    }).then(function(result) {
+    }).then(function (result) {
       if (result.isConfirmed) {
         // Retry the same operation.
-        if (operationName === "ExportToPDF") { ExportToPDF(); }
-        else if (operationName === "ExportToBibTeX") { ExportToBibTeX(); }
-        else if (operationName === "GenerateWordDocument") { HandleWordDownloadClick(); }
-        else if (operationName === "ExportToJSONResume") { ExportToJSONResume(); }
+        if (operationName === "ExportToPDF") {
+          ExportToPDF();
+        } else if (operationName === "ExportToBibTeX") {
+          ExportToBibTeX();
+        } else if (operationName === "GenerateWordDocument") {
+          HandleWordDownloadClick();
+        } else if (operationName === "ExportToJSONResume") {
+          ExportToJSONResume();
+        }
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         window.print();
       }
@@ -5179,6 +5425,7 @@ function SetupBackToTop() {
   const btn = document.getElementById("back-to-top");
   if (!btn) return;
   let ticking = false;
+
   function update() {
     ticking = false;
     if (window.scrollY > 600) {
@@ -5187,14 +5434,15 @@ function SetupBackToTop() {
       btn.classList.remove("is-visible");
     }
   }
-  window.addEventListener("scroll", function() {
+
+  window.addEventListener("scroll", function () {
     if (!ticking) {
       ticking = true;
       window.requestAnimationFrame(update);
     }
-  }, { passive: true });
-  btn.addEventListener("click", function() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, {passive: true});
+  btn.addEventListener("click", function () {
+    window.scrollTo({top: 0, behavior: "smooth"});
   });
 }
 
@@ -5209,6 +5457,7 @@ function SetupMobileToc() {
   backdrop.setAttribute("aria-hidden", "true");
   document.body.appendChild(backdrop);
   let lastFocused = null;
+
   function open() {
     toc.classList.add("is-open");
     backdrop.classList.add("is-open");
@@ -5219,6 +5468,7 @@ function SetupMobileToc() {
     if (firstLink) firstLink.focus();
     document.addEventListener("keydown", onKeydown);
   }
+
   function close() {
     toc.classList.remove("is-open");
     backdrop.classList.remove("is-open");
@@ -5228,6 +5478,7 @@ function SetupMobileToc() {
       lastFocused.focus();
     }
   }
+
   function onKeydown(e) {
     if (e.key === "Escape") {
       close();
@@ -5247,13 +5498,18 @@ function SetupMobileToc() {
       }
     }
   }
-  toggle.addEventListener("click", function() {
-    if (toc.classList.contains("is-open")) { close(); } else { open(); }
+
+  toggle.addEventListener("click", function () {
+    if (toc.classList.contains("is-open")) {
+      close();
+    } else {
+      open();
+    }
   });
   backdrop.addEventListener("click", close);
   // Close when a TOC link is clicked (mobile only).
-  toc.querySelectorAll(".toc-link").forEach(function(link) {
-    link.addEventListener("click", function() {
+  toc.querySelectorAll(".toc-link").forEach(function (link) {
+    link.addEventListener("click", function () {
       if (window.matchMedia("(max-width: 991px)").matches) {
         close();
       }
@@ -5265,9 +5521,10 @@ function SetupMobileToc() {
 function SetupCopyToClipboard() {
   // All inline .copy-btn elements.
   const buttons = document.querySelectorAll(".copy-btn");
-  buttons.forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
       const value = btn.getAttribute("data-copy") || "";
+
       // Use the Clipboard API with a fallback to a hidden textarea.
       function onSuccess() {
         btn.classList.add("copied");
@@ -5277,18 +5534,22 @@ function SetupCopyToClipboard() {
         if (announcement) {
           announcement.textContent = "Copied: " + value;
         }
-        setTimeout(function() {
+        setTimeout(function () {
           btn.classList.remove("copied");
           btn.innerHTML = original;
           if (announcement) announcement.textContent = "";
         }, 2000);
       }
+
       function onFailure() {
         btn.style.borderColor = "#dc3545";
-        setTimeout(function() { btn.style.borderColor = ""; }, 1500);
+        setTimeout(function () {
+          btn.style.borderColor = "";
+        }, 1500);
       }
+
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(value).then(onSuccess, function() {
+        navigator.clipboard.writeText(value).then(onSuccess, function () {
           // Fallback: hidden textarea + execCommand.
           const ta = document.createElement("textarea");
           ta.value = value;
@@ -5296,8 +5557,12 @@ function SetupCopyToClipboard() {
           ta.style.left = "-9999px";
           document.body.appendChild(ta);
           ta.select();
-          try { document.execCommand("copy"); onSuccess(); }
-          catch (e) { onFailure(); }
+          try {
+            document.execCommand("copy");
+            onSuccess();
+          } catch (e) {
+            onFailure();
+          }
           document.body.removeChild(ta);
         });
       } else {
@@ -5307,8 +5572,12 @@ function SetupCopyToClipboard() {
         ta.style.left = "-9999px";
         document.body.appendChild(ta);
         ta.select();
-        try { document.execCommand("copy"); onSuccess(); }
-        catch (e) { onFailure(); }
+        try {
+          document.execCommand("copy");
+          onSuccess();
+        } catch (e) {
+          onFailure();
+        }
         document.body.removeChild(ta);
       }
     });
@@ -5316,9 +5585,11 @@ function SetupCopyToClipboard() {
   // The floating copy FAB copies the primary email.
   const fab = document.getElementById("copy-contact-fab");
   if (fab) {
-    fab.addEventListener("click", function() {
+    fab.addEventListener("click", function () {
       const primaryBtn = document.querySelector('.copy-btn[data-copy="hmbala01@louisville.edu"]');
-      if (primaryBtn) { primaryBtn.click(); }
+      if (primaryBtn) {
+        primaryBtn.click();
+      }
     });
   }
 }
@@ -5330,11 +5601,13 @@ function SetupScrollReveal() {
   if (sections.length === 0) return;
   // If IntersectionObserver is unsupported, show everything immediately.
   if (!("IntersectionObserver" in window)) {
-    sections.forEach(function(s) { s.classList.add("is-revealed"); });
+    sections.forEach(function (s) {
+      s.classList.add("is-revealed");
+    });
     return;
   }
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-revealed");
         observer.unobserve(entry.target);
@@ -5344,7 +5617,9 @@ function SetupScrollReveal() {
     rootMargin: "0px 0px -10% 0px",
     threshold: 0.05
   });
-  sections.forEach(function(s) { observer.observe(s); });
+  sections.forEach(function (s) {
+    observer.observe(s);
+  });
 }
 
 // Compute and display reading time + word count.
@@ -5379,15 +5654,31 @@ function SetupReadingTime() {
 }
 
 // Execute initialization when the DOM is ready.
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Initialize the Word export generator
-  try { InitializeWordGenerator(); } catch (e) { CVLog.error("InitializeWordGenerator failed:", e); }
+  try {
+    InitializeWordGenerator();
+  } catch (e) {
+    CVLog.error("InitializeWordGenerator failed:", e);
+  }
   // Initialize the new UI enhancements
-  try { InitializeUIEnhancements(); } catch (e) { CVLog.error("InitializeUIEnhancements failed:", e); }
+  try {
+    InitializeUIEnhancements();
+  } catch (e) {
+    CVLog.error("InitializeUIEnhancements failed:", e);
+  }
   // Initialize the sticky Table of Contents
-  try { InitializeStickyToc(); } catch (e) { CVLog.error("InitializeStickyToc failed:", e); }
+  try {
+    InitializeStickyToc();
+  } catch (e) {
+    CVLog.error("InitializeStickyToc failed:", e);
+  }
   // Generate tables dynamically for the web view
-  try { InitializePublicationTables(); } catch (e) { CVLog.error("InitializePublicationTables failed:", e); }
+  try {
+    InitializePublicationTables();
+  } catch (e) {
+    CVLog.error("InitializePublicationTables failed:", e);
+  }
 });
 
 // Batch 6: New JS functions for live data integrations, accessibility extras,
@@ -5425,12 +5716,16 @@ function SetupCitationBadges() {
   const pubItems = document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item");
   if (pubItems.length === 0) return;
   let cache = {};
-  try { cache = JSON.parse(localStorage.getItem("cv-citation-cache") || "{}"); } catch (e) { cache = {}; }
+  try {
+    cache = JSON.parse(localStorage.getItem("cv-citation-cache") || "{}");
+  } catch (e) {
+    cache = {};
+  }
   const now = Date.now();
   let cacheDirty = false;
   // Build the list of DOIs that need processing (cached or fresh).
   const queue = [];
-  pubItems.forEach(function(pub) {
+  pubItems.forEach(function (pub) {
     const doiEl = pub.querySelector("a[href*='doi.org']");
     if (!doiEl) return;
     const href = doiEl.getAttribute("href");
@@ -5443,12 +5738,15 @@ function SetupCitationBadges() {
     if (entry && (now - entry.t) < 7 * 24 * 3600 * 1000) {
       injectBadge(meta, entry.count, entry.url);
     } else {
-      queue.push({ doi: doi, meta: meta, cacheKey: cacheKey });
+      queue.push({doi: doi, meta: meta, cacheKey: cacheKey});
     }
   });
   if (queue.length === 0) {
     if (cacheDirty) {
-      try { localStorage.setItem("cv-citation-cache", JSON.stringify(cache)); } catch (e) {}
+      try {
+        localStorage.setItem("cv-citation-cache", JSON.stringify(cache));
+      } catch (e) {
+      }
     }
     return;
   }
@@ -5460,45 +5758,48 @@ function SetupCitationBadges() {
   function fetchNext() {
     if (idx >= active.length) {
       if (cacheDirty) {
-        try { localStorage.setItem("cv-citation-cache", JSON.stringify(cache)); } catch (e) {}
+        try {
+          localStorage.setItem("cv-citation-cache", JSON.stringify(cache));
+        } catch (e) {
+        }
       }
       return;
     }
     const item = active[idx++];
     const ssUrl = "https://api.semanticscholar.org/graph/v1/paper/DOI:" + encodeURIComponent(item.doi) + "?fields=citationCount,url";
-    fetch(ssUrl, { headers: { "Accept": "application/json" } })
-      .then(function(r) {
+    fetch(ssUrl, {headers: {"Accept": "application/json"}})
+      .then(function (r) {
         if (r.status === 429) {
           // Rate limited — back off and retry this same item.
           currentDelay = Math.min(currentDelay * 2, 10000);
           CVLog.warn("Semantic Scholar 429 (rate limited). Backing off to", currentDelay, "ms. Trying OpenAlex fallback for", item.doi);
           idx--; // Re-queue this item.
           // Try OpenAlex as fallback for this item.
-          return fetchFromOpenAlex(item).finally(function() {
+          return fetchFromOpenAlex(item).finally(function () {
             setTimeout(fetchNext, currentDelay);
           });
         }
         if (!r.ok) throw new Error("HTTP " + r.status);
         // Successful response — reset backoff.
         currentDelay = 1200;
-        return r.json().then(function(data) {
+        return r.json().then(function (data) {
           const count = data.citationCount || 0;
           const paperUrl = data.url || ("https://doi.org/" + item.doi);
-          cache[item.cacheKey] = { t: Date.now(), count: count, url: paperUrl };
+          cache[item.cacheKey] = {t: Date.now(), count: count, url: paperUrl};
           cacheDirty = true;
           injectBadge(item.meta, count, paperUrl);
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         // Semantic Scholar failed (network/CORS/non-429) — try OpenAlex fallback.
         CVLog.warn("Semantic Scholar failed for", item.doi, "— trying OpenAlex:", err.message);
         return fetchFromOpenAlex(item);
       })
-      .then(function() {
+      .then(function () {
         // Schedule next request after the current delay.
         setTimeout(fetchNext, currentDelay);
       })
-      .catch(function() {
+      .catch(function () {
         // Both APIs failed — silent. Badge is enhancement only.
         setTimeout(fetchNext, currentDelay);
       });
@@ -5510,22 +5811,23 @@ function SetupCitationBadges() {
   //   https://api.openalex.org/works/doi:{DOI}?select=cited_by_count,id
   function fetchFromOpenAlex(item) {
     const oaUrl = "https://api.openalex.org/works/doi:" + encodeURIComponent(item.doi) + "?select=cited_by_count,id";
-    return fetch(oaUrl, { headers: { "Accept": "application/json" } })
-      .then(function(r) {
+    return fetch(oaUrl, {headers: {"Accept": "application/json"}})
+      .then(function (r) {
         if (!r.ok) throw new Error("OpenAlex HTTP " + r.status);
         return r.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         const count = data.cited_by_count || 0;
         const paperUrl = data.id || ("https://doi.org/" + item.doi);
-        cache[item.cacheKey] = { t: Date.now(), count: count, url: paperUrl, source: "openalex" };
+        cache[item.cacheKey] = {t: Date.now(), count: count, url: paperUrl, source: "openalex"};
         cacheDirty = true;
         injectBadge(item.meta, count, paperUrl);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         CVLog.warn("OpenAlex also failed for", item.doi, "— giving up:", err.message);
       });
   }
+
   fetchNext();
 }
 
@@ -5561,38 +5863,48 @@ function SetupGitHubStats() {
   if (repoLinks.length === 0) return;
   const seen = {};
   const toFetch = [];
-  repoLinks.forEach(function(link) {
+  repoLinks.forEach(function (link) {
     const m = link.href.match(/github\.com\/HossamBalaha\/([^/?#]+)/);
     if (!m) return;
     const repo = m[1];
     if (seen[repo]) return;
     seen[repo] = true;
-    toFetch.push({ repo: repo, link: link });
+    toFetch.push({repo: repo, link: link});
   });
   // Cache for 1 hour.
   let cache = {};
-  try { cache = JSON.parse(localStorage.getItem("cv-github-cache") || "{}"); } catch (e) { cache = {}; }
+  try {
+    cache = JSON.parse(localStorage.getItem("cv-github-cache") || "{}");
+  } catch (e) {
+    cache = {};
+  }
   const now = Date.now();
   let cacheDirty = false;
-  toFetch.forEach(function(item, idx) {
-    setTimeout(function() {
+  toFetch.forEach(function (item, idx) {
+    setTimeout(function () {
       const entry = cache[item.repo];
       if (entry && (now - entry.t) < 3600 * 1000) {
         injectGitHubBadge(item.link, entry.stars, entry.forks);
         return;
       }
-      fetch("https://api.github.com/repos/HossamBalaha/" + item.repo, { headers: { "Accept": "application/vnd.github+json" } })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
+      fetch("https://api.github.com/repos/HossamBalaha/" + item.repo, {headers: {"Accept": "application/vnd.github+json"}})
+        .then(function (r) {
+          return r.json();
+        })
+        .then(function (data) {
           if (!data || data.message) return;
-          cache[item.repo] = { t: Date.now(), stars: data.stargazers_count || 0, forks: data.forks_count || 0 };
+          cache[item.repo] = {t: Date.now(), stars: data.stargazers_count || 0, forks: data.forks_count || 0};
           cacheDirty = true;
           injectGitHubBadge(item.link, data.stargazers_count || 0, data.forks_count || 0);
         })
-        .catch(function() {})
-        .finally(function() {
+        .catch(function () {
+        })
+        .finally(function () {
           if (cacheDirty) {
-            try { localStorage.setItem("cv-github-cache", JSON.stringify(cache)); } catch (e) {}
+            try {
+              localStorage.setItem("cv-github-cache", JSON.stringify(cache));
+            } catch (e) {
+            }
           }
         });
     }, idx * 600);  // 10 requests/minute rate limit safety
@@ -5631,20 +5943,23 @@ function SetupFeaturedPubs() {
   }
   // Try to use cached citation counts to rank.
   let cache = {};
-  try { cache = JSON.parse(localStorage.getItem("cv-citation-cache") || "{}"); } catch (e) {}
-  const scored = pubs.map(function(p) {
+  try {
+    cache = JSON.parse(localStorage.getItem("cv-citation-cache") || "{}");
+  } catch (e) {
+  }
+  const scored = pubs.map(function (p) {
     const entry = p.doi ? cache["doi:" + p.doi] : null;
     const citations = entry ? entry.count : 0;
-    return { pub: p, citations: citations, year: parseInt(p.year) || 0 };
+    return {pub: p, citations: citations, year: parseInt(p.year) || 0};
   });
   // Sort by citations desc, then year desc.
-  scored.sort(function(a, b) {
+  scored.sort(function (a, b) {
     if (b.citations !== a.citations) return b.citations - a.citations;
     return b.year - a.year;
   });
   const top = scored.slice(0, 5);
   carousel.innerHTML = "";
-  top.forEach(function(s, idx) {
+  top.forEach(function (s, idx) {
     const card = document.createElement("article");
     card.className = "featured-pub-card";
     const rank = document.createElement("div");
@@ -5683,271 +5998,6 @@ function SetupFeaturedPubs() {
     card.appendChild(meta);
     carousel.appendChild(card);
   });
-}
-
-// --- Co-author network graph (D3.js force-directed) ---
-// Uses the OpenAlex API (which has permissive CORS, no key required) to fetch
-// real author lists per DOI. Results are cached in localStorage (7-day TTL)
-// so the graph builds instantly on repeat visits and never hammers the API.
-// Requests are sequential (one at a time) with a small delay between each.
-// The graph is rebuilt incrementally as each publication's authors arrive,
-// so the user sees the network grow in real time instead of staring at a
-// "loading" message.
-function SetupCoAuthorGraph() {
-  const container = document.getElementById("coauthor-graph");
-  if (!container) return;
-  if (typeof d3 === "undefined") {
-    container.innerHTML = '<p style="padding:1rem;color:var(--cv-text-muted)">D3.js library failed to load. Co-author graph unavailable.</p>';
-    return;
-  }
-  const pubs = CollectPublications();
-  if (pubs.length === 0) {
-    container.innerHTML = '<p style="padding:1rem;color:var(--cv-text-muted)">No publications found to build the co-author graph.</p>';
-    return;
-  }
-
-  const pendingPubs = pubs.filter(function(p) { return p.doi; });
-  let cache = {};
-  try { cache = JSON.parse(localStorage.getItem("cv-coauthor-cache") || "{}"); } catch (e) { cache = {}; }
-  const now = Date.now();
-  let cacheDirty = false;
-  // Track how many publications have author data available.
-  let processed = 0;
-  const total = pendingPubs.length;
-  // When the modal is open, pause graph rebuilds so the user's zoom/drag
-  // state isn't destroyed by a re-render. The data keeps being fetched
-  // and cached; the graph will rebuild when the modal is closed.
-  window.__coauthorPauseRender = false;
-
-  function renderLoadingMessage() {
-    const pct = total > 0 ? Math.round((processed / total) * 100) : 0;
-    container.innerHTML =
-      '<div class="coauthor-loading" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:2rem;color:var(--cv-text-muted);text-align:center;gap:8px;">' +
-        '<i class="fas fa-spinner fa-spin" style="font-size:1.5rem;color:var(--cv-accent,#0d6efd);"></i>' +
-        '<p style="margin:0;font-size:0.95rem;">Building co-author network from publication data…</p>' +
-        '<p style="margin:0;font-size:0.8rem;color:var(--cv-text-muted);">' + processed + ' / ' + total + ' publications processed (' + pct + '%)</p>' +
-        '<p style="margin:0;font-size:0.78rem;color:var(--cv-text-muted);max-width:420px;">The graph appears automatically as OpenAlex responds — no need to refresh.</p>' +
-      '</div>';
-  }
-  renderLoadingMessage();
-
-  // Debounced graph renderer: only rebuilds the SVG at most once every
-  // 2.5s during the fetch loop, so the graph doesn't flash on every
-  // single OpenAlex response. The final render (after all fetches done)
-  // always runs immediately. When the co-author modal is open, rebuilds
-  // are paused so the user's zoom/drag state isn't destroyed.
-  let renderTimer = null;
-  let lastRenderAt = 0;
-  let hasRenderedOnce = false;
-  let pendingRender = false;  // True if a render was skipped because the modal was open.
-  function scheduleGraphRender(immediate) {
-    if (renderTimer) { clearTimeout(renderTimer); renderTimer = null; }
-    // If the modal is open, don't rebuild — the user is interacting with
-    // the graph (zooming, dragging) and a rebuild would reset their
-    // state. Remember that a render is pending so we can do it when
-    // the modal closes.
-    if (window.__coauthorPauseRender && !immediate) {
-      pendingRender = true;
-      return;
-    }
-    if (immediate) {
-      buildGraph();
-      lastRenderAt = Date.now();
-      hasRenderedOnce = true;
-      pendingRender = false;
-      return;
-    }
-    const elapsed = Date.now() - lastRenderAt;
-    if (!hasRenderedOnce || elapsed > 2500) {
-      buildGraph();
-      lastRenderAt = Date.now();
-      hasRenderedOnce = true;
-    } else {
-      // Schedule a render for when 2.5s have elapsed since the last one.
-      renderTimer = setTimeout(function() {
-        renderTimer = null;
-        if (window.__coauthorPauseRender) { pendingRender = true; return; }
-        buildGraph();
-        lastRenderAt = Date.now();
-        hasRenderedOnce = true;
-      }, 2500 - elapsed);
-    }
-  }
-
-  function buildGraph() {
-    // Aggregate co-author counts across all publications.
-    const coauthors = {};
-    processed = 0;
-    pendingPubs.forEach(function(p) {
-      const entry = cache["doi:" + p.doi];
-      if (!entry || !entry.authors) return;
-      processed++;
-      entry.authors.forEach(function(name) {
-        if (!name) return;
-        // Skip the CV owner (any reasonable spelling of Hossam Balaha).
-        if (/\b(Hossam|Balaha)\b/i.test(name) && /Hossam/i.test(name)) return;
-        const key = name.trim();
-        if (!key) return;
-        coauthors[key] = (coauthors[key] || 0) + 1;
-      });
-    });
-    const nodes = Object.keys(coauthors).map(function(name) {
-      return { id: name, count: coauthors[name] };
-    });
-    // Always include the CV owner as the central node.
-    nodes.unshift({ id: "Hossam Balaha", count: pubs.length, central: true });
-    if (nodes.length <= 1) {
-      // Not enough data yet — show the loading message with progress.
-      renderLoadingMessage();
-    } else {
-      renderGraph(nodes);
-    }
-  }
-
-  // Color scale for co-author nodes based on the number of shared papers.
-  // The central node (you) is always blue; co-authors get green/amber/red
-  // based on collaboration frequency.
-  function nodeColor(d) {
-    if (d.central) return "#0d6efd";  // you = blue
-    if (d.count >= 6) return "#ef4444";  // 6+ papers = red
-    if (d.count >= 3) return "#f59e0b";  // 3–5 papers = amber
-    return "#10b981";  // 1–2 papers = green
-  }
-
-  // Store the zoom behavior globally so the modal's zoom buttons can
-  // control it. Reset on each render.
-  window.__coauthorZoom = null;
-  window.__coauthorZoomLabel = null;
-
-  function renderGraph(nodes) {
-    container.innerHTML = "";
-    const links = nodes.slice(1).map(function(n) {
-      return { source: "Hossam Balaha", target: n.id, value: n.count };
-    });
-    const width = container.clientWidth || 800;
-    const height = container.clientHeight || 520;
-    const svg = d3.select(container).append("svg")
-      .attr("viewBox", "0 0 " + width + " " + height)
-      .attr("class", "coauthor-svg")
-      .attr("preserveAspectRatio", "xMidYMid meet")
-      .style("width", "100%")
-      .style("height", "100%");
-
-    // --- Zoom behavior (mouse wheel + buttons) ---
-    const zoomG = svg.append("g").attr("class", "coauthor-zoom-layer");
-    const zoom = d3.zoom()
-      .scaleExtent([0.3, 4])
-      .on("zoom", function(event) {
-        zoomG.attr("transform", event.transform);
-        const label = document.getElementById("coauthor-zoom-label");
-        if (label) label.textContent = Math.round(event.transform.k * 100) + "%";
-      });
-    svg.call(zoom);
-    window.__coauthorZoom = zoom;
-    window.__coauthorZoomSvg = svg;
-
-    const simulation = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id(function(d) { return d.id; }).distance(90))
-      .force("charge", d3.forceManyBody().strength(-260))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collide", d3.forceCollide().radius(function(d) { return Math.max(14, Math.sqrt(d.count) * 5 + 6); }));
-    const link = zoomG.append("g").selectAll("line")
-      .data(links).enter().append("line")
-      .attr("class", "coauthor-link")
-      .attr("stroke-width", function(d) { return Math.max(1, d.value); });
-    const node = zoomG.append("g").selectAll("circle")
-      .data(nodes).enter().append("circle")
-      .attr("class", "coauthor-node")
-      .attr("r", function(d) { return d.central ? 18 : Math.max(8, Math.sqrt(d.count) * 5); })
-      .attr("data-central", function(d) { return d.central ? "1" : "0"; })
-      .style("fill", nodeColor)
-      .call(d3.drag()
-        .on("start", function(event, d) { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-        .on("drag", function(event, d) { d.fx = event.x; d.fy = event.y; })
-        .on("end", function(event, d) { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
-    node.append("title").text(function(d) { return d.id + " (" + d.count + " shared paper" + (d.count === 1 ? "" : "s") + ")"; });
-    const label = zoomG.append("g").selectAll("text")
-      .data(nodes).enter().append("text")
-      .attr("class", "coauthor-label")
-      .attr("dy", function(d) { return d.central ? 32 : -12; })
-      .text(function(d) { return d.id === "Hossam Balaha" ? "Hossam Balaha (you)" : d.id; });
-    simulation.on("tick", function() {
-      link.attr("x1", function(d) { return d.source.x; })
-          .attr("y1", function(d) { return d.source.y; })
-          .attr("x2", function(d) { return d.target.x; })
-          .attr("y2", function(d) { return d.target.y; });
-      node.attr("cx", function(d) { return d.x; })
-          .attr("cy", function(d) { return d.y; });
-      label.attr("x", function(d) { return d.x; })
-           .attr("y", function(d) { return d.y; });
-    });
-  }
-
-  // Sequential fetch with delay — avoids hitting OpenAlex rate limits.
-  // Cap at 50 publications per session so the user doesn't wait too long;
-  // the rest will be picked up on subsequent visits (cached for 7 days).
-  const fetchCap = 50;
-  let fetchCount = 0;
-  let i = 0;
-  function fetchNext() {
-    if (i >= pendingPubs.length || fetchCount >= fetchCap) {
-      // All done (or cap reached) — final render (immediate, no debounce)
-      // and persist cache.
-      scheduleGraphRender(true);
-      if (cacheDirty) {
-        try { localStorage.setItem("cv-coauthor-cache", JSON.stringify(cache)); } catch (e) {}
-      }
-      return;
-    }
-    const p = pendingPubs[i++];
-    const key = "doi:" + p.doi;
-    const entry = cache[key];
-    if (entry && (now - entry.t) < 7 * 24 * 3600 * 1000 && entry.authors) {
-      // Cached — proceed immediately (no delay needed, doesn't count toward cap).
-      setTimeout(fetchNext, 0);
-      return;
-    }
-    fetchCount++;
-    const url = "https://api.openalex.org/works/doi:" + encodeURIComponent(p.doi) + "?select=authorships";
-    // NOTE: Do NOT set a User-Agent header here — browsers treat User-Agent
-    // as a forbidden header for fetch(), and sending it triggers a CORS
-    // preflight that OpenAlex rejects with "header 'user-agent' is not
-    // allowed according to header 'Access-Control-Allow-Headers'".
-    // The browser's default User-Agent is sent automatically; OpenAlex's
-    // polite-pool requirement is satisfied by the Origin/Referer headers.
-    fetch(url, { headers: { "Accept": "application/json" } })
-      .then(function(r) {
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        return r.json();
-      })
-      .then(function(data) {
-        const authors = [];
-        if (data && data.authorships) {
-          data.authorships.forEach(function(a) {
-            if (a && a.author && a.author.display_name) authors.push(a.author.display_name);
-          });
-        }
-        cache[key] = { t: Date.now(), authors: authors };
-        cacheDirty = true;
-        // Rebuild the graph, but DEBOUNCED — only render at most once every
-        // 2.5s during the fetch loop so the SVG doesn't flash on every
-        // single fetch (which was causing the "reloads every second"
-        // visual glitch). The final render after all fetches complete
-        // always runs.
-        scheduleGraphRender();
-      })
-      .catch(function() {
-        // Silent failure — we still render whatever we have cached.
-      })
-      .finally(function() {
-        // 500ms gap between network calls keeps us well under OpenAlex limits.
-        setTimeout(fetchNext, 500);
-      });
-  }
-  // Initial render from cache (instant, immediate), then kick off the
-  // fetch loop.
-  scheduleGraphRender(true);
-  setTimeout(fetchNext, 200);
 }
 
 // --- QR code (rendered inside the QR share popup) ---
@@ -6001,6 +6051,7 @@ function SetupFabMenu() {
     menu.setAttribute("data-open", "true");
     toggle.setAttribute("aria-expanded", "true");
   }
+
   function close() {
     if (!isOpen) return;
     isOpen = false;
@@ -6008,6 +6059,7 @@ function SetupFabMenu() {
     menu.setAttribute("data-open", "false");
     toggle.setAttribute("aria-expanded", "false");
   }
+
   function toggleMenu() {
     if (!isOpen) {
       // Menu is closed — open and pin it.
@@ -6025,7 +6077,7 @@ function SetupFabMenu() {
   }
 
   // Click the main button toggles the menu.
-  toggle.addEventListener("click", function(e) {
+  toggle.addEventListener("click", function (e) {
     e.stopPropagation();
     toggleMenu();
   });
@@ -6035,11 +6087,14 @@ function SetupFabMenu() {
   // UNLESS the user clicked to pin it open. Touch devices use click only.
   const isTouch = window.matchMedia("(pointer: coarse)").matches;
   if (!isTouch) {
-    menu.addEventListener("mouseenter", function() {
-      if (hoverTimer) { clearTimeout(hoverTimer); hoverTimer = null; }
+    menu.addEventListener("mouseenter", function () {
+      if (hoverTimer) {
+        clearTimeout(hoverTimer);
+        hoverTimer = null;
+      }
       open();
     });
-    menu.addEventListener("mouseleave", function() {
+    menu.addEventListener("mouseleave", function () {
       if (hoverTimer) clearTimeout(hoverTimer);
       if (pinnedByClick) return;  // Don't close if pinned open by a click.
       hoverTimer = setTimeout(close, 300);
@@ -6047,14 +6102,14 @@ function SetupFabMenu() {
   }
 
   // Close on outside click.
-  document.addEventListener("click", function(e) {
+  document.addEventListener("click", function (e) {
     if (!isOpen) return;
     if (menu.contains(e.target)) return;
     close();
   });
 
   // Close on Escape.
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && isOpen) {
       close();
       toggle.focus();
@@ -6063,8 +6118,8 @@ function SetupFabMenu() {
 
   // After clicking an item, close the menu (the item's own click handler
   // opens the corresponding popup/modal).
-  items.forEach(function(item) {
-    item.addEventListener("click", function() {
+  items.forEach(function (item) {
+    item.addEventListener("click", function () {
       // Slight delay so the click handler on the item runs first.
       setTimeout(close, 100);
     });
@@ -6077,7 +6132,7 @@ function SetupFabMenu() {
 function SetupDownloadWordFab() {
   const fab = document.getElementById("download-word-fab");
   if (!fab) return;
-  fab.addEventListener("click", function() {
+  fab.addEventListener("click", function () {
     if (typeof HandleWordDownloadClick === "function") {
       HandleWordDownloadClick();
     } else {
@@ -6086,148 +6141,6 @@ function SetupDownloadWordFab() {
       if (btn) btn.click();
     }
   });
-}
-
-// --- Co-author Network modal (centered, like the Calendly modal) ---
-// Moves the existing coauthor-graph container into the modal body when the
-// user clicks the Co-author Network FAB, and shows the modal centered on
-// screen with a dark backdrop. The graph continues to be populated by
-// SetupCoAuthorGraph (which runs on page load) — we just relocate the
-// container so it shows inside the modal.
-function SetupCoAuthorModal() {
-  const fab = document.getElementById("coauthor-fab");
-  const modal = document.getElementById("coauthor-modal");
-  const backdrop = document.getElementById("coauthor-modal-backdrop");
-  const body = document.getElementById("coauthor-modal-body");
-  if (!fab || !modal || !backdrop || !body) return;
-  const closeBtn = modal.querySelector(".coauthor-modal-close");
-  let graphRelocated = false;
-  let originalParent = null;
-  let originalNextSibling = null;
-  // audit-fix Enh 3: Focus-trap utility — keeps Tab cycling within the modal when open.
-  let _trapActive = false;
-  let _trapHandler = null;
-  function trapFocus(container) {
-    if (_trapActive) return;
-    _trapActive = true;
-    _trapHandler = function(e) {
-      if (e.key !== "Tab") return;
-      const focusables = container.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusables.length === 0) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-    container.addEventListener("keydown", _trapHandler);
-  }
-  function untrapFocus() {
-    if (!_trapActive || !_trapHandler) return;
-    modal.removeEventListener("keydown", _trapHandler);
-    _trapActive = false;
-    _trapHandler = null;
-  }
-
-  function open() {
-    if (backdrop) backdrop.hidden = false;
-    modal.hidden = false;
-    document.body.style.overflow = "hidden";  // lock page scroll
-    // Pause graph rebuilds so the user's zoom/drag state isn't destroyed
-    // while the modal is open.
-    window.__coauthorPauseRender = true;
-    // Move the existing graph container into the modal body so it shows
-    // at full modal size. The graph keeps its accumulated data.
-    if (!graphRelocated) {
-      const graph = document.getElementById("coauthor-graph");
-      if (graph) {
-        originalParent = graph.parentNode;
-        originalNextSibling = graph.nextSibling;
-        body.appendChild(graph);
-        graphRelocated = true;
-      }
-    }
-    requestAnimationFrame(function() {
-      // Resize the D3 simulation to fit the modal.
-      if (typeof d3 !== "undefined") {
-        const svg = body.querySelector("svg.coauthor-svg");
-        if (svg) {
-          const w = body.clientWidth || 800;
-          const h = body.clientHeight || 600;
-          svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-          svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-        }
-      }
-      if (closeBtn) closeBtn.focus();
-      // audit-fix Enh 3: Activate focus-trap when modal opens.
-      trapFocus(modal);
-    });
-  }
-
-  function close() {
-    untrapFocus();
-    modal.hidden = true;
-    backdrop.hidden = true;
-    document.body.style.overflow = "";
-    // Resume graph rebuilds and do a final render if one was pending.
-    window.__coauthorPauseRender = false;
-    // Move the graph container back to its original location in the page
-    // so the inline section still shows it when scrolled to.
-    if (graphRelocated && originalParent) {
-      const graph = document.getElementById("coauthor-graph");
-      if (graph) {
-        if (originalNextSibling) {
-          originalParent.insertBefore(graph, originalNextSibling);
-        } else {
-          originalParent.appendChild(graph);
-        }
-      }
-      graphRelocated = false;
-    }
-    fab.focus();
-  }
-
-  fab.addEventListener("click", function(e) {
-    e.stopPropagation();
-    if (modal.hidden) open(); else close();
-  });
-  if (closeBtn) closeBtn.addEventListener("click", close);
-  if (backdrop) {
-    backdrop.addEventListener("click", function(e) {
-      if (e.target === backdrop) close();
-    });
-  }
-  document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && !modal.hidden) close();
-  });
-
-  // --- Zoom controls ---
-  const zoomInBtn = document.getElementById("coauthor-zoom-in");
-  const zoomOutBtn = document.getElementById("coauthor-zoom-out");
-  const zoomResetBtn = document.getElementById("coauthor-zoom-reset");
-  function applyZoom(factor) {
-    const svg = window.__coauthorZoomSvg;
-    const zoom = window.__coauthorZoom;
-    if (!svg || !zoom) return;
-    const sel = d3.select(svg);
-    let currentK = 1;
-    try { currentK = d3.zoomTransform(svg).k; } catch (e) {}
-    const newK = factor === 0 ? 1 : Math.max(0.3, Math.min(4, currentK * factor));
-    sel.transition().duration(200).call(zoom.scaleTo, newK);
-  }
-  if (zoomInBtn) zoomInBtn.addEventListener("click", function() { applyZoom(1.3); });
-  if (zoomOutBtn) zoomOutBtn.addEventListener("click", function() { applyZoom(1 / 1.3); });
-  if (zoomResetBtn) zoomResetBtn.addEventListener("click", function() { applyZoom(0); });
 }
 
 // --- Avatar lightbox (More Avatars gallery) ---
@@ -6247,12 +6160,12 @@ function SetupAvatarLightbox() {
   let currentIdx = 0;
   const avatarData = [];
 
-  photos.forEach(function(a, idx) {
+  photos.forEach(function (a, idx) {
     const href = a.getAttribute("href") || "";
     const thumb = a.querySelector("img");
     const alt = thumb ? thumb.getAttribute("alt") : "";
-    avatarData.push({ src: href, alt: alt });
-    a.addEventListener("click", function(e) {
+    avatarData.push({src: href, alt: alt});
+    a.addEventListener("click", function (e) {
       e.preventDefault();
       currentIdx = idx;
       show();
@@ -6267,31 +6180,43 @@ function SetupAvatarLightbox() {
     if (caption) caption.textContent = data.alt || ("Avatar " + (currentIdx + 1) + " of " + avatarData.length);
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
-    requestAnimationFrame(function() { lightbox.classList.add("is-visible"); });
+    requestAnimationFrame(function () {
+      lightbox.classList.add("is-visible");
+    });
   }
+
   function hide() {
     lightbox.classList.remove("is-visible");
-    setTimeout(function() {
+    setTimeout(function () {
       lightbox.hidden = true;
       document.body.style.overflow = "";
     }, 250);
   }
-  function next() { currentIdx = (currentIdx + 1) % avatarData.length; show(); }
-  function prev() { currentIdx = (currentIdx - 1 + avatarData.length) % avatarData.length; show(); }
+
+  function next() {
+    currentIdx = (currentIdx + 1) % avatarData.length;
+    show();
+  }
+
+  function prev() {
+    currentIdx = (currentIdx - 1 + avatarData.length) % avatarData.length;
+    show();
+  }
 
   if (closeBtn) closeBtn.addEventListener("click", hide);
   if (nextBtn) nextBtn.addEventListener("click", next);
   if (prevBtn) prevBtn.addEventListener("click", prev);
-  lightbox.addEventListener("click", function(e) {
+  lightbox.addEventListener("click", function (e) {
     if (e.target === lightbox) hide();
   });
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     if (lightbox.hidden) return;
     if (e.key === "Escape") hide();
     else if (e.key === "ArrowRight") next();
     else if (e.key === "ArrowLeft") prev();
   });
 }
+
 // --- QR share popup (anchored above the QR FAB) ---
 function SetupQrSharePopup() {
   const fab = document.getElementById("qr-share-fab");
@@ -6302,7 +6227,9 @@ function SetupQrSharePopup() {
   const openBtn = document.getElementById("qr-share-open");
   const url = "https://hossambalaha.github.io/";
 
-  function isMobile() { return window.matchMedia("(max-width: 768px)").matches; }
+  function isMobile() {
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
 
   function positionPopup() {
     // audit-fix: Center the popup on screen instead of positioning relative to FAB.
@@ -6326,7 +6253,7 @@ function SetupQrSharePopup() {
     popup.hidden = false;
     fab.setAttribute("aria-expanded", "true");
     fab.classList.add("is-active");
-    requestAnimationFrame(function() {
+    requestAnimationFrame(function () {
       positionPopup();
       // Render the QR code now (lazy) so we don't pay the qrcodejs cost up-front.
       if (!popup.dataset.qrRendered) {
@@ -6345,34 +6272,48 @@ function SetupQrSharePopup() {
     fab.focus();
   }
 
-  fab.addEventListener("click", function() { if (popup.hidden) open(); else close(); });
+  fab.addEventListener("click", function () {
+    if (popup.hidden) open(); else close();
+  });
   if (closeBtn) closeBtn.addEventListener("click", close);
-  if (copyBtn) copyBtn.addEventListener("click", function() {
+  if (copyBtn) copyBtn.addEventListener("click", function () {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).catch(function() {});
+      navigator.clipboard.writeText(url).catch(function () {
+      });
     } else {
       const ta = document.createElement("textarea");
-      ta.value = url; document.body.appendChild(ta);
-      ta.select(); try { document.execCommand("copy"); } catch (e) {}
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+      } catch (e) {
+      }
       document.body.removeChild(ta);
     }
     const original = copyBtn.textContent;
     copyBtn.textContent = "Copied!";
-    setTimeout(function() { copyBtn.textContent = original; }, 1500);
+    setTimeout(function () {
+      copyBtn.textContent = original;
+    }, 1500);
   });
-  if (openBtn) openBtn.addEventListener("click", function() {
+  if (openBtn) openBtn.addEventListener("click", function () {
     window.open(url, "_blank", "noopener,noreferrer");
   });
-  document.addEventListener("click", function(e) {
+  document.addEventListener("click", function (e) {
     if (popup.hidden) return;
     if (popup.contains(e.target) || fab.contains(e.target)) return;
     close();
   });
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !popup.hidden) close();
   });
-  window.addEventListener("resize", function() { if (!popup.hidden) positionPopup(); }, { passive: true });
-  window.addEventListener("scroll", function() { if (!popup.hidden) positionPopup(); }, { passive: true });
+  window.addEventListener("resize", function () {
+    if (!popup.hidden) positionPopup();
+  }, {passive: true});
+  window.addEventListener("scroll", function () {
+    if (!popup.hidden) positionPopup();
+  }, {passive: true});
 }
 
 // --- ORCID publication sync (DISABLED) ---
@@ -6381,6 +6322,7 @@ function SetupQrSharePopup() {
 function SetupORCIDSync() {
   // No-op — button removed.
 }
+
 function SyncFromORCID() {
   // No-op — button removed.
 }
@@ -6389,37 +6331,39 @@ function SyncFromORCID() {
 function SetupSchemaOrgJSONLD() {
   // ScholarlyArticle: from each publication with a DOI.
   const pubs = CollectPublications();
-  const graph = pubs.filter(function(p) { return p.doi; }).slice(0, 50).map(function(p) {
+  const graph = pubs.filter(function (p) {
+    return p.doi;
+  }).slice(0, 50).map(function (p) {
     return {
       "@type": "ScholarlyArticle",
       "headline": p.title,
       "datePublished": p.year,
-      "isPartOf": { "@type": "PublicationIssue", "name": p.venue },
-      "author": { "@type": "Person", "name": "Hossam Magdy Balaha" },
+      "isPartOf": {"@type": "PublicationIssue", "name": p.venue},
+      "author": {"@type": "Person", "name": "Hossam Magdy Balaha"},
       "identifier": p.doi,
       "url": "https://doi.org/" + p.doi
     };
   });
   const scholarlyEl = document.getElementById("scholarly-jsonld");
   if (scholarlyEl) {
-    scholarlyEl.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+    scholarlyEl.textContent = JSON.stringify({"@context": "https://schema.org", "@graph": graph});
   }
   // Course: from YouTube-Courses section.
   const courses = [];
-  document.querySelectorAll("#YouTube-Courses .resume-timeline-item, #YouTube-Courses .journal-item, #YouTube-Courses .course-card, #YouTube-Courses li").forEach(function(item) {
+  document.querySelectorAll("#YouTube-Courses .resume-timeline-item, #YouTube-Courses .journal-item, #YouTube-Courses .course-card, #YouTube-Courses li").forEach(function (item) {
     const title = item.querySelector(".resume-position-title, .course-title, h3.course-title, h3, h4");
     const link = item.querySelector("a[href*='youtube.com'], a[href*='github.com']");
     if (!title) return;
     courses.push({
       "@type": "Course",
       "name": title.textContent.trim(),
-      "provider": { "@type": "Organization", "name": "YouTube", "sameAs": "https://www.youtube.com" },
+      "provider": {"@type": "Organization", "name": "YouTube", "sameAs": "https://www.youtube.com"},
       "url": link ? link.href : ""
     });
   });
   const courseEl = document.getElementById("course-jsonld");
   if (courseEl) {
-    courseEl.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": courses });
+    courseEl.textContent = JSON.stringify({"@context": "https://schema.org", "@graph": courses});
   }
 }
 
@@ -6437,8 +6381,8 @@ function SetupFontSizeControls() {
     root.style.setProperty("--cv-root-font-size", saved + "px");
     root.style.fontSize = saved + "px";
   }
-  buttons.forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
       const action = btn.getAttribute("data-font-action");
       const current = parseFloat(getComputedStyle(root).fontSize);
       let next;
@@ -6455,7 +6399,9 @@ function SetupFontSizeControls() {
       const status = document.getElementById("search-match-status");
       if (status) {
         status.textContent = "Font size: " + next + "px";
-        setTimeout(function() { status.textContent = ""; }, 1500);
+        setTimeout(function () {
+          status.textContent = "";
+        }, 1500);
       }
     });
   });
@@ -6467,6 +6413,7 @@ function SetupDyslexiaFont() {
   if (!toggle) return;
   // Load Lexend font on first toggle (lazy-load to avoid upfront cost).
   let loaded = false;
+
   function ensureFont() {
     if (loaded) return;
     const link = document.createElement("link");
@@ -6475,6 +6422,7 @@ function SetupDyslexiaFont() {
     document.head.appendChild(link);
     loaded = true;
   }
+
   function syncToggle() {
     const on = document.body.classList.contains("dyslexia-font");
     if (toggle.classList.contains("a11y-switch")) {
@@ -6483,13 +6431,14 @@ function SetupDyslexiaFont() {
       toggle.setAttribute("aria-pressed", on ? "true" : "false");
     }
   }
+
   const saved = localStorage.getItem("cv-dyslexia-font") === "true";
   if (saved) {
     ensureFont();
     document.body.classList.add("dyslexia-font");
   }
   syncToggle();
-  toggle.addEventListener("click", function() {
+  toggle.addEventListener("click", function () {
     ensureFont();
     const on = document.body.classList.toggle("dyslexia-font");
     localStorage.setItem("cv-dyslexia-font", on ? "true" : "false");
@@ -6509,8 +6458,15 @@ function SetupTextToSpeech() {
   const menuBtn = document.getElementById("a11y-tts-btn");
   if (!btn && !menuBtn) return;
   if (!("speechSynthesis" in window)) {
-    if (btn) { btn.disabled = true; btn.title = "Text-to-speech not supported in this browser"; btn.style.opacity = "0.4"; }
-    if (menuBtn) { menuBtn.disabled = true; menuBtn.title = "Text-to-speech not supported in this browser"; }
+    if (btn) {
+      btn.disabled = true;
+      btn.title = "Text-to-speech not supported in this browser";
+      btn.style.opacity = "0.4";
+    }
+    if (menuBtn) {
+      menuBtn.disabled = true;
+      menuBtn.title = "Text-to-speech not supported in this browser";
+    }
     return;
   }
 
@@ -6539,9 +6495,9 @@ function SetupTextToSpeech() {
     captionOverlay.hidden = true;
     captionOverlay.innerHTML =
       '<div class="tts-caption-bar">' +
-        '<span class="tts-caption-indicator" aria-hidden="true"></span>' +
-        '<span class="tts-caption-label">Now reading</span>' +
-        '<span class="tts-caption-section"></span>' +
+      '<span class="tts-caption-indicator" aria-hidden="true"></span>' +
+      '<span class="tts-caption-label">Now reading</span>' +
+      '<span class="tts-caption-section"></span>' +
       '</div>' +
       '<div class="tts-caption-text"></div>' +
       '<div class="tts-caption-progress"><div class="tts-caption-progress-bar"></div></div>';
@@ -6553,11 +6509,14 @@ function SetupTextToSpeech() {
 
   function showCaption(text) {
     ensureCaptionOverlay();
-    if (captionHideTimer) { clearTimeout(captionHideTimer); captionHideTimer = null; }
+    if (captionHideTimer) {
+      clearTimeout(captionHideTimer);
+      captionHideTimer = null;
+    }
     if (captionText) {
       // Fade out then in for a smooth subtitle transition.
       captionText.style.opacity = "0";
-      setTimeout(function() {
+      setTimeout(function () {
         captionText.textContent = text;
         captionText.style.opacity = "1";
       }, 120);
@@ -6578,7 +6537,7 @@ function SetupTextToSpeech() {
     captionOverlay.classList.remove("is-visible");
     // Delay hiding so the fade-out finishes.
     if (captionHideTimer) clearTimeout(captionHideTimer);
-    captionHideTimer = setTimeout(function() {
+    captionHideTimer = setTimeout(function () {
       if (captionOverlay) captionOverlay.hidden = true;
     }, 350);
   }
@@ -6623,20 +6582,31 @@ function SetupTextToSpeech() {
       "en-GB Female"
     ];
     for (let i = 0; i < preferredNames.length; i++) {
-      const v = voices.find(function(vc) { return vc.name === preferredNames[i]; });
-      if (v) { pickedVoice = v; return; }
+      const v = voices.find(function (vc) {
+        return vc.name === preferredNames[i];
+      });
+      if (v) {
+        pickedVoice = v;
+        return;
+      }
     }
     // Heuristic fallback: pick any English voice whose name contains a
     // female cue ("female", "aria", "jenny", "samantha", "karen", "zira",
     // "hazel", "susan", "catherine", "tessa", "moira", "serena", "fiona").
     const femaleRegex = /female|aria|jenny|samantha|karen|zira|hazel|susan|catherine|tessa|moira|serena|fiona|veena|kate|sara|linda/i;
-    const femaleVoice = voices.find(function(vc) {
+    const femaleVoice = voices.find(function (vc) {
       return vc.lang && vc.lang.indexOf("en") === 0 && femaleRegex.test(vc.name);
     });
-    if (femaleVoice) { pickedVoice = femaleVoice; return; }
+    if (femaleVoice) {
+      pickedVoice = femaleVoice;
+      return;
+    }
     // Final fallback: any English voice (will be male if nothing else).
-    pickedVoice = voices.find(function(vc) { return vc.lang && vc.lang.indexOf("en") === 0; }) || voices[0];
+    pickedVoice = voices.find(function (vc) {
+      return vc.lang && vc.lang.indexOf("en") === 0;
+    }) || voices[0];
   }
+
   loadVoices();
   if (window.speechSynthesis.onvoiceschanged !== undefined) {
     window.speechSynthesis.onvoiceschanged = loadVoices;
@@ -6659,7 +6629,7 @@ function SetupTextToSpeech() {
     // Use a paragraph separator the chunker can detect for longer pauses.
     const paras = target.querySelectorAll("p, .resume-position-title, .resume-company-name");
     let count = 0;
-    paras.forEach(function(p) {
+    paras.forEach(function (p) {
       if (count < 20) {
         // The "\n\n" between paragraphs signals a paragraph break.
         text += p.textContent.trim() + ". \n\n";
@@ -6677,7 +6647,7 @@ function SetupTextToSpeech() {
     const sentences = text.match(/[^.!?]+[.!?]+(?:\s*\n\n|\s+|$)|[^.!?]+$/g) || [text];
     const chunks = [];
     let current = "";
-    sentences.forEach(function(s) {
+    sentences.forEach(function (s) {
       s = s.trim();
       if (!s) return;
       // Detect paragraph breaks (double newline) — keep a marker so the
@@ -6728,11 +6698,11 @@ function SetupTextToSpeech() {
     if (/\,\s*$/.test(text) || /\:\s*$/.test(text)) {
       nextDelay = 200;  // clause end
     }
-    utterance.onend = function() {
+    utterance.onend = function () {
       // Pause between chunks so the listener can absorb content.
       setTimeout(speakNext, nextDelay);
     };
-    utterance.onerror = function() {
+    utterance.onerror = function () {
       speaking = false;
       setIconState(false);
       hideCaption();
@@ -6779,7 +6749,7 @@ function SetupTextToSpeech() {
   if (btn) btn.addEventListener("click", toggle);
   if (menuBtn) menuBtn.addEventListener("click", toggle);
   // Stop when leaving the page.
-  window.addEventListener("beforeunload", function() {
+  window.addEventListener("beforeunload", function () {
     if (speaking) window.speechSynthesis.cancel();
     hideCaption();
   });
@@ -6790,26 +6760,33 @@ function SetupShortcuts() {
   const overlay = document.getElementById("shortcuts-overlay");
   const closeBtn = overlay ? overlay.querySelector(".shortcuts-close") : null;
   const shortcutsBtn = document.getElementById("shortcuts-button") || document.getElementById("a11y-shortcuts-btn");
+
   function open() {
-    if (overlay) { overlay.hidden = false; }
+    if (overlay) {
+      overlay.hidden = false;
+    }
     const close = overlay ? overlay.querySelector(".shortcuts-close") : null;
     if (close) close.focus();
   }
+
   function close() {
-    if (overlay) { overlay.hidden = true; }
+    if (overlay) {
+      overlay.hidden = true;
+    }
     if (shortcutsBtn) shortcutsBtn.focus();
   }
+
   if (shortcutsBtn) shortcutsBtn.addEventListener("click", open);
   if (closeBtn) closeBtn.addEventListener("click", close);
   if (overlay) {
-    overlay.addEventListener("click", function(e) {
+    overlay.addEventListener("click", function (e) {
       if (e.target === overlay) close();
     });
   }
   // Global keyboard shortcuts
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     // Ignore when typing in inputs.
-    if (["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)) return;
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
     // ? shows the overlay
     if (e.key === "?" && !e.ctrlKey && !e.metaKey) {
       e.preventDefault();
@@ -6843,12 +6820,17 @@ function SetupShortcuts() {
     }
     // B scrolls to top
     if (e.key === "b" || e.key === "B") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({top: 0, behavior: "smooth"});
     }
-    // F increases font (Shift+F decreases)
-    if (e.key === "f" || e.key === "F") {
-      const action = e.shiftKey ? "decrease" : "increase";
-      const btn = document.querySelector("[data-font-action='" + action + "']");
+    // + / = increases font; - / _ decreases. Chosen to avoid clashing with
+    // common browser shortcuts that involve the letter F (Ctrl+F find, Alt+F
+    // menu) and Firefox's type-ahead quick-find, which single letters trigger.
+    if (e.key === "+" || e.key === "=") {
+      const btn = document.querySelector("[data-font-action='increase']");
+      if (btn) btn.click();
+    }
+    if (e.key === "-" || e.key === "_") {
+      const btn = document.querySelector("[data-font-action='decrease']");
       if (btn) btn.click();
     }
     // J / K jump to previous / next section
@@ -6862,13 +6844,16 @@ function SetupShortcuts() {
       const viewportCenter = window.innerHeight / 2;
       for (let i = 0; i < headings.length; i++) {
         const rect = headings[i].getBoundingClientRect();
-        if (rect.top > viewportCenter) { currentIdx = i - 1; break; }
+        if (rect.top > viewportCenter) {
+          currentIdx = i - 1;
+          break;
+        }
         currentIdx = i;
       }
       const dir = (e.key === "j" || e.key === "J") ? -1 : 1;
       const nextIdx = Math.max(0, Math.min(headings.length - 1, currentIdx + dir));
       if (headings[nextIdx]) {
-        headings[nextIdx].scrollIntoView({ behavior: "smooth", block: "start" });
+        headings[nextIdx].scrollIntoView({behavior: "smooth", block: "start"});
       }
     }
   });
@@ -6878,6 +6863,7 @@ function SetupShortcuts() {
 function SetupHighContrastMode() {
   const toggle = document.getElementById("a11y-contrast-toggle") || document.getElementById("high-contrast-toggle");
   if (!toggle) return;
+
   function syncToggle() {
     const on = document.body.classList.contains("high-contrast");
     if (toggle.classList.contains("a11y-switch")) {
@@ -6886,12 +6872,13 @@ function SetupHighContrastMode() {
       toggle.setAttribute("aria-pressed", on ? "true" : "false");
     }
   }
+
   const saved = localStorage.getItem("cv-high-contrast") === "true";
   if (saved) {
     document.body.classList.add("high-contrast");
   }
   syncToggle();
-  toggle.addEventListener("click", function() {
+  toggle.addEventListener("click", function () {
     const on = document.body.classList.toggle("high-contrast");
     localStorage.setItem("cv-high-contrast", on ? "true" : "false");
     syncToggle();
@@ -6907,6 +6894,7 @@ function SetupReadingGuide() {
   document.body.appendChild(guide);
   const enabled = localStorage.getItem("cv-reading-guide") === "true";
   if (enabled) document.body.classList.add("reading-guide-active");
+
   // audit-fix Enh 2: Show/hide the indicator badge.
   function updateGuideIndicator() {
     const indicator = document.getElementById("reading-guide-indicator");
@@ -6917,11 +6905,12 @@ function SetupReadingGuide() {
       indicator.setAttribute("hidden", "");
     }
   }
+
   updateGuideIndicator();
   // Wire up the "turn off" button on the indicator.
   const turnOffBtn = document.getElementById("reading-guide-turn-off");
   if (turnOffBtn) {
-    turnOffBtn.addEventListener("click", function() {
+    turnOffBtn.addEventListener("click", function () {
       document.body.classList.remove("reading-guide-active");
       localStorage.setItem("cv-reading-guide", "false");
       const mt = document.getElementById("a11y-guide-toggle");
@@ -6933,7 +6922,7 @@ function SetupReadingGuide() {
   const menuToggle = document.getElementById("a11y-guide-toggle");
   if (menuToggle) {
     menuToggle.setAttribute("aria-checked", enabled ? "true" : "false");
-    menuToggle.addEventListener("click", function() {
+    menuToggle.addEventListener("click", function () {
       const on = document.body.classList.toggle("reading-guide-active");
       localStorage.setItem("cv-reading-guide", on ? "true" : "false");
       menuToggle.setAttribute("aria-checked", on ? "true" : "false");
@@ -6943,8 +6932,8 @@ function SetupReadingGuide() {
   // audit-fix: Toggle on Shift+R (not just R) to prevent accidental activation.
   // Previously, pressing 'R' alone would toggle the guide, which was too easy
   // to trigger by mistake while typing in the search box or navigating.
-  document.addEventListener("keydown", function(e) {
-    if (["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)) return;
+  document.addEventListener("keydown", function (e) {
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
     if ((e.key === "r" || e.key === "R") && e.shiftKey) {
       e.preventDefault();
       const on = document.body.classList.toggle("reading-guide-active");
@@ -6954,16 +6943,16 @@ function SetupReadingGuide() {
     }
   });
   let ticking = false;
-  window.addEventListener("mousemove", function(e) {
+  window.addEventListener("mousemove", function (e) {
     if (!document.body.classList.contains("reading-guide-active")) return;
     if (!ticking) {
       ticking = true;
-      window.requestAnimationFrame(function() {
+      window.requestAnimationFrame(function () {
         guide.style.top = (e.clientY - 14) + "px";
         ticking = false;
       });
     }
-  }, { passive: true });
+  }, {passive: true});
 }
 
 // --- Accessibility menu (consolidated popup) ---
@@ -6973,24 +6962,31 @@ function SetupReadingGuide() {
 // click or Escape.
 // audit-fix Enh 1: Reset all preferences — clears all localStorage keys and reloads.
 function ResetAllPreferences() {
-  if (!confirm("Reset all preferences? This will clear dark mode, font size, reading guide, high contrast, dyslexia font, and all cached data. The page will reload.")) return;
+  if (!confirm("Reset all preferences? This will clear dark mode, font size, reading guide, high contrast, dyslexia font, per-block buttons, and all cached data. The page will reload.")) return;
   const keysToRemove = [
     "cv-dark-mode", "cv-reading-guide", "cv-high-contrast", "cv-dyslexia-font",
-    "cv-root-font-size", "cv-citation-cache", "cv-github-cache", "cv-coauthor-cache",
+    "cv-root-font-size", "cv-citation-cache", "cv-github-cache",
     "cv-debug"
   ];
-  keysToRemove.forEach(function(key) {
-    try { localStorage.removeItem(key); } catch (e) {}
+  keysToRemove.forEach(function (key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {
+    }
   });
   // Also clear any other cv-* keys
   try {
     const allKeys = Object.keys(localStorage);
-    allKeys.forEach(function(key) {
+    allKeys.forEach(function (key) {
       if (key.startsWith("cv-")) {
-        try { localStorage.removeItem(key); } catch (e) {}
+        try {
+          localStorage.removeItem(key);
+        } catch (e) {
+        }
       }
     });
-  } catch (e) {}
+  } catch (e) {
+  }
   // Reload the page to apply defaults
   window.location.reload();
 }
@@ -6999,6 +6995,7 @@ function SetupAccessibilityMenu() {
   const btn = document.getElementById("accessibility-menu-btn");
   const panel = document.getElementById("accessibility-menu-panel");
   if (!btn || !panel) return;
+
   function open() {
     panel.hidden = false;
     btn.setAttribute("aria-expanded", "true");
@@ -7007,34 +7004,40 @@ function SetupAccessibilityMenu() {
     const firstControl = panel.querySelector("button, a, [tabindex]:not([tabindex='-1'])");
     if (firstControl) {
       // Delay focus a frame so the visibility change has applied.
-      requestAnimationFrame(function() { firstControl.focus(); });
+      requestAnimationFrame(function () {
+        firstControl.focus();
+      });
     }
   }
+
   function close() {
     panel.hidden = true;
     btn.setAttribute("aria-expanded", "false");
     btn.classList.remove("is-active");
     btn.focus();
   }
-  btn.addEventListener("click", function(e) {
+
+  btn.addEventListener("click", function (e) {
     e.stopPropagation();
     if (panel.hidden) open(); else close();
   });
   // Prevent clicks inside the panel from closing it via the document handler.
-  panel.addEventListener("click", function(e) { e.stopPropagation(); });
+  panel.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
   // Close on outside click.
-  document.addEventListener("click", function(e) {
+  document.addEventListener("click", function (e) {
     if (panel.hidden) return;
     if (panel.contains(e.target) || btn.contains(e.target)) return;
     close();
   });
   // Close on Escape.
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !panel.hidden) close();
   });
   // Reposition on resize — we use a fixed top/right position so the panel
   // stays anchored to the toolbar button.
-  window.addEventListener("resize", function() {
+  window.addEventListener("resize", function () {
     if (!panel.hidden) {
       // Keep the panel within the viewport bounds.
       const rect = panel.getBoundingClientRect();
@@ -7043,7 +7046,7 @@ function SetupAccessibilityMenu() {
         panel.style.left = "auto";
       }
     }
-  }, { passive: true });
+  }, {passive: true});
   // audit-fix Enh 1: Wire up the Reset All Preferences button.
   const resetBtn = document.getElementById("a11y-reset-btn");
   if (resetBtn) {
@@ -7061,22 +7064,24 @@ function SetupAnalytics() {
   // If Plausible is already loaded via a script tag, nothing to do.
   if (window.plausible) return;
   // Stub: track events to console unless a real endpoint is configured.
-  window.plausible = function(eventName, options) {
+  window.plausible = function (eventName, options) {
     options = options || {};
     if (window.plausibleEndpoint) {
       // Real Plausible custom event endpoint.
       try {
         fetch(window.plausibleEndpoint + "/api/event", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {"Content-Type": "application/json"},
           body: JSON.stringify({
             name: eventName,
             url: window.location.href,
             domain: window.location.hostname,
             props: options.props || {}
           })
-        }).catch(function() {});
-      } catch (e) {}
+        }).catch(function () {
+        });
+      } catch (e) {
+      }
     } else {
       CVLog.log("[Analytics stub]", eventName, options);
     }
@@ -7085,18 +7090,23 @@ function SetupAnalytics() {
 
 // --- Download tracking with section granularity ---
 // Wraps the existing TrackAnalyticsEvent to also fire plausible events.
-(function() {
+(function () {
   const original = window.TrackAnalyticsEvent;
   if (typeof original !== "function") return;
-  window.TrackAnalyticsEvent = function(category, action, extras) {
+  window.TrackAnalyticsEvent = function (category, action, extras) {
     original.call(this, category, action);
     if (window.plausible) {
       const eventName = category + " — " + action;
-      const props = { category: category, action: action };
+      const props = {category: category, action: action};
       if (extras && typeof extras === "object") {
-        for (const k in extras) { if (extras.hasOwnProperty(k)) props[k] = extras[k]; }
+        for (const k in extras) {
+          if (extras.hasOwnProperty(k)) props[k] = extras[k];
+        }
       }
-      try { window.plausible(eventName, { props: props }); } catch (e) {}
+      try {
+        window.plausible(eventName, {props: props});
+      } catch (e) {
+      }
     }
   };
 })();
@@ -7107,9 +7117,11 @@ function SetupAvailabilityIndicator() {
   const el = document.getElementById("availability-indicator");
   const text = document.getElementById("availability-text");
   if (!el || !text) return;
-  fetch("available-for.json", { cache: "no-cache" })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
+  fetch("available-for.json", {cache: "no-cache"})
+    .then(function (r) {
+      return r.json();
+    })
+    .then(function (data) {
       el.classList.add("status-" + (data.status || "open"));
       const dot = el.querySelector(".availability-dot");
       if (dot && data.status === "closed") {
@@ -7120,10 +7132,13 @@ function SetupAvailabilityIndicator() {
       el.hidden = false;
       if (data.details) el.title = data.details;
       if (window.plausible) {
-        try { window.plausible("Availability View", { props: { status: data.status } }); } catch (e) {}
+        try {
+          window.plausible("Availability View", {props: {status: data.status}});
+        } catch (e) {
+        }
       }
     })
-    .catch(function() {
+    .catch(function () {
       // Silently hide — don't bother the user.
       el.hidden = true;
     });
@@ -7153,7 +7168,7 @@ function SetupScheduleMeetingPopup() {
     // Lock page scroll while the modal is open.
     document.body.style.overflow = "hidden";
     // Focus the close button (first focusable) for keyboard users.
-    requestAnimationFrame(function() {
+    requestAnimationFrame(function () {
       if (closeBtn) closeBtn.focus();
     });
     // Lazy-load the Calendly inline widget once the modal opens.
@@ -7185,6 +7200,7 @@ function SetupScheduleMeetingPopup() {
       s.async = true;
       document.body.appendChild(s);
     }
+
     // Once Calendly is available, initialize the inline widget inside the body.
     function initWidget() {
       if (typeof window.Calendly === "undefined" || !window.Calendly.initInlineWidget) {
@@ -7229,14 +7245,14 @@ function SetupScheduleMeetingPopup() {
         });
         // After Calendly injects the iframe, re-apply our CSS overrides
         // in case Calendly set inline styles that conflict.
-        setTimeout(function() {
+        setTimeout(function () {
           const iframe = widgetContainer ? widgetContainer.querySelector("iframe") : null;
           if (iframe) {
             iframe.style.cssText = "width:100% !important;height:100% !important;min-width:0 !important;min-height:0 !important;border:0 !important;display:block !important;position:absolute !important;top:0 !important;left:0 !important;right:0 !important;bottom:0 !important;";
           }
           // Also override any Calendly-created wrapper divs.
           const wrappers = widgetContainer ? widgetContainer.querySelectorAll("div") : [];
-          wrappers.forEach(function(d) {
+          wrappers.forEach(function (d) {
             d.style.minHeight = "0";
             d.style.height = "100%";
             d.style.width = "100%";
@@ -7251,6 +7267,7 @@ function SetupScheduleMeetingPopup() {
         }
       }
     }
+
     initWidget();
   }
 
@@ -7258,12 +7275,12 @@ function SetupScheduleMeetingPopup() {
   if (closeBtn) closeBtn.addEventListener("click", close);
   // Close when clicking on the backdrop (outside the popup).
   if (backdrop) {
-    backdrop.addEventListener("click", function(e) {
+    backdrop.addEventListener("click", function (e) {
       if (e.target === backdrop) close();
     });
   }
   // Close on Escape.
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !popup.hidden) close();
   });
 }
@@ -7287,7 +7304,7 @@ function SetupLazyFlickr() {
   if (scripts.length === 0) return;
   // Remove the original scripts (they auto-execute on load).
   const srcs = [];
-  scripts.forEach(function(s) {
+  scripts.forEach(function (s) {
     srcs.push(s.src);
     s.parentNode.removeChild(s);
   });
@@ -7299,7 +7316,7 @@ function SetupLazyFlickr() {
   }
   if (flickrContainers.length === 0) {
     // No containers to observe — just reload the scripts.
-    srcs.forEach(function(src) {
+    srcs.forEach(function (src) {
       const s = document.createElement("script");
       s.src = src;
       s.async = true;
@@ -7308,26 +7325,30 @@ function SetupLazyFlickr() {
     return;
   }
   let loaded = false;
+
   function loadScripts() {
     if (loaded) return;
     loaded = true;
-    srcs.forEach(function(src) {
+    srcs.forEach(function (src) {
       const s = document.createElement("script");
       s.src = src;
       s.async = true;
       document.body.appendChild(s);
     });
   }
+
   if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           loadScripts();
           observer.disconnect();
         }
       });
-    }, { rootMargin: "200px" });
-    flickrContainers.forEach(function(c) { observer.observe(c); });
+    }, {rootMargin: "200px"});
+    flickrContainers.forEach(function (c) {
+      observer.observe(c);
+    });
   } else {
     // Fallback: load after window load event.
     window.addEventListener("load", loadScripts);
@@ -7338,9 +7359,9 @@ function SetupLazyFlickr() {
 // Hide Altmetric badges that show zero mentions (no social media attention).
 function HideZeroAltmetricBadges() {
   const badges = document.querySelectorAll(".altmetric-embed");
-  badges.forEach(function(badge) {
+  badges.forEach(function (badge) {
     // The Altmetric JS populates the badge asynchronously. Check after a delay.
-    setTimeout(function() {
+    setTimeout(function () {
       const scoreEl = badge.querySelector(".altmetric-score, .altmetric-see-more");
       const text = badge.textContent || "";
       // If the badge shows "0" or has no content, hide it.
@@ -7359,6 +7380,7 @@ function HideZeroAltmetricBadges() {
     }, 3000);  // Wait 3s for Altmetric JS to populate.
   });
 }
+
 // ===========================================================================
 // INIT REGISTRATION
 // ===========================================================================
@@ -7367,15 +7389,15 @@ function HideZeroAltmetricBadges() {
 
 // audit-fix P2-2: Move inline onload/onerror on profile img to addEventListener.
 // Replaces the previous inline handlers (which required CSP 'unsafe-inline').
-(function() {
+(function () {
   function setupProfileImageHandlers() {
     var img = document.querySelector('img.picture.rounded-circle');
     if (!img) return;
-    img.addEventListener('load', function(e) {
+    img.addEventListener('load', function (e) {
       var parent = e.target.parentElement;
       if (parent) parent.classList.add('loaded');
     });
-    img.addEventListener('error', function(e) {
+    img.addEventListener('error', function (e) {
       var parent = e.target.parentElement;
       if (parent) parent.classList.add('error');
     });
@@ -7385,6 +7407,7 @@ function HideZeroAltmetricBadges() {
       if (parent) parent.classList.add('loaded');
     }
   }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupProfileImageHandlers);
   } else {
@@ -7394,21 +7417,24 @@ function HideZeroAltmetricBadges() {
 
 // audit-fix P0-1 runtime: ensure dynamically-generated target=_blank links get rel=noopener noreferrer.
 // DataTables and other JS may rebuild <a> tags from data attributes; this observer catches them.
-(function() {
+(function () {
   function patchLink(a) {
     if (a.target === "_blank" && (!a.rel || a.rel.indexOf("noopener") === -1)) {
       a.rel = (a.rel ? a.rel + " " : "") + "noopener noreferrer";
     }
   }
+
   function patchAll(root) {
     try {
       var links = (root || document).querySelectorAll('a[target="_blank"]');
       for (var i = 0; i < links.length; i++) patchLink(links[i]);
-    } catch (e) {}
+    } catch (e) {
+    }
   }
+
   patchAll(document);
   if (typeof MutationObserver !== "undefined") {
-    var obs = new MutationObserver(function(mutations) {
+    var obs = new MutationObserver(function (mutations) {
       for (var i = 0; i < mutations.length; i++) {
         var m = mutations[i];
         for (var j = 0; j < m.addedNodes.length; j++) {
@@ -7420,7 +7446,7 @@ function HideZeroAltmetricBadges() {
         }
       }
     });
-    obs.observe(document.body || document.documentElement, { childList: true, subtree: true });
+    obs.observe(document.body || document.documentElement, {childList: true, subtree: true});
   }
 })();
 
@@ -7436,6 +7462,16 @@ function HideZeroAltmetricBadges() {
 function SetupPerBlockActions() {
   // Don't run twice.
   if (document.querySelector('.block-action-toolbar')) return;
+
+  // audit-fix: Add accessibility-menu toggles for the per-block buttons.
+  // Body classes hide the buttons; the state persists in localStorage and
+  // is wired up by SetupBlockActionToggles() (see below). Defaults: ON.
+  if (localStorage.getItem("cv-block-copy") === "false") {
+    document.body.classList.add("block-copy-off");
+  }
+  if (localStorage.getItem("cv-block-speak") === "false") {
+    document.body.classList.add("block-speak-off");
+  }
 
   // CSS for the per-block toolbars.
   const css = `
@@ -7458,6 +7494,11 @@ function SetupPerBlockActions() {
     .role-card:hover .block-action-toolbar {
       opacity: 1;
     }
+    /* Accessibility toggles: hide the per-block Copy / Read-aloud buttons.
+       When both are off, hide the whole toolbar (nothing left to show). */
+    body.block-copy-off .block-action-btn.block-action-copy { display: none !important; }
+    body.block-speak-off .block-action-btn.block-action-speak { display: none !important; }
+    body.block-copy-off.block-speak-off .block-action-toolbar { display: none !important; }
     .block-action-btn {
       display: inline-flex;
       align-items: center;
@@ -7525,14 +7566,22 @@ function SetupPerBlockActions() {
   // We attach the toolbar to the section title (h2.resume-section-title) and
   // to each timeline item header (.resume-timeline-item-header).
   const targets = [
-    { selector: 'h2.resume-section-title', getText: (el) => el.closest('.resume-section') || el.parentElement, label: 'section' },
-    { selector: '.resume-position-title', getText: (el) => el.closest('.resume-timeline-item') || el.parentElement, label: 'item' },
-    { selector: '.course-card', getText: (el) => el, label: 'course' },
-    { selector: '.repo-item', getText: (el) => el, label: 'repo' },
+    {
+      selector: 'h2.resume-section-title',
+      getText: (el) => el.closest('.resume-section') || el.parentElement,
+      label: 'section'
+    },
+    {
+      selector: '.resume-position-title',
+      getText: (el) => el.closest('.resume-timeline-item') || el.parentElement,
+      label: 'item'
+    },
+    {selector: '.course-card', getText: (el) => el, label: 'course'},
+    {selector: '.repo-item', getText: (el) => el, label: 'repo'},
   ];
 
-  targets.forEach(function(target) {
-    document.querySelectorAll(target.selector).forEach(function(el) {
+  targets.forEach(function (target) {
+    document.querySelectorAll(target.selector).forEach(function (el) {
       // Skip if already has a toolbar.
       if (el.querySelector('.block-action-toolbar')) return;
       // Skip if the element is inside a template/hidden section.
@@ -7546,11 +7595,11 @@ function SetupPerBlockActions() {
       // Copy button.
       const copyBtn = document.createElement('button');
       copyBtn.type = 'button';
-      copyBtn.className = 'block-action-btn';
+      copyBtn.className = 'block-action-btn block-action-copy';
       copyBtn.setAttribute('aria-label', 'Copy ' + target.label + ' text to clipboard');
       copyBtn.setAttribute('title', 'Copy to clipboard');
       copyBtn.innerHTML = '<i class="far fa-copy" aria-hidden="true"></i>';
-      copyBtn.addEventListener('click', function(e) {
+      copyBtn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         const container = target.getText(el);
@@ -7558,9 +7607,9 @@ function SetupPerBlockActions() {
         // Clean up: collapse multiple spaces/newlines into single spaces, trim.
         const text = rawText.replace(/\s+/g, ' ').trim();
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function() {
+          navigator.clipboard.writeText(text).then(function () {
             showCopiedFeedback(copyBtn);
-          }).catch(function() {
+          }).catch(function () {
             // Fallback for older browsers / file://
             fallbackCopy(text);
             showCopiedFeedback(copyBtn);
@@ -7575,11 +7624,11 @@ function SetupPerBlockActions() {
       // Read-aloud button.
       const speakBtn = document.createElement('button');
       speakBtn.type = 'button';
-      speakBtn.className = 'block-action-btn';
+      speakBtn.className = 'block-action-btn block-action-speak';
       speakBtn.setAttribute('aria-label', 'Read ' + target.label + ' aloud');
       speakBtn.setAttribute('title', 'Read aloud');
       speakBtn.innerHTML = '<i class="fas fa-volume-up" aria-hidden="true"></i>';
-      speakBtn.addEventListener('click', function(e) {
+      speakBtn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         const container = target.getText(el);
@@ -7597,18 +7646,18 @@ function SetupPerBlockActions() {
           // Cancel any other ongoing speech.
           window.speechSynthesis.cancel();
           // Reset all other speaking buttons.
-          document.querySelectorAll('.block-action-btn.is-speaking').forEach(function(b) {
+          document.querySelectorAll('.block-action-btn.is-speaking').forEach(function (b) {
             b.classList.remove('is-speaking');
             b.innerHTML = '<i class="fas fa-volume-up" aria-hidden="true"></i>';
           });
           const utter = new SpeechSynthesisUtterance(text);
           utter.rate = 0.95;
           utter.pitch = 1;
-          utter.onend = function() {
+          utter.onend = function () {
             speakBtn.classList.remove('is-speaking');
             speakBtn.innerHTML = '<i class="fas fa-volume-up" aria-hidden="true"></i>';
           };
-          utter.onerror = function() {
+          utter.onerror = function () {
             speakBtn.classList.remove('is-speaking');
             speakBtn.innerHTML = '<i class="fas fa-volume-up" aria-hidden="true"></i>';
           };
@@ -7628,7 +7677,7 @@ function SetupPerBlockActions() {
     const original = btn.innerHTML;
     btn.classList.add('copied');
     btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i>';
-    setTimeout(function() {
+    setTimeout(function () {
       btn.classList.remove('copied');
       btn.innerHTML = original;
     }, 1500);
@@ -7642,8 +7691,51 @@ function SetupPerBlockActions() {
     ta.style.left = '-9999px';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); } catch (e) {}
+    try {
+      document.execCommand('copy');
+    } catch (e) {
+    }
     document.body.removeChild(ta);
+  }
+}
+
+// --- Accessibility-menu toggles for the per-block action buttons ---
+// Two switches in the accessibility menu ("Copy-to-clipboard buttons" and
+// "Read-aloud buttons") show/hide the per-block Copy and Read Aloud buttons
+// added by SetupPerBlockActions(). State persists in localStorage and is
+// cleared by "Reset all preferences" (all cv-* keys). Defaults: ON.
+function SetupBlockActionToggles() {
+  const copyToggle = document.getElementById("a11y-block-copy-toggle");
+  const speakToggle = document.getElementById("a11y-block-speak-toggle");
+
+  // Apply the saved state early so already-rendered toolbars hide instantly.
+  if (localStorage.getItem("cv-block-copy") === "false") {
+    document.body.classList.add("block-copy-off");
+  }
+  if (localStorage.getItem("cv-block-speak") === "false") {
+    document.body.classList.add("block-speak-off");
+  }
+
+  function syncSwitch(toggle, on) {
+    if (toggle) toggle.setAttribute("aria-checked", on ? "true" : "false");
+  }
+
+  syncSwitch(copyToggle, !document.body.classList.contains("block-copy-off"));
+  syncSwitch(speakToggle, !document.body.classList.contains("block-speak-off"));
+
+  if (copyToggle) {
+    copyToggle.addEventListener("click", function () {
+      const off = document.body.classList.toggle("block-copy-off");
+      localStorage.setItem("cv-block-copy", off ? "false" : "true");
+      syncSwitch(copyToggle, !off);
+    });
+  }
+  if (speakToggle) {
+    speakToggle.addEventListener("click", function () {
+      const off = document.body.classList.toggle("block-speak-off");
+      localStorage.setItem("cv-block-speak", off ? "false" : "true");
+      syncSwitch(speakToggle, !off);
+    });
   }
 }
 
@@ -7747,8 +7839,12 @@ function SetupAbbrAcronyms() {
   };
   // Build a regex that matches any acronym as a whole word.
   // Sort by length (longest first) to match multi-word acronyms first.
-  const sortedKeys = Object.keys(acronyms).sort(function(a, b) { return b.length - a.length; });
-  const escapedKeys = sortedKeys.map(function(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); });
+  const sortedKeys = Object.keys(acronyms).sort(function (a, b) {
+    return b.length - a.length;
+  });
+  const escapedKeys = sortedKeys.map(function (k) {
+    return k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  });
   const regex = new RegExp("\\b(" + escapedKeys.join("|") + ")\\b", "g");
 
   // Skip these elements.
@@ -7789,7 +7885,7 @@ function SetupAbbrAcronyms() {
 
   function walkTextNodes(root) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode: function(node) {
+      acceptNode: function (node) {
         // Skip if parent is in skipTags.
         if (node.parentElement && skipTags.has(node.parentElement.tagName)) {
           return NodeFilter.FILTER_REJECT;
@@ -7857,7 +7953,7 @@ function ExportToMarkdown() {
         const tags = sectionEl.querySelectorAll(".skill-tag, .skill-pill, .tech-tag");
         if (tags.length > 0) {
           const tagTexts = [];
-          tags.forEach(function(t) {
+          tags.forEach(function (t) {
             const text = t.textContent.trim().replace(/\s+/g, " ");
             if (text && !tagTexts.includes(text)) tagTexts.push(text);
           });
@@ -7866,7 +7962,7 @@ function ExportToMarkdown() {
         continue;
       }
 
-      items.forEach(function(item) {
+      items.forEach(function (item) {
         const posTitle = item.querySelector(".resume-position-title");
         const company = item.querySelector(".resume-company-name");
         const time = item.querySelector(".resume-position-time");
@@ -7885,7 +7981,7 @@ function ExportToMarkdown() {
           // Extract bullet points or paragraphs
           const bullets = desc.querySelectorAll("li");
           if (bullets.length > 0) {
-            bullets.forEach(function(li) {
+            bullets.forEach(function (li) {
               const text = li.textContent.trim().replace(/\s+/g, " ");
               if (text) md += "- " + text + "\n";
             });
@@ -7905,7 +8001,7 @@ function ExportToMarkdown() {
     }
 
     // Create and trigger download
-    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    const blob = new Blob([md], {type: "text/markdown;charset=utf-8"});
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

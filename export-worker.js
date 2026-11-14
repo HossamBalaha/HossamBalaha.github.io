@@ -15,7 +15,7 @@
  * final docx blob generation.
  */
 
-self.onmessage = function(event) {
+self.onmessage = function (event) {
   let msg = event.data;
   if (!msg || !msg.id || !msg.type) return;
   try {
@@ -23,12 +23,12 @@ self.onmessage = function(event) {
       // Convert <img> src="..." attributes to base64 data URIs in the HTML.
       let html = msg.html || "";
       let result = convertImageSrcsToDataUri(html);
-      self.postMessage({ id: msg.id, type: "done", result: result });
+      self.postMessage({id: msg.id, type: "done", result: result});
     } else {
-      self.postMessage({ id: msg.id, type: "error", message: "Unknown message type: " + msg.type });
+      self.postMessage({id: msg.id, type: "error", message: "Unknown message type: " + msg.type});
     }
   } catch (err) {
-    self.postMessage({ id: msg.id, type: "error", message: err.message });
+    self.postMessage({id: msg.id, type: "error", message: err.message});
   }
 };
 
@@ -51,5 +51,5 @@ function convertImageSrcsToDataUri(html) {
       urls.push(url);
     }
   }
-  return JSON.stringify({ imageUrls: urls });
+  return JSON.stringify({imageUrls: urls});
 }

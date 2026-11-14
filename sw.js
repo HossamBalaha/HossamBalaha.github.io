@@ -18,9 +18,10 @@
  * Bump CACHE_VERSION whenever you ship a new build to invalidate old caches.
  */
 
-// audit-fix: bumped cache version after Bootstrap 5.3 upgrade + new features
-const CACHE_VERSION = "cv-final-v15-20261031";
-const API_CACHE_VERSION = "cv-api-v15-20261031";
+// 2026-11-14: bumped cache version — removed D3 co-author graph, added a11y
+// per-block button toggles, new +/- font-size shortcut, 3 new publications.
+const CACHE_VERSION = "cv-final-v16-20261114";
+const API_CACHE_VERSION = "cv-api-v16-20261114";
 
 const PRECACHE_URLS = [
   "./",
@@ -101,17 +102,17 @@ const API_TTL_MS = 24 * 60 * 60 * 1000;  // 24 hours
 // ---------------------------------------------------------------------------
 // Install: precache the app shell only (cert PDFs precached in activate).
 // ---------------------------------------------------------------------------
-self.addEventListener("install", function(event) {
+self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then(function(cache) {
+    caches.open(CACHE_VERSION).then(function (cache) {
       return Promise.all(
-        PRECACHE_URLS.map(function(url) {
-          return cache.add(url).catch(function(err) {
+        PRECACHE_URLS.map(function (url) {
+          return cache.add(url).catch(function (err) {
             console.warn("[SW] Precache miss for", url, err);
           });
         })
       );
-    }).then(function() {
+    }).then(function () {
       return self.skipWaiting();
     })
   );
@@ -120,35 +121,39 @@ self.addEventListener("install", function(event) {
 // ---------------------------------------------------------------------------
 // Activate: clean up old caches AND precache certification PDFs in the background.
 // ---------------------------------------------------------------------------
-self.addEventListener("activate", function(event) {
+self.addEventListener("activate", function (event) {
   event.waitUntil(
-    caches.keys().then(function(keys) {
+    caches.keys().then(function (keys) {
       return Promise.all(
         keys
-          .filter(function(key) { return key !== CACHE_VERSION && key !== API_CACHE_VERSION; })
-          .map(function(key) {
+          .filter(function (key) {
+            return key !== CACHE_VERSION && key !== API_CACHE_VERSION;
+          })
+          .map(function (key) {
             console.log("[SW] Deleting old cache:", key);
             return caches.delete(key);
           })
       );
-    }).then(function() {
+    }).then(function () {
       // Precache cert PDFs in the background — don't block activation.
-      caches.open(CACHE_VERSION).then(function(cache) {
+      caches.open(CACHE_VERSION).then(function (cache) {
         // Process in small batches to avoid memory spikes.
         let i = 0;
+
         function nextBatch() {
           let batch = CERT_PDFS.slice(i, i + 5);
           if (batch.length === 0) return;
-          Promise.all(batch.map(function(pdf) {
-            return cache.match("./" + pdf).then(function(r) {
+          Promise.all(batch.map(function (pdf) {
+            return cache.match("./" + pdf).then(function (r) {
               if (r) return;  // Already cached.
-              return cache.add("./" + pdf).catch(function(err) {
+              return cache.add("./" + pdf).catch(function (err) {
                 console.warn("[SW] Cert precache miss for", pdf);
               });
             });
           })).then(nextBatch);
           i += 5;
         }
+
         nextBatch();
       });
       return self.clients.claim();
@@ -159,7 +164,7 @@ self.addEventListener("activate", function(event) {
 // ---------------------------------------------------------------------------
 // Fetch: route requests by type.
 // ---------------------------------------------------------------------------
-self.addEventListener("fetch", function(event) {
+self.addEventListener("fetch", function (event) {
   let req = event.request;
   if (req.method !== "GET") return;
 
@@ -169,8 +174,8 @@ self.addEventListener("fetch", function(event) {
   // --- API requests (Semantic Scholar, GitHub, ORCID): cache-first + TTL ---
   if (API_HOSTS.indexOf(url.host) !== -1) {
     event.respondWith(
-      caches.open(API_CACHE_VERSION).then(function(cache) {
-        return cache.match(req).then(function(cached) {
+      caches.open(API_CACHE_VERSION).then(function (cache) {
+        return cache.match(req).then(function (cached) {
           if (cached) {
             // Check TTL via the cached Date header.
             let cachedTime = cached.headers.get("sw-cached-at");
@@ -182,7 +187,7 @@ self.addEventListener("fetch", function(event) {
             }
           }
           // Stale or missing — fetch fresh.
-          return fetch(req).then(function(resp) {
+          return fetch(req).then(function (resp) {
             if (resp && resp.status === 200) {
               // Add a custom header for TTL tracking.
               let headers = new Headers(resp.headers);
@@ -193,15 +198,16 @@ self.addEventListener("fetch", function(event) {
                 statusText: resp.statusText,
                 headers: headers
               });
-              cache.put(req, cached.clone()).catch(function() {});
+              cache.put(req, cached.clone()).catch(function () {
+              });
               return cached;
             }
             return resp;
-          }).catch(function() {
+          }).catch(function () {
             // Network failed — return stale if any.
             return cached || new Response("API offline.", {
               status: 503,
-              headers: { "Content-Type": "text/plain" }
+              headers: {"Content-Type": "text/plain"}
             });
           });
         });
@@ -213,14 +219,15 @@ self.addEventListener("fetch", function(event) {
   // --- Navigation requests: network-first, fall back to cached shell. ---
   if (req.mode === "navigate") {
     event.respondWith(
-      fetch(req).then(function(resp) {
+      fetch(req).then(function (resp) {
         let copy = resp.clone();
-        caches.open(CACHE_VERSION).then(function(cache) {
-          cache.put("./index.html", copy).catch(function() {});
+        caches.open(CACHE_VERSION).then(function (cache) {
+          cache.put("./index.html", copy).catch(function () {
+          });
         });
         return resp;
-      }).catch(function() {
-        return caches.match("./index.html").then(function(cached) {
+      }).catch(function () {
+        return caches.match("./index.html").then(function (cached) {
           return cached || caches.match("./");
         });
       })
@@ -231,33 +238,36 @@ self.addEventListener("fetch", function(event) {
   // --- Cross-origin (CDN) assets: cache-first, 7-day TTL, then network. ---
   if (!sameOrigin) {
     event.respondWith(
-      caches.match(req).then(function(cached) {
+      caches.match(req).then(function (cached) {
         if (cached) {
           // Revalidate in the background.
-          fetch(req).then(function(resp) {
+          fetch(req).then(function (resp) {
             if (resp && resp.status === 200) {
               let copy = resp.clone();
-              caches.open(CACHE_VERSION).then(function(cache) {
-                cache.put(req, copy).catch(function() {});
+              caches.open(CACHE_VERSION).then(function (cache) {
+                cache.put(req, copy).catch(function () {
+                });
               });
             }
-          }).catch(function() {});
+          }).catch(function () {
+          });
           return cached;
         }
-        return fetch(req).then(function(resp) {
+        return fetch(req).then(function (resp) {
           if (!resp || resp.status !== 200 || resp.type !== "basic") {
             return resp;
           }
           let copy = resp.clone();
-          caches.open(CACHE_VERSION).then(function(cache) {
-            cache.put(req, copy).catch(function() {});
+          caches.open(CACHE_VERSION).then(function (cache) {
+            cache.put(req, copy).catch(function () {
+            });
           });
           return resp;
-        }).catch(function() {
+        }).catch(function () {
           return new Response("Resource unavailable offline.", {
             status: 503,
             statusText: "Service Unavailable",
-            headers: { "Content-Type": "text/plain" }
+            headers: {"Content-Type": "text/plain"}
           });
         });
       })
@@ -267,21 +277,22 @@ self.addEventListener("fetch", function(event) {
 
   // --- Same-origin assets: stale-while-revalidate. ---
   event.respondWith(
-    caches.match(req).then(function(cached) {
-      let networkFetch = fetch(req).then(function(resp) {
+    caches.match(req).then(function (cached) {
+      let networkFetch = fetch(req).then(function (resp) {
         if (!resp || resp.status !== 200 || resp.type !== "basic") {
           return resp;
         }
         let copy = resp.clone();
-        caches.open(CACHE_VERSION).then(function(cache) {
-          cache.put(req, copy).catch(function() {});
+        caches.open(CACHE_VERSION).then(function (cache) {
+          cache.put(req, copy).catch(function () {
+          });
         });
         return resp;
-      }).catch(function() {
+      }).catch(function () {
         return cached || new Response("Offline and not cached.", {
           status: 503,
           statusText: "Service Unavailable",
-          headers: { "Content-Type": "text/plain" }
+          headers: {"Content-Type": "text/plain"}
         });
       });
       return cached || networkFetch;
