@@ -2,7 +2,7 @@
  *
  * Features:
  *   - Precache all certification PDFs (~12 MB) so the full CV works offline.
- *   - Cache Semantic Scholar / GitHub / ORCID API responses for 24h.
+ *   - Cache OpenAlex / Semantic Scholar / GitHub / ORCID API responses for 24h.
  *   - Cache Altmetric badge script.
  *
  * Strategy:
@@ -11,15 +11,15 @@
  *   - For navigation requests: network-first, fall back to cached index.html.
  *   - For static assets (same-origin images, PDFs, fonts): stale-while-revalidate.
  *   - For CDN assets (cross-origin): cache-first with a 7-day TTL, fall back to network.
- *   - For API requests (api.semanticscholar.org, api.github.com, pub.orcid.org):
- *     cache-first with a 24-hour TTL.
+ *   - For API requests (api.openalex.org, api.semanticscholar.org, api.github.com,
+ *     pub.orcid.org): cache-first with a 24-hour TTL.
  *   - For everything else: pass through to the network.
  *
  * CACHE_VERSION keys the runtime caches; change its value to invalidate
  * everything that was cached by previous builds.
  */
-const CACHE_VERSION = "cv-static";
-const API_CACHE_VERSION = "cv-api";
+const CACHE_VERSION = "cv-static-v2";
+const API_CACHE_VERSION = "cv-api-v2";
 
 const PRECACHE_URLS = [
   "./",
@@ -89,6 +89,7 @@ const CERT_PDFS = [
 
 // API hosts whose responses we cache for 24h.
 const API_HOSTS = [
+  "api.openalex.org",
   "api.semanticscholar.org",
   "api.github.com",
   "pub.orcid.org"
@@ -168,7 +169,7 @@ self.addEventListener("fetch", function (event) {
   let url = new URL(req.url);
   let sameOrigin = (url.origin === self.location.origin);
 
-  // --- API requests (Semantic Scholar, GitHub, ORCID): cache-first + TTL ---
+  // --- API requests (OpenAlex, Semantic Scholar, GitHub, ORCID): cache-first + TTL ---
   if (API_HOSTS.indexOf(url.host) !== -1) {
     event.respondWith(
       caches.open(API_CACHE_VERSION).then(function (cache) {

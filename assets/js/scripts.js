@@ -3738,7 +3738,13 @@ async function HandleWordDownloadClick(event) {
             watermarkCss = ".WordPage { position: relative; overflow: hidden; } .WordPage::before { content: \"" + wmText + "\"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 88pt; font-family: Calibri, sans-serif; color: rgba(192, 192, 192, 0.3); font-weight: bold; z-index: 9999; pointer-events: none; white-space: nowrap; }";
           }
           // Build the full HTML document for the iframe.
-          const previewHtml = "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Live Preview</title><style>html { background: #f3f2f1; } body { margin: 0; padding: 16px; background: #f3f2f1; display: flex; justify-content: center; } .WordPage { width: " + pageWidth + "; min-height: " + pageHeight + "; padding: " + marginPt + "; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.15); margin-bottom: 16px; box-sizing: border-box; } " + wordStyles + watermarkCss + "</style></head><body><div class=\"WordPage\">" + clonedElement.innerHTML + "</div></body></html>";
+          // NOTE: the page is centered with block-level auto margins instead of
+          // a flex container — flex items shrink by default, which would
+          // silently reflow the paper to the panel width (and break the
+          // fit-to-preview measurement). With auto margins the page keeps its
+          // true paper width; when the panel is narrower the iframe simply
+          // scrolls horizontally, exactly like Word.
+          const previewHtml = "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Live Preview</title><style>html { background: #f3f2f1; } body { margin: 0; padding: 16px; background: #f3f2f1; } .WordPage { width: " + pageWidth + "; min-height: " + pageHeight + "; padding: " + marginPt + "; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.15); margin: 0 auto 16px; box-sizing: border-box; } " + wordStyles + watermarkCss + "</style></head><body><div class=\"WordPage\">" + clonedElement.innerHTML + "</div></body></html>";
           // Write to the iframe.
           const frameDoc = iframeEl.contentDocument || iframeEl.contentWindow.document;
           frameDoc.open();
@@ -5674,23 +5680,26 @@ document.addEventListener("DOMContentLoaded", function () {
 // LIVE DATA INTEGRATIONS
 // ===========================================================================
 
-// --- Semantic Scholar citation badges ---
+// --- Citation badges (OpenAlex + Semantic Scholar) ---
 // For each publication with a DOI, fetch citation count and inject a badge.
 // Uses a per-DOI cache in localStorage (7-day TTL) to avoid hammering the API.
-// Requests are strictly sequential with a delay — Semantic Scholar rate-limits
-// aggressive concurrent requests with CORS-blocking 429 responses, so we
-// serialize them. Failures are silent (badges are an enhancement, not critical).
+// Requests are strictly sequential with a delay — the APIs rate-limit
+// aggressive concurrent requests, so we serialize them. Failures are silent
+// (badges are an enhancement, not critical).
 //
 // Robustness details:
-//   1. Skip entirely on file:// protocol — Semantic Scholar and OpenAlex both
-//      reject `null` origins with CORS errors, so there's no point trying.
-//      This eliminates the noisy CORS console errors when the CV is opened
-//      locally (e.g. double-clicked from a Downloads folder).
-//   2. Fall back to the OpenAlex API (also in CSP connect-src) when Semantic
-//      Scholar returns 429 or any other error. OpenAlex has a higher free
-//      rate limit (100k/day, 10/s) and supports CORS from any origin.
-//   3. Exponential backoff on 429 — if Semantic Scholar returns 429, double
-//      the delay before the next request (up to 10s max).
+//   1. Skip entirely on file:// protocol — both APIs reject `null` origins
+//      with CORS errors, so there's no point trying. This eliminates the
+//      noisy CORS console errors when the CV is opened locally.
+//   2. OpenAlex is the PRIMARY source: it is CORS-friendly, highly available
+//      and generously rate-limited (100k/day, 10/s), so the common path
+//      produces no failed requests at all. Semantic Scholar's public API is
+//      frequently overloaded (503) and rate-limited (429), so it is only used
+//      as a silent fallback when OpenAlex cannot serve a DOI.
+//   3. Exponential backoff on 429 — if the fallback returns 429, double the
+//      delay before the next request (up to 10s max).
+//   4. All API failures are logged only through CVLog (visible only when
+//      localStorage.cv_debug = '1'), never as uncaught errors.
 function SetupCitationBadges() {
   // Skip on file:// — APIs will CORS-reject with `null` origin.
   if (window.location.protocol === "file:") {
@@ -5735,7 +5744,7 @@ function SetupCitationBadges() {
     return;
   }
   // Limit to the first 12 most-recent uncached DOIs per page load — keeps us
-  // well under the Semantic Scholar rate limit even on a fresh cache.
+  // well under the API rate limits even on a fresh cache.
   const active = queue.slice(0, 12);
   let idx = 0;
   let currentDelay = 1200; // Start at 1.2s, double on 429 (max 10s).
@@ -5750,49 +5759,28 @@ function SetupCitationBadges() {
       return;
     }
     const item = active[idx++];
-    const ssUrl = "https://api.semanticscholar.org/graph/v1/paper/DOI:" + encodeURIComponent(item.doi) + "?fields=citationCount,url";
-    fetch(ssUrl, {headers: {"Accept": "application/json"}})
-      .then(function (r) {
-        if (r.status === 429) {
-          // Rate limited — back off and retry this same item.
-          currentDelay = Math.min(currentDelay * 2, 10000);
-          CVLog.warn("Semantic Scholar 429 (rate limited). Backing off to", currentDelay, "ms. Trying OpenAlex fallback for", item.doi);
-          idx--; // Re-queue this item.
-          // Try OpenAlex as fallback for this item.
-          return fetchFromOpenAlex(item).finally(function () {
-            setTimeout(fetchNext, currentDelay);
-          });
-        }
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        // Successful response — reset backoff.
-        currentDelay = 1200;
-        return r.json().then(function (data) {
-          const count = data.citationCount || 0;
-          const paperUrl = data.url || ("https://doi.org/" + item.doi);
-          cache[item.cacheKey] = {t: Date.now(), count: count, url: paperUrl};
-          cacheDirty = true;
-          injectBadge(item.meta, count, paperUrl);
-        });
-      })
-      .catch(function (err) {
-        // Semantic Scholar failed (network/CORS/non-429) — try OpenAlex fallback.
-        CVLog.warn("Semantic Scholar failed for", item.doi, "— trying OpenAlex:", err.message);
-        return fetchFromOpenAlex(item);
-      })
-      .then(function () {
-        // Schedule next request after the current delay.
-        setTimeout(fetchNext, currentDelay);
+    // OpenAlex first — the reliable source. Only when it cannot serve a DOI
+    // do we fall back to Semantic Scholar, and even then failures stay
+    // silent so the console stays clean.
+    fetchFromOpenAlex(item)
+      .then(function (handled) {
+        if (!handled) return fetchFromSemanticScholar(item);
       })
       .catch(function () {
-        // Both APIs failed — silent. Badge is enhancement only.
+        // Both APIs failed — silent. Badges are an enhancement only.
+      })
+      .finally(function () {
+        // Schedule the next request after the current delay.
         setTimeout(fetchNext, currentDelay);
       });
   }
 
-  // Fallback: fetch citation count from OpenAlex API.
-  // OpenAlex is more permissive (CORS-enabled, higher rate limit) and returns
-  // cited_by_count for any DOI. URL format:
+  // Primary source: fetch the citation count from the OpenAlex API.
+  // OpenAlex is CORS-enabled, highly available and returns cited_by_count
+  // for any DOI. URL format:
   //   https://api.openalex.org/works/doi:{DOI}?select=cited_by_count,id
+  // Resolves with true when the badge was injected, or false when OpenAlex
+  // failed and the caller should try the fallback.
   function fetchFromOpenAlex(item) {
     const oaUrl = "https://api.openalex.org/works/doi:" + encodeURIComponent(item.doi) + "?select=cited_by_count,id";
     return fetch(oaUrl, {headers: {"Accept": "application/json"}})
@@ -5806,9 +5794,40 @@ function SetupCitationBadges() {
         cache[item.cacheKey] = {t: Date.now(), count: count, url: paperUrl, source: "openalex"};
         cacheDirty = true;
         injectBadge(item.meta, count, paperUrl);
+        return true;
       })
       .catch(function (err) {
-        CVLog.warn("OpenAlex also failed for", item.doi, "— giving up:", err.message);
+        CVLog.warn("OpenAlex failed for", item.doi, "— trying Semantic Scholar:", err.message);
+        return false;
+      });
+  }
+
+  // Fallback source: fetch the citation count from Semantic Scholar.
+  // Its public API is frequently overloaded (503) or rate-limited (429), so
+  // failures are expected here and are handled silently.
+  function fetchFromSemanticScholar(item) {
+    const ssUrl = "https://api.semanticscholar.org/graph/v1/paper/DOI:" + encodeURIComponent(item.doi) + "?fields=citationCount,url";
+    return fetch(ssUrl, {headers: {"Accept": "application/json"}})
+      .then(function (r) {
+        if (r.status === 429) {
+          // Rate limited — back off before the next request.
+          currentDelay = Math.min(currentDelay * 2, 10000);
+          CVLog.warn("Semantic Scholar 429 (rate limited). Backing off to", currentDelay, "ms.");
+          throw new Error("rate limited");
+        }
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        // Successful response — reset the backoff.
+        currentDelay = 1200;
+        return r.json().then(function (data) {
+          const count = data.citationCount || 0;
+          const paperUrl = data.url || ("https://doi.org/" + item.doi);
+          cache[item.cacheKey] = {t: Date.now(), count: count, url: paperUrl};
+          cacheDirty = true;
+          injectBadge(item.meta, count, paperUrl);
+        });
+      })
+      .catch(function (err) {
+        CVLog.warn("Semantic Scholar also failed for", item.doi, "— giving up:", err.message);
       });
   }
 
@@ -7091,36 +7110,11 @@ function SetupAnalytics() {
 })();
 
 // --- Availability indicator ---
+// Disabled on purpose: the availability badge is not shown. The previous
+// implementation sat behind an early "return" (which raised "unreachable
+// code after return statement" warnings), so the dead code was removed.
+// available-for.json is still shipped in case the feature is re-enabled.
 function SetupAvailabilityIndicator() {
-  return;
-  const el = document.getElementById("availability-indicator");
-  const text = document.getElementById("availability-text");
-  if (!el || !text) return;
-  fetch("available-for.json", {cache: "no-cache"})
-    .then(function (r) {
-      return r.json();
-    })
-    .then(function (data) {
-      el.classList.add("status-" + (data.status || "open"));
-      const dot = el.querySelector(".availability-dot");
-      if (dot && data.status === "closed") {
-        // No pulse for closed.
-      }
-      const label = data.label || (data.status === "open" ? "Open to opportunities" : "Currently unavailable");
-      text.textContent = label;
-      el.hidden = false;
-      if (data.details) el.title = data.details;
-      if (window.plausible) {
-        try {
-          window.plausible("Availability View", {props: {status: data.status}});
-        } catch (e) {
-        }
-      }
-    })
-    .catch(function () {
-      // Silently hide — don't bother the user.
-      el.hidden = true;
-    });
 }
 
 // --- Schedule a Meeting modal (centered on screen, 50% width) ---
