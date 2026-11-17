@@ -1,4 +1,4 @@
-// audit-fix P3-1: Gate console logging behind a DEBUG flag.
+// Gate console logging behind a DEBUG flag.
 // In production, set DEBUG=false to silence console.error/warn/log.
 // Override by setting localStorage.cv_debug = '1' in DevTools.
 var CV_DEBUG = (function () {
@@ -216,9 +216,9 @@ function CreateImageFallbackParagraph(imgElement) {
 
 // Define the asynchronous function to convert images to base64.
 async function ConvertImagesToBase64(element) {
-  // audit-fix: On file:// protocol, fetch() of local images fails with CORS errors.
+  // On file:// protocol, fetch() of local images fails with CORS errors.
   // Skip base64 conversion entirely — the <img src="..."> tags will load the images
-  // directly when the exported document is opened. This only affects the Word/PDF
+  // directly when the exported document is opened. This only affects the Word
   // export pipeline when run from file:// (e.g. opening the CV from a local folder).
   // On https:// production, fetch() works normally and images are embedded as base64.
   if (window.location.protocol === "file:") {
@@ -567,7 +567,7 @@ function GetWordFriendlyStyles(options) {
     highContrastCss = "h1, h2, h3, h4, a, strong { color: #000000 !important; } .badge, .skill-tag, .skill-pill, .repo-badge, .volunteer-badge, .course-badge, .role-badge, .journal-publisher { background: transparent !important; color: #000000 !important; border: 1px solid #000000 !important; }";
   }
   // Return the complete CSS string.
-  return "@page { size: " + paperSize + "; margin: " + marginPt + "; } " + "@page WordSection1 { size: " + paperSize + "; margin: " + marginPt + "; mso-page-margin-top: " + marginPt + "; mso-page-margin-bottom: " + marginPt + "; mso-page-margin-left: " + marginPt + "; mso-page-margin-right: " + marginPt + "; mso-header-margin: 36pt; mso-footer-margin: 36pt; } " + "div.WordSection1 { page: WordSection1; margin: 0; padding: 0; } " + "html, body { margin: 0; padding: 0; } " + "body { font-family: " + fontFamily + "; font-size: " + fontSize + "; line-height: " + bodyLineHeight + "; color: #000000; text-align: left; } " + "h1 { font-size: " + h1Size + "; font-weight: bold; margin: " + h1Margin + "; text-align: center; color: " + accentColor + "; } " + "h2 { font-size: " + h2Size + "; font-weight: bold; margin: " + h2Margin + "; text-transform: " + h2Transform + "; border-bottom: " + h2Border + "; padding-bottom: " + h2Padding + "; text-align: left; color: " + accentColor + "; } " + "h3 { font-size: " + h3Size + "; font-weight: bold; margin: " + h3Margin + "; text-align: left; color: #000000; } " + "h4 { font-size: " + h4Size + "; font-weight: bold; margin: " + h4Margin + "; text-align: left; color: #000000; } " + "p { font-size: " + fontSize + "; margin: " + pMargin + "; line-height: " + bodyLineHeight + "; text-align: " + textAlign + "; } " + bulletCss + "li { font-size: " + fontSize + "; margin-bottom: " + liMargin + "; line-height: " + bodyLineHeight + "; text-align: " + textAlign + "; } " + linkCss + doiCss + noUnderlinesCss + kerningCss + orphanCss + bwLinkCss + monoBadgesCss + consistentIndentCss + itemDividersCss + removeShadowsCss + stableTablesCss + highContrastCss + grayscaleCss + pageBreakCss + ".row, .col-lg-9, .col-lg-3, .col-lg-12, .col-auto, .d-flex, .flex-column, .flex-md-row, .col-12, .col-md-6 { display: block !important; width: 100% !important; float: none !important; margin: 0 !important; padding: 0 !important; } " + "button, .btn, #PdfDownloadContainer, .FloatingDownloadContainer, nav, .nav-badge-link, #Posters, #All-Photos, #Photos, .stats-bar, .courses-stats, .swal2-container { display: none !important; } " + "i[class*=\"fa\"], i[class*=\"bi\"], svg, .fa-container { display: none !important; } " + ".tech-tag, .skill-tag, .skill-pill, .repo-badge, .volunteer-badge, .course-badge, .role-badge, .repo-desc, .journal-publisher { display: inline !important; background: none !important; color: #000000 !important; padding: 0 !important; margin-right: 4pt !important; font-size: 10pt !important; border: none !important; } " + ".resume-timeline-item { margin-bottom: " + timelineMargin + "; padding: " + timelinePadding + "; border-left: none !important; background-color: transparent !important; } " + ".resume-timeline-item-header { margin-bottom: 2pt !important; } " + ".resume-position-title { margin: 0 0 1pt 0; font-size: 11.5pt; font-weight: bold; } " + ".resume-company-name { margin: 0 0 1pt 0; font-size: 11pt; font-style: italic; } " + ".resume-position-time { margin: " + timeMargin + "; font-weight: normal; color: #333333; font-size: 10pt; } " + "img { max-width: 100%; height: auto; border: none; } " + "ul, ol { margin-top: 0 !important; padding-top: 0 !important; } " + "li:first-child { margin-top: 0 !important; padding-top: 0 !important; } " + "p:first-child { margin-top: 0 !important; } " + ".journal-item { margin-bottom: 4pt !important; } " + ".journal-name { margin: 0 !important; } " + ".resume-timeline-item-desc > ul { margin-top: 0 !important; } " + "table { border-collapse: collapse; width: 100%; margin-bottom: 6pt; } " + "td, th { border: 1px solid #000000; padding: 4pt; } " + "a[href*=\"doi.org\"], a[href*=\"DOI\"], .doi-link, li:has(a[href*=\"doi.org\"]) { text-align: left !important; word-break: break-all !important; } ";
+  return "@page { size: " + paperSize + "; margin: " + marginPt + "; } " + "@page WordSection1 { size: " + paperSize + "; margin: " + marginPt + "; mso-page-margin-top: " + marginPt + "; mso-page-margin-bottom: " + marginPt + "; mso-page-margin-left: " + marginPt + "; mso-page-margin-right: " + marginPt + "; mso-header-margin: 36pt; mso-footer-margin: 36pt; } " + "div.WordSection1 { page: WordSection1; margin: 0; padding: 0; } " + "html, body { margin: 0; padding: 0; } " + "body { font-family: " + fontFamily + "; font-size: " + fontSize + "; line-height: " + bodyLineHeight + "; color: #000000; text-align: left; } " + "h1 { font-size: " + h1Size + "; font-weight: bold; margin: " + h1Margin + "; text-align: center; color: " + accentColor + "; } " + "h2 { font-size: " + h2Size + "; font-weight: bold; margin: " + h2Margin + "; text-transform: " + h2Transform + "; border-bottom: " + h2Border + "; padding-bottom: " + h2Padding + "; text-align: left; color: " + accentColor + "; } " + "h3 { font-size: " + h3Size + "; font-weight: bold; margin: " + h3Margin + "; text-align: left; color: #000000; } " + "h4 { font-size: " + h4Size + "; font-weight: bold; margin: " + h4Margin + "; text-align: left; color: #000000; } " + "p { font-size: " + fontSize + "; margin: " + pMargin + "; line-height: " + bodyLineHeight + "; text-align: " + textAlign + "; } " + bulletCss + "li { font-size: " + fontSize + "; margin-bottom: " + liMargin + "; line-height: " + bodyLineHeight + "; text-align: " + textAlign + "; } " + linkCss + doiCss + noUnderlinesCss + kerningCss + orphanCss + bwLinkCss + monoBadgesCss + consistentIndentCss + itemDividersCss + removeShadowsCss + stableTablesCss + highContrastCss + grayscaleCss + pageBreakCss + ".row, .col-lg-9, .col-lg-3, .col-lg-12, .col-auto, .d-flex, .flex-column, .flex-md-row, .col-12, .col-md-6 { display: block !important; width: 100% !important; float: none !important; margin: 0 !important; padding: 0 !important; } " + "button, .btn, nav, .nav-badge-link, #global-toolbar, #sticky-toc, .toc-backdrop, .toc-flyout, .back-to-top, #back-to-top, .mobile-toc-toggle, #mobile-toc-toggle, .fab-menu, #reading-progress-bar, #reading-guide-indicator, .block-action-toolbar, .accessibility-menu-panel, .qr-share-popup, .schedule-meeting-popup, .avatar-lightbox, #Posters, #All-Photos, #Photos, .stats-bar, .courses-stats, .swal2-container { display: none !important; } " + "i[class*=\"fa\"], i[class*=\"bi\"], svg, .fa-container { display: none !important; } " + ".tech-tag, .skill-tag, .skill-pill, .repo-badge, .volunteer-badge, .course-badge, .role-badge, .repo-desc, .journal-publisher { display: inline !important; background: none !important; color: #000000 !important; padding: 0 !important; margin-right: 4pt !important; font-size: 10pt !important; border: none !important; } " + ".resume-timeline-item { margin-bottom: " + timelineMargin + "; padding: " + timelinePadding + "; border-left: none !important; background-color: transparent !important; } " + ".resume-timeline-item-header { margin-bottom: 2pt !important; } " + ".resume-position-title { margin: 0 0 1pt 0; font-size: 11.5pt; font-weight: bold; } " + ".resume-company-name { margin: 0 0 1pt 0; font-size: 11pt; font-style: italic; } " + ".resume-position-time { margin: " + timeMargin + "; font-weight: normal; color: #333333; font-size: 10pt; } " + "img { max-width: 100%; height: auto; border: none; } " + "ul, ol { margin-top: 0 !important; padding-top: 0 !important; } " + "li:first-child { margin-top: 0 !important; padding-top: 0 !important; } " + "p:first-child { margin-top: 0 !important; } " + ".journal-item { margin-bottom: 4pt !important; } " + ".journal-name { margin: 0 !important; } " + ".resume-timeline-item-desc > ul { margin-top: 0 !important; } " + "table { border-collapse: collapse; width: 100%; margin-bottom: 6pt; } " + "td, th { border: 1px solid #000000; padding: 4pt; } " + "a[href*=\"doi.org\"], a[href*=\"DOI\"], .doi-link, li:has(a[href*=\"doi.org\"]) { text-align: left !important; word-break: break-all !important; } ";
 }
 
 // Define the function to build the configuration modal HTML.
@@ -1040,23 +1040,30 @@ function BuildConfigurationModalHtml() {
   // Add responsive media queries for the modal.
   modalCss += "@media (max-width: 992px) { .section-checkbox-card { width: 48% !important; } }";
   modalCss += "@media (max-width: 768px) { .swal2-popup { font-size: 0.9rem !important; } .export-tabs { flex-direction: column; } .export-tab-link { width: 100%; margin-right: 0 !important; margin-bottom: 4px; } .section-checkbox-card { width: 100% !important; } .accent-color-row { flex-wrap: wrap; } }";
-  // audit-fix: Two-panel layout CSS — left=configs, right=live preview.
-  modalCss += ".export-two-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }";
-  modalCss += ".export-config-panel { max-height: 70vh; overflow-y: auto; padding-right: 8px; }";
+  // Two-panel layout CSS — the settings start hidden so only the live
+  // preview is visible; the Customize button slides the settings in and out.
+  modalCss += ".export-two-panel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0; align-items: stretch; transition: gap 0.4s cubic-bezier(0.4, 0, 0.2, 1); }";
+  modalCss += ".export-config-panel { max-width: 0; opacity: 0; overflow: hidden; max-height: 70vh; padding: 0; margin: 0; border: 0; transition: max-width 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease 0.1s; }";
+  modalCss += ".export-two-panel.show-settings { gap: 20px; }";
+  modalCss += ".export-two-panel.show-settings .export-config-panel { max-width: min(720px, 48vw); opacity: 1; overflow-y: auto; padding-right: 8px; }";
   modalCss += ".export-preview-panel { position: sticky; top: 0; height: 70vh; display: flex; flex-direction: column; background: #f3f2f1; border: 1px solid #cbd5e1; border-radius: 14px; overflow: hidden; }";
   modalCss += ".export-preview-header { padding: 10px 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }";
   modalCss += ".export-preview-header .preview-status { margin-left: auto; font-size: 0.7rem; font-weight: 500; opacity: 0.9; }";
   modalCss += ".export-preview-iframe { flex: 1; width: 100%; border: none; background: white; }";
   modalCss += ".export-preview-placeholder { flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #64748b; font-size: 0.85rem; gap: 8px; padding: 20px; text-align: center; }";
-  // audit-fix: Loader overlay for live preview.
+  // Loader overlay for the live preview.
   modalCss += ".export-preview-loader { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(243,242,241,0.85); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10; backdrop-filter: blur(2px); }";
   modalCss += ".preview-spinner { width: 36px; height: 36px; border: 3px solid #cbd5e1; border-top-color: #10b981; border-radius: 50%; animation: preview-spin 0.8s linear infinite; }";
   modalCss += ".preview-loader-text { font-size: 0.8rem; color: #475569; font-weight: 500; }";
   modalCss += "@keyframes preview-spin { to { transform: rotate(360deg); } }";
-  modalCss += "@media (max-width: 992px) { .export-two-panel { grid-template-columns: 1fr; } .export-preview-panel { height: 50vh; } }";
+  modalCss += "@media (max-width: 992px) { .export-two-panel { grid-template-columns: minmax(0, 1fr); } .export-two-panel.show-settings .export-config-panel { max-width: 100%; max-height: 60vh; } .export-preview-panel { height: 50vh; } }";
   // Add styling for the SweetAlert popup.
   modalCss += ".swal2-popup { background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%) !important; border-radius: 20px !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important; border: 1px solid #e2e8f0 !important; font-family: \"Segoe UI\", system-ui, -apple-system, sans-serif !important; }";
   modalCss += ".swal2-title { color: #0f172a !important; font-size: 1.8rem !important; font-weight: 800 !important; letter-spacing: -0.5px !important; }";
+  // Animate the popup width so the modal smoothly grows/shrinks between the
+  // full two-panel width (Customize on) and the fitted live-preview width
+  // (Customize off).
+  modalCss += ".swal2-popup { transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1); }";
   // Add styling for the export tabs.
   modalCss += ".export-tabs { display: flex; gap: 6px; background: #f1f5f9; padding: 6px; border-radius: 14px; margin-bottom: 24px; border: 1px solid #e2e8f0; }";
   modalCss += ".export-tab-link { flex: 1; text-align: center; padding: 12px 10px; border-radius: 10px; font-weight: 600; color: #64748b; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.82rem; }";
@@ -1084,7 +1091,31 @@ function BuildConfigurationModalHtml() {
   modalCss += ".accent-color-preview { width: 18px; height: 18px; border-radius: 4px; border: 1px solid #cbd5e1; flex-shrink: 0; }";
   // Add styling for buttons.
   modalCss += ".swal2-confirm { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important; border-radius: 12px !important; font-weight: 700 !important; padding: 12px 32px !important; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3) !important; }";
-  modalCss += ".swal2-cancel { background: #f1f5f9 !important; color: #475569 !important; border-radius: 12px !important; font-weight: 600 !important; padding: 12px 32px !important; }";
+  modalCss += ".swal2-cancel { background: #f1f5f9 !important; color: #475569 !important; border: 1.5px solid #cbd5e1 !important; border-radius: 12px !important; font-weight: 600 !important; padding: 12px 32px !important; transition: border-color 0.2s ease, background 0.2s ease; }";
+  modalCss += ".swal2-cancel:hover, .swal2-cancel:focus-visible { border-color: #94a3b8 !important; background: #e9eef5 !important; }";
+  // Actions bar: the "Generate DOCX" button, the "Other Formats" dropdown
+  // and the "Cancel" button sit next to each other, centered in one row.
+  modalCss += ".swal2-actions { display: flex !important; align-items: center !important; justify-content: center !important; gap: 10px; width: 100% !important; margin: 20px auto 8px !important; padding: 0 6px; }";
+  // "Other Formats" split button + upward-opening card menu.
+  modalCss += ".export-formats-dropdown { position: relative; display: inline-flex; }";
+  modalCss += ".export-formats-toggle { background: #ffffff !important; color: #334155 !important; border: 1.5px solid #e2e8f0 !important; border-radius: 12px !important; padding: 12px 20px !important; font-weight: 600 !important; box-shadow: none !important; display: inline-flex; align-items: center; gap: 8px; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease; }";
+  modalCss += ".export-formats-toggle:hover, .export-formats-toggle:focus-visible { border-color: #a5b4fc !important; background: #eef2ff !important; color: #4338ca !important; }";
+  modalCss += ".export-formats-toggle .export-formats-caret { font-size: 0.7rem; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }";
+  modalCss += ".export-formats-dropdown.is-open .export-formats-toggle { border-color: #4f46e5 !important; background: #eef2ff !important; color: #4338ca !important; }";
+  modalCss += ".export-formats-dropdown.is-open .export-formats-caret { transform: rotate(180deg); }";
+  modalCss += ".export-formats-menu { position: absolute; bottom: calc(100% + 12px); left: 0; min-width: 252px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.28); padding: 8px; display: grid; gap: 2px; opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.97); transform-origin: bottom left; transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1), visibility 0.22s; z-index: 60; }";
+  modalCss += ".export-formats-dropdown.is-open .export-formats-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }";
+  modalCss += ".export-formats-menu-label { font-size: 0.64rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; padding: 6px 10px 4px; }";
+  modalCss += ".export-format-item { display: flex; align-items: center; gap: 11px; width: 100%; padding: 9px 10px; border: none; background: transparent; border-radius: 10px; font: inherit; font-size: 0.88rem; font-weight: 600; color: #334155; cursor: pointer; text-align: left; transition: background 0.15s ease, color 0.15s ease; }";
+  modalCss += ".export-format-item:hover, .export-format-item:focus-visible { background: #f1f5f9; color: #0f172a; outline: none; }";
+  modalCss += ".format-chip { width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; color: #ffffff; font-size: 0.8rem; flex-shrink: 0; }";
+  modalCss += ".format-ext { margin-left: auto; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.6px; color: #64748b; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; padding: 2px 7px; }";
+  modalCss += "@media (max-width: 768px) { .swal2-actions { flex-wrap: wrap; } }";
+  // Customize toggle (lives in the live-preview header).
+  modalCss += ".export-customize-toggle { margin-left: 10px; border: 1px solid rgba(255, 255, 255, 0.55); background: rgba(255, 255, 255, 0.14); color: #ffffff; font: inherit; font-size: 0.78rem; font-weight: 600; padding: 6px 14px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; transition: background 0.2s ease, border-color 0.2s ease; }";
+  modalCss += ".export-customize-toggle:hover, .export-customize-toggle:focus-visible { background: rgba(255, 255, 255, 0.3); border-color: #ffffff; outline: none; }";
+  modalCss += ".export-customize-toggle .export-customize-caret { font-size: 0.65rem; transition: transform 0.3s ease; }";
+  modalCss += ".export-customize-toggle[aria-expanded=\"true\"] .export-customize-caret { transform: rotate(180deg); }";
   modalCss += "</style>";
   // Initialize the modal HTML.
   let modalHtml = "<div style=\"text-align: left; font-size: 0.9rem;\">";
@@ -1307,7 +1338,7 @@ function BuildConfigurationModalHtml() {
   modalHtml += " </div> ";
   // Build the Executive Polish pane.
   modalHtml += " <div id=\"pane-executive\" class=\"export-tab-pane\"> ";
-  modalHtml += " <h6 class=\"fw-bold text-primary border-bottom pb-1 mb-3\">Final Round: Pro Typography & Structure</h6> ";
+  modalHtml += " <h6 class=\"fw-bold text-primary border-bottom pb-1 mb-3\">Pro Typography & Structure</h6> ";
   modalHtml += " <div class=\"row mb-3\"> ";
   modalHtml += " <div class=\"col-md-6\"> ";
   modalHtml += BuildModalCheckbox("swal-bw-links", "Black & White Links (Ink Saver)", "Forces all hyperlinks to print in solid black.", true);
@@ -1352,17 +1383,16 @@ function BuildConfigurationModalHtml() {
   modalHtml += " <div class=\"mb-3\"> <button type=\"button\" class=\"btn btn-sm btn-outline-primary me-2\" id=\"swal-select-all\">Select All</button> <button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" id=\"swal-deselect-all\">Deselect All</button> </div> ";
   modalHtml += " <div class=\"section-checkboxes-grid\">" + sectionCheckboxesHtml + "</div> ";
   modalHtml += " </div> ";
-  // audit-fix: Credit moved to Swal footer (below buttons) — no longer in modal HTML.
-  modalCss += "<style>" + ".docx-preview-popup .swal2-close { font-size: 2rem; } " + ".docx-preview-popup .swal2-html-container { padding: 0 10px !important; } " + "#DocxPreviewContainer .docx-wrapper { background: white !important; padding: 0 !important; } " + "#DocxPreviewContainer .docx-wrapper > section.docx { box-shadow: 0 2px 8px rgba(0,0,0,0.12); margin-bottom: 20px; padding: 40px !important; } " + "</style>";
   modalHtml += "</div>";
   // Return the combined CSS and HTML.
-  // audit-fix: Wrap the modal content in a two-panel layout — left=configs, right=live preview.
+  // Two-panel layout: left = export settings, right = live preview.
   // The live preview iframe updates in real-time as the user changes any option.
   let previewPanelHtml = '';
   previewPanelHtml += '<div class="export-preview-panel">';
   previewPanelHtml += '  <div class="export-preview-header">';
   previewPanelHtml += '    <i class="fas fa-eye"></i> Live Preview';
   previewPanelHtml += '    <span class="preview-status" id="live-preview-status">Ready</span>';
+  previewPanelHtml += '    <button type="button" class="export-customize-toggle" id="export-customize-toggle" aria-expanded="false" aria-controls="export-config-panel" title="Show or hide the export settings"><i aria-hidden="true" class="fas fa-sliders"></i>Customize<i aria-hidden="true" class="fas fa-chevron-down export-customize-caret"></i></button>';
   previewPanelHtml += '  </div>';
   previewPanelHtml += '  <div class="export-preview-placeholder" id="live-preview-placeholder">';
   previewPanelHtml += '    <i class="fas fa-file-word" style="font-size: 2.5rem; opacity: 0.3;"></i>';
@@ -1376,7 +1406,7 @@ function BuildConfigurationModalHtml() {
   previewPanelHtml += '  </div>';
   previewPanelHtml += '  <iframe class="export-preview-iframe" id="live-preview-iframe" style="display: none;" title="Live document preview"></iframe>';
   previewPanelHtml += '</div>';
-  const twoPanelHtml = '<div class="export-two-panel"><div class="export-config-panel">' + modalHtml + '</div>' + previewPanelHtml + '</div>';
+  const twoPanelHtml = '<div class="export-two-panel"><div class="export-config-panel" id="export-config-panel">' + modalHtml + '</div>' + previewPanelHtml + '</div>';
   return modalCss + twoPanelHtml;
 }
 
@@ -1739,7 +1769,7 @@ async function ProcessResumeElement(clonedElement, options) {
   const featuredCarousel = clonedElement.querySelector("#featured-pubs-carousel");
   if (featuredCarousel) {
     let cards = featuredCarousel.querySelectorAll(".featured-pub-card");
-    // audit-fix: Also check for older carousel item selectors.
+    // Also check for older carousel item selectors.
     if (cards.length === 0) {
       cards = featuredCarousel.querySelectorAll(".owl-item, .carousel-item, .featured-item");
     }
@@ -1764,7 +1794,7 @@ async function ProcessResumeElement(clonedElement, options) {
       const doiHref = doiLink ? doiLink.getAttribute("href") : "";
       rows.push({rank: rank, title: title, venue: venue, year: year, citations: citations, doiHref: doiHref});
     });
-    // audit-fix: Build a list (matching other publication sections) instead of a styled table.
+    // Build a list (matching other publication sections) instead of a styled table.
     // Each featured pub becomes an <article> with title, venue, year, citations, DOI —
     // exactly like the Published Journal Articles section.
     if (rows.length > 0) {
@@ -1840,7 +1870,7 @@ async function ProcessResumeElement(clonedElement, options) {
       }
     }
   } else {
-    // audit-fix: Center the profile photo in the Word/preview output.
+    // Center the profile photo in the Word/preview output.
     const photoElement = clonedElement.querySelector(".picture.rounded-circle");
     if (photoElement) {
       const photoRow = photoElement.closest(".row");
@@ -3126,7 +3156,7 @@ async function ProcessResumeElement(clonedElement, options) {
     }
   }
   // Select sections to remove.
-  const sectionsToRemove = clonedElement.querySelectorAll("#Photos, #Posters, #All-Photos, .nav-badge-link, #PdfDownloadContainer, .FloatingDownloadContainer");
+  const sectionsToRemove = clonedElement.querySelectorAll("#Photos, #Posters, #All-Photos, .nav-badge-link");
   // Iterate over each section to remove.
   sectionsToRemove.forEach(function (el) {
     // Remove the element.
@@ -3292,8 +3322,8 @@ async function ProcessResumeElement(clonedElement, options) {
       wrapper.appendChild(img);
     }
   });
-  // audit-fix: Insert comma+space separators after each tech-tag and skill-tag
-  // so they don't concatenate in the Word/PDF export (Word ignores inline margins).
+  // Insert comma+space separators after each tech-tag and skill-tag
+  // so they don't concatenate in the Word export (Word ignores inline margins).
   clonedElement.querySelectorAll(".tech-tag, .skill-tag, .skill-pill").forEach(function (tag) {
     // Only skip if the next sibling is a text node that starts with a comma.
     // Whitespace-only text nodes (newlines, spaces) do NOT count as separators
@@ -3314,111 +3344,120 @@ async function ProcessResumeElement(clonedElement, options) {
   }
 }
 
-// Define the asynchronous function to handle the preview button click.
-async function HandlePreviewClick() {
-  // Collect the selected options from the modal.
-  const options = GetModalOptions();
-  // Select the main resume wrapper.
-  const resumeElement = document.querySelector(".resume-wrapper-inner");
-  // Guard against missing resume wrapper.
-  if (!resumeElement) {
-    // Return early if the element is not found.
-    return;
-  }
-  // Create a deep clone of the resume element.
-  const clonedElement = resumeElement.cloneNode(true);
-  // Process the cloned element with all export options.
-  await ProcessResumeElement(clonedElement, options);
-  // Generate the styles based on selected options.
-  const wordStyles = GetWordFriendlyStyles(options);
-  // Read the selected paper size.
-  const paperSize = options.Paper || "8.5in 11.0in";
-  // Read the selected page margin.
-  const pageMargin = options.Margin || "0.75in";
-  // Convert the selected margin into points.
-  const marginPt = ConvertMarginToPoints(pageMargin);
-  // Extract the page width.
-  const pageWidth = paperSize.split(" ")[0] || "8.5in";
-  // Extract the page height.
-  const pageHeight = paperSize.split(" ")[1] || "11in";
-  // Initialize the CSS string for the browser preview watermark.
-  let previewWatermarkCss = "";
-  // Check whether a watermark is selected.
-  if ((options.Watermark) && (options.Watermark !== "none")) {
-    // Convert the watermark text to uppercase.
-    const wmText = options.Watermark.toUpperCase();
-    // Build the CSS rules for the pseudo-element watermark.
-    previewWatermarkCss = ".WordPage { position: relative; overflow: hidden; } " + ".WordPage::before { content: \"" + wmText + "\"; position: absolute; top: 50%; left: 50%; " + "transform: translate(-50%, -50%) rotate(-45deg); font-size: 88pt; font-family: Calibri, sans-serif; " + "color: rgba(192, 192, 192, 0.3); font-weight: bold; z-index: 9999; pointer-events: none; white-space: nowrap; }";
-  }
-  // Create a custom overlay for the preview.
-  const overlay = document.createElement("div");
-  // Set the overlay ID.
-  overlay.id = "DocxPreviewOverlay";
-  // Set the overlay styles.
-  overlay.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;";
-  // Add click event listener to close the overlay.
-  overlay.addEventListener("click", function (clickEvent) {
-    // Check if the click target is the overlay itself.
-    if (clickEvent.target === overlay) {
-      // Remove the overlay from the DOM.
-      overlay.remove();
-    }
-  });
-  // Create header container.
-  const header = document.createElement("div");
-  // Set the header styles.
-  header.style.cssText = "width: 100%; max-width: 950px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; color: white;";
-  // Set the header inner HTML.
-  header.innerHTML = "<h3 style=\"margin: 0; font-size: 1.5rem;\"><i class=\"fas fa-file-word\" style=\"color: #2b579a;\"></i> Real Word Preview</h3>";
-  // Create back button.
-  const backBtn = document.createElement("button");
-  // Set the back button inner HTML.
-  backBtn.innerHTML = "<i class=\"fas fa-arrow-left\"></i> Back to Editor";
-  // Set the back button styles.
-  backBtn.style.cssText = "background: #f1f5f9; color: #475569; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; box-shadow: 0 4px 6px rgba(0,0,0, 0.1);";
-  // Add click event listener to the back button.
-  backBtn.addEventListener("click", function () {
-    // Remove the overlay from the DOM.
-    overlay.remove();
-  });
-  // Append the back button to the header.
-  header.appendChild(backBtn);
-  // Append the header to the overlay.
-  overlay.appendChild(header);
-  // Create a container for the preview.
-  const previewContainer = document.createElement("div");
-  // Set the container ID for styling.
-  previewContainer.id = "DocxPreviewContainer";
-  // Set the container styles.
-  previewContainer.style.cssText = "width: 100%; max-width: 950px; height: 80vh; overflow-y: auto; border: 1px solid #cccccc; border-radius: 8px; background: #f3f2f1; box-shadow: 0 10px 25px rgba(0,0,0,0.5); padding: 20px;";
-  // Append the container to the overlay.
-  overlay.appendChild(previewContainer);
-  // Append overlay to body.
-  document.body.appendChild(overlay);
-  // Create an iframe to isolate the preview styles.
-  const previewFrame = document.createElement("iframe");
-  // Set the iframe styles.
-  previewFrame.style.cssText = "width: 100%; height: 100%; border: none; background: transparent;";
-  // Append the iframe to the preview container.
-  previewContainer.appendChild(previewFrame);
-  // Get the document object of the iframe.
-  const frameDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
-  // Open the iframe document for writing.
-  frameDoc.open();
-  // Write the HTML structure with Word-like page styling into the iframe.
-  frameDoc.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Word Preview</title><style>html { background: #f3f2f1; } body { margin: 0; padding: 20px; background: #f3f2f1; display: flex; justify-content: center; } .WordPage { width: " + pageWidth + "; min-height: " + pageHeight + "; padding: " + marginPt + "; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.15); margin-bottom: 20px; box-sizing: border-box; } " + wordStyles + previewWatermarkCss + "</style></head><body><div class=\"WordPage\">" + clonedElement.innerHTML + "</div></body></html>");
-  // Close the iframe document to finish rendering.
-  frameDoc.close();
+// Define the full width the export modal uses while the Customize settings
+// are shown (both panels visible).
+const EXPORT_MODAL_FULL_WIDTH = "min(1800px, 96vw)";
+
+// Define a helper to convert a CSS paper-size width ("8.5in", "210mm", ...)
+// into CSS pixels (96 px per inch).
+function ParsePaperWidthToPixels(widthStr) {
+  const match = /^([\d.]+)\s*(in|mm|cm|px|pt)?$/i.exec(String(widthStr || "").trim());
+  if (!match) return 0;
+  const value = parseFloat(match[1]);
+  const unit = (match[2] || "in").toLowerCase();
+  const factors = {in: 96, mm: 96 / 25.4, cm: 96 / 2.54, px: 1, pt: 96 / 72};
+  return value * (factors[unit] || 96);
 }
 
-// Define the function to initialize the Word generator.
-function InitializeWordGenerator() {
-  // Find the download button.
-  const downloadButton = document.getElementById("DownloadPdfButton");
-  // Add a click event listener if the button exists.
-  if (downloadButton) {
-    downloadButton.addEventListener("click", HandleWordDownloadClick);
+// Define a helper to get the export popup element safely.
+function GetExportPopup() {
+  if (typeof Swal !== "undefined" && typeof Swal.getPopup === "function") {
+    const popup = Swal.getPopup();
+    if (popup) return popup;
   }
+  return document.querySelector(".swal2-popup");
+}
+
+// Define a helper to measure the horizontal padding/margins between the popup
+// edge and the two-panel container, so the fitted width can hug the preview.
+function MeasureExportChromeWidth() {
+  const popup = GetExportPopup();
+  const htmlContainer = popup ? popup.querySelector(".swal2-html-container") : null;
+  if (!htmlContainer) return 80;
+  const popupStyle = window.getComputedStyle(popup);
+  const htmlStyle = window.getComputedStyle(htmlContainer);
+  return (parseFloat(popupStyle.paddingLeft) || 0) + (parseFloat(popupStyle.paddingRight) || 0)
+    + (parseFloat(popupStyle.borderLeftWidth) || 0) + (parseFloat(popupStyle.borderRightWidth) || 0)
+    + (parseFloat(htmlStyle.paddingLeft) || 0) + (parseFloat(htmlStyle.paddingRight) || 0)
+    + (parseFloat(htmlStyle.marginLeft) || 0) + (parseFloat(htmlStyle.marginRight) || 0);
+}
+
+// Define a helper to measure the natural width of the action buttons row
+// ("Generate DOCX", "Other Formats" and "Cancel" next to each other).
+function MeasureExportActionsWidth() {
+  const actions = document.querySelector(".swal2-actions");
+  if (!actions) return 0;
+  const actionsStyle = window.getComputedStyle(actions);
+  const gap = parseFloat(actionsStyle.columnGap || actionsStyle.gap) || 0;
+  let total = (parseFloat(actionsStyle.paddingLeft) || 0) + (parseFloat(actionsStyle.paddingRight) || 0);
+  Array.prototype.forEach.call(actions.children, function (child, index) {
+    if (index > 0) total += gap;
+    const childStyle = window.getComputedStyle(child);
+    total += child.getBoundingClientRect().width
+      + (parseFloat(childStyle.marginLeft) || 0) + (parseFloat(childStyle.marginRight) || 0);
+  });
+  return total;
+}
+
+// Define a helper that computes the popup width needed to fit the live
+// preview page exactly (used while the Customize settings are hidden).
+function ComputeExportFitWidth() {
+  const previewPanel = document.querySelector(".export-preview-panel");
+  if (!previewPanel) return null;
+  const iframe = document.getElementById("live-preview-iframe");
+  let pageWidthPx = 0;
+  // Prefer measuring the rendered page inside the preview iframe.
+  try {
+    const frameDoc = iframe ? (iframe.contentDocument || (iframe.contentWindow && iframe.contentWindow.document)) : null;
+    const page = frameDoc ? frameDoc.querySelector(".WordPage") : null;
+    if (page) pageWidthPx = page.getBoundingClientRect().width;
+  } catch (err) {
+    // The iframe is not measurable yet — fall back to the paper size below.
+  }
+  // Fallback: derive the page width from the selected paper size.
+  if (!pageWidthPx) {
+    const paperValue = GetSwalValue("swal-paper") || "8.5in 11.0in";
+    pageWidthPx = ParsePaperWidthToPixels(paperValue.split(" ")[0]);
+  }
+  if (!pageWidthPx) return null;
+  const panelStyle = window.getComputedStyle(previewPanel);
+  const borderX = (parseFloat(panelStyle.borderLeftWidth) || 0) + (parseFloat(panelStyle.borderRightWidth) || 0);
+  // 32px accounts for the iframe body padding (16px on each side of the page).
+  let needed = Math.ceil(pageWidthPx + 32 + borderX + MeasureExportChromeWidth());
+  // Never get narrower than the centered action buttons row.
+  const actionsWidth = MeasureExportActionsWidth();
+  if (actionsWidth) {
+    needed = Math.max(needed, Math.ceil(actionsWidth + MeasureExportChromeWidth() + 24));
+  }
+  // Never exceed the viewport.
+  return Math.min(needed, Math.round(window.innerWidth * 0.96));
+}
+
+// Define a helper that smoothly shrinks/grows the modal so it fits the live
+// preview page. Passing true applies the change instantly (used on the initial
+// open, before the popup is painted, so no animation is visible).
+function ApplyExportFitWidth(instant) {
+  const popup = GetExportPopup();
+  if (!popup) return;
+  const fitWidth = ComputeExportFitWidth();
+  if (!fitWidth) return;
+  if (instant) popup.style.setProperty("transition", "none", "important");
+  popup.style.width = fitWidth + "px";
+  if (instant) {
+    // Restore the smooth width transition on the next frames.
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        popup.style.removeProperty("transition");
+      });
+    });
+  }
+}
+
+// Define a helper that smoothly grows the modal back to its full two-panel
+// width (the width it had while the Customize settings were shown).
+function ApplyExportFullWidth() {
+  const popup = GetExportPopup();
+  if (popup) popup.style.width = EXPORT_MODAL_FULL_WIDTH;
 }
 
 // Define the asynchronous function to handle the Word download click event.
@@ -3435,99 +3474,128 @@ async function HandleWordDownloadClick(event) {
     "title": "Export CV",
     "html": modalHtml,
     "showCancelButton": true,
-    "confirmButtonText": "Generate DOCX",
+    "confirmButtonText": "<i class=\"fas fa-file-word\"></i> Generate DOCX",
     "cancelButtonText": "Cancel",
     "focusConfirm": false,
     "width": "min(1800px, 96vw)",
+    "willOpen": function () {
+      // The Customize settings start hidden, so open the modal already
+      // fitted to the live preview page width (no resize flash).
+      ApplyExportFitWidth(true);
+    },
     "footer": '<div style="font-size: 0.75rem; color: #888888; text-align: center; width: 100%;">This customization is designed by <strong style="color: #333333;">Hossam Magdy Balaha</strong></div>',
     "didOpen": function () {
       // Find the actions container.
       const actionsContainer = document.querySelector(".swal2-actions");
       // Check if the actions container exists.
       if (actionsContainer) {
-        // Create a JSON Resume export button.
-        const jsonBtn = document.createElement("button");
-        // Set the button type.
-        jsonBtn.type = "button";
-        // Set the button class.
-        jsonBtn.className = "swal2-confirm swal2-styled";
-        // Set the button inner HTML.
-        jsonBtn.innerHTML = "<i class=\"fas fa-file-code\"></i> JSON";
-        // Set the button styles.
-        jsonBtn.style.background = "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)";
-        jsonBtn.style.boxShadow = "0 4px 12px rgba(139, 92, 246, 0.3)";
-        jsonBtn.style.marginRight = "10px";
-        // Add a click event listener to the JSON button.
-        jsonBtn.addEventListener("click", function () {
-          Swal.close();
-          ExportToJSONResume();
+        // Build the "Other Formats" dropdown and insert it after the confirm
+        // button, so "Generate DOCX" stays the first (primary) option and the
+        // secondary formats live together in one menu.
+        const dropdownWrap = document.createElement("div");
+        dropdownWrap.className = "export-formats-dropdown";
+        // Create the dropdown toggle button.
+        const dropdownBtn = document.createElement("button");
+        dropdownBtn.type = "button";
+        dropdownBtn.className = "swal2-styled export-formats-toggle";
+        dropdownBtn.setAttribute("aria-haspopup", "menu");
+        dropdownBtn.setAttribute("aria-expanded", "false");
+        dropdownBtn.innerHTML = "<i class=\"fas fa-layer-group\"></i> Other Formats <i class=\"fas fa-chevron-up export-formats-caret\"></i>";
+        dropdownWrap.appendChild(dropdownBtn);
+        // Create the dropdown menu.
+        const dropdownMenu = document.createElement("div");
+        dropdownMenu.className = "export-formats-menu";
+        dropdownMenu.setAttribute("role", "menu");
+        // Small uppercase header inside the menu card.
+        const menuLabel = document.createElement("div");
+        menuLabel.className = "export-formats-menu-label";
+        menuLabel.textContent = "Export as";
+        dropdownMenu.appendChild(menuLabel);
+        // The secondary export formats offered in the dropdown.
+        const formats = [
+          {Label: "Markdown", Icon: "fas fa-file-lines", Color: "#024950", Ext: "MD", Action: ExportToMarkdown},
+          {Label: "BibTeX", Icon: "fas fa-code", Color: "#d97706", Ext: "BIB", Action: ExportToBibTeX},
+          {Label: "JSON Resume", Icon: "fas fa-file-code", Color: "#6d28d9", Ext: "JSON", Action: ExportToJSONResume},
+          {Label: "RIS", Icon: "fas fa-file-arrow-down", Color: "#0891b2", Ext: "RIS", Action: ExportToRIS},
+          {Label: "CSV", Icon: "fas fa-file-csv", Color: "#16a34a", Ext: "CSV", Action: ExportToCSV}
+        ];
+        // Iterate over each format and build its menu item.
+        formats.forEach(function (format) {
+          // Create the menu item button.
+          const item = document.createElement("button");
+          // Set the button type and role.
+          item.type = "button";
+          item.className = "export-format-item";
+          item.setAttribute("role", "menuitem");
+          // Set the item content: a colored icon chip, the format label, and
+          // a small file-extension badge on the right.
+          item.innerHTML = "<span class=\"format-chip\" style=\"background: " + format.Color + ";\"><i class=\"" + format.Icon + "\" aria-hidden=\"true\"></i></span><span class=\"format-text\">" + format.Label + "</span><span class=\"format-ext\">" + format.Ext + "</span>";
+          // Close the modal and run the export when the item is clicked.
+          item.addEventListener("click", function () {
+            closeDropdown();
+            Swal.close();
+            format.Action();
+          });
+          // Append the item to the menu.
+          dropdownMenu.appendChild(item);
         });
-        // Prepend the JSON button to the actions container.
-        actionsContainer.prepend(jsonBtn);
-        // Create a BibTeX export button.
-        const bibtexBtn = document.createElement("button");
-        // Set the button type.
-        bibtexBtn.type = "button";
-        // Set the button class.
-        bibtexBtn.className = "swal2-confirm swal2-styled";
-        // Set the button inner HTML.
-        bibtexBtn.innerHTML = "<i class=\"fas fa-code\"></i> BibTeX";
-        // Set the button styles.
-        bibtexBtn.style.background = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
-        bibtexBtn.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.3)";
-        bibtexBtn.style.marginRight = "10px";
-        // Add a click event listener to the BibTeX button.
-        bibtexBtn.addEventListener("click", function () {
-          Swal.close();
-          ExportToBibTeX();
+        // Append the menu to the dropdown wrapper.
+        dropdownWrap.appendChild(dropdownMenu);
+
+        // Toggle the dropdown open/closed.
+        function closeDropdown() {
+          dropdownWrap.classList.remove("is-open");
+          dropdownBtn.setAttribute("aria-expanded", "false");
+        }
+
+        dropdownBtn.addEventListener("click", function (clickEvent) {
+          clickEvent.stopPropagation();
+          const willOpen = !dropdownWrap.classList.contains("is-open");
+          closeDropdown();
+          if (willOpen) {
+            dropdownWrap.classList.add("is-open");
+            dropdownBtn.setAttribute("aria-expanded", "true");
+          }
         });
-        // Prepend the BibTeX button to the actions container.
-        actionsContainer.prepend(bibtexBtn);
-        // audit-fix Enh 5: Create a Markdown export button.
-        const mdBtn = document.createElement("button");
-        mdBtn.type = "button";
-        mdBtn.className = "swal2-confirm swal2-styled";
-        mdBtn.innerHTML = "<i class=\"fas fa-file-lines\"></i> Markdown";
-        mdBtn.style.background = "linear-gradient(135deg, #08636a 0%, #024950 100%)";
-        mdBtn.style.boxShadow = "0 4px 12px rgba(2, 73, 80, 0.3)";
-        mdBtn.style.marginRight = "10px";
-        mdBtn.addEventListener("click", function () {
-          Swal.close();
-          ExportToMarkdown();
+        // Close the dropdown when clicking anywhere outside of it.
+        document.addEventListener("click", function (clickEvent) {
+          if (!dropdownWrap.contains(clickEvent.target)) {
+            closeDropdown();
+          }
         });
-        actionsContainer.prepend(mdBtn);
-        // Create a PDF export button.
-        const pdfBtn = document.createElement("button");
-        // Set the button type.
-        pdfBtn.type = "button";
-        // Set the button class.
-        pdfBtn.className = "swal2-confirm swal2-styled";
-        // Set the button inner HTML.
-        pdfBtn.innerHTML = "<i class=\"fas fa-file-pdf\"></i> PDF";
-        // Set the button styles.
-        pdfBtn.style.background = "linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)";
-        pdfBtn.style.boxShadow = "0 4px 12px rgba(239, 68, 68, 0.3)";
-        pdfBtn.style.marginRight = "10px";
-        // Add a click event listener to the PDF button.
-        pdfBtn.addEventListener("click", function () {
-          Swal.close();
-          ExportToPDF();
+        // Close the dropdown (instead of the whole modal) on Escape.
+        document.addEventListener("keydown", function (keyEvent) {
+          if (keyEvent.key === "Escape" && dropdownWrap.classList.contains("is-open")) {
+            keyEvent.stopPropagation();
+            closeDropdown();
+          }
+        }, true);
+        // Insert the dropdown after the confirm button.
+        const confirmButton = actionsContainer.querySelector(".swal2-confirm");
+        if (confirmButton) {
+          confirmButton.after(dropdownWrap);
+        } else {
+          actionsContainer.appendChild(dropdownWrap);
+        }
+      }
+      // Wire the Customize toggle: the settings panel starts hidden so only
+      // the live preview is visible; clicking Customize slides the settings
+      // in/out and the modal width follows smoothly — fitted to the preview
+      // page while hidden, full two-panel width while shown.
+      const twoPanel = document.querySelector(".export-two-panel");
+      const customizeBtn = document.querySelector(".export-customize-toggle");
+      if (twoPanel && customizeBtn) {
+        customizeBtn.addEventListener("click", function () {
+          const isOpen = twoPanel.classList.toggle("show-settings");
+          customizeBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          // Toggle off -> shrink to fit the live preview; toggle on ->
+          // smoothly grow back to the full width the modal had before.
+          if (isOpen) {
+            ApplyExportFullWidth();
+          } else {
+            ApplyExportFitWidth(false);
+          }
         });
-        // Prepend the PDF button to the actions container.
-        actionsContainer.prepend(pdfBtn);
-        // audit-fix: Preview button hidden — the two-panel live preview on the
-        // right side now makes this redundant. The HandlePreviewClick() function
-        // is kept for backwards compatibility but the button is no longer shown.
-        // let previewBtn = document.createElement("button");
-        // previewBtn.type = "button";
-        // previewBtn.className = "swal2-confirm swal2-styled";
-        // previewBtn.innerHTML = "<i class=\"fas fa-eye\"></i> Preview";
-        // previewBtn.style.background = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
-        // previewBtn.style.boxShadow = "0 4px 12px rgba(16, 185, 129, 0.3)";
-        // previewBtn.style.marginRight = "10px";
-        // previewBtn.style.display = "none";
-        // previewBtn.addEventListener("click", function() { HandlePreviewClick(); });
-        // actionsContainer.prepend(previewBtn);
       }
       // Select all tab links.
       const tabLinks = document.querySelectorAll(".export-tab-link");
@@ -3620,7 +3688,7 @@ async function HandleWordDownloadClick(event) {
         });
       }
 
-      // audit-fix: Live preview — attach change listeners to ALL config inputs
+      // Live preview — attach change listeners to ALL config inputs
       // so the right-panel preview updates in real-time as the user tweaks options.
       // Updates are debounced (400ms) to avoid lag on rapid changes.
       let livePreviewTimer = null;
@@ -3681,6 +3749,11 @@ async function HandleWordDownloadClick(event) {
           if (placeholderEl) placeholderEl.style.display = "none";
           if (loaderEl) loaderEl.style.display = "none";
           if (statusEl) statusEl.textContent = "Live";
+          // While the Customize settings are hidden, keep the modal fitted to
+          // the (possibly new) live preview page width.
+          if (!twoPanel || !twoPanel.classList.contains("show-settings")) {
+            ApplyExportFitWidth(false);
+          }
         } catch (err) {
           CVLog.warn("Live preview error:", err);
           if (statusEl) statusEl.textContent = "Error";
@@ -3773,16 +3846,16 @@ function InitializeUIEnhancements() {
   } catch (e) {
     CVLog.error('SetupLazyLoading() failed:', e);
   }
-  // Setup the pass-1 accessibility / UX features.
+  // Setup the accessibility / UX features.
   try {
     SetupBackToTop();
   } catch (e) {
     CVLog.error('SetupBackToTop() failed:', e);
   }
   try {
-    SetupMobileToc();
+    SetupTocToggle();
   } catch (e) {
-    CVLog.error('SetupMobileToc() failed:', e);
+    CVLog.error('SetupTocToggle() failed:', e);
   }
   try {
     SetupCopyToClipboard();
@@ -3794,7 +3867,7 @@ function InitializeUIEnhancements() {
   } catch (e) {
     CVLog.error('SetupScrollReveal() failed:', e);
   }
-  // Setup the pass-2 live data integrations.
+  // Setup the live data integrations.
   try {
     SetupQRCode();
   } catch (e) {
@@ -3830,7 +3903,7 @@ function InitializeUIEnhancements() {
   } catch (e) {
     CVLog.error('SetupORCIDSync() failed:', e);
   }
-  // Setup the pass-2 accessibility extras.
+  // Setup the accessibility extras.
   try {
     SetupFontSizeControls();
   } catch (e) {
@@ -3866,7 +3939,7 @@ function InitializeUIEnhancements() {
   } catch (e) {
     CVLog.error('SetupReadingGuide() failed:', e);
   }
-  // Setup the pass-2 analytics & engagement.
+  // Setup the analytics & engagement.
   try {
     SetupAnalytics();
   } catch (e) {
@@ -3912,7 +3985,7 @@ function InitializeUIEnhancements() {
   } catch (e) {
     CVLog.error('SetupLazyFlickr() failed:', e);
   }
-  // audit-fix: Per-block copy + read-aloud buttons on every section/item.
+  // Per-block copy + read-aloud buttons on every section/item.
   try {
     SetupPerBlockActions();
   } catch (e) {
@@ -3924,7 +3997,7 @@ function InitializeUIEnhancements() {
   } catch (e) {
     CVLog.error('SetupBlockActionToggles() failed:', e);
   }
-  // audit-fix Enh 4: Wrap acronyms in <abbr> tags for screen readers.
+  // Wrap acronyms in <abbr> tags for screen readers.
   try {
     SetupAbbrAcronyms();
   } catch (e) {
@@ -3970,7 +4043,7 @@ function SetupDarkMode() {
   if (!toggle) {
     return;
   }
-  // audit-fix Bootstrap-5.3: also set data-bs-theme on <html> so Bootstrap 5.3's
+  // Also set data-bs-theme on <html> so Bootstrap 5.3's
   // built-in color mode kicks in (styles form controls, cards, tables, etc.).
   function applyDarkMode(isDark) {
     document.body.classList.toggle("dark-mode", isDark);
@@ -4241,10 +4314,9 @@ function TrackAnalyticsEvent(category, action) {
   CVLog.log("Analytics Event:", category, action);
 }
 
-// audit-fix P2-5: Removed dead TriggerDownloadWebhook stub (commented-out Make.com
-// webhook placeholder was misleading). The 8 call sites below now call this no-op
-// wrapper so existing code paths remain intact; set window.ENABLE_DOWNLOAD_WEBHOOK
-// = true and replace DOWNLOAD_WEBHOOK_URL to re-enable.
+// Optional download-completion webhook. All call sites go through this wrapper;
+// it is a no-op unless ENABLE_DOWNLOAD_WEBHOOK is true and DOWNLOAD_WEBHOOK_URL
+// is set.
 var DOWNLOAD_WEBHOOK_URL = ""; // e.g. "https://hook.us1.make.com/REAL_WEBHOOK_ID"
 var ENABLE_DOWNLOAD_WEBHOOK = false;
 
@@ -4262,7 +4334,35 @@ function TriggerDownloadWebhook(type) {
   });
 }
 
-// Initialize the sticky Table of Contents aside.
+// Map section headings to icons for the icon-only TOC rail.
+const TocIconMap = [
+  [/professional summary/i, "fas fa-user-tie"],
+  [/long biograph/i, "fas fa-book-open"],
+  [/biograph/i, "fas fa-book"],
+  [/experience|employment|freelance/i, "fas fa-briefcase"],
+  [/interest/i, "fas fa-flask"],
+  [/education/i, "fas fa-graduation-cap"],
+  [/language/i, "fas fa-language"],
+  [/patent|invention/i, "fas fa-lightbulb"],
+  [/publication|journal|conference|paper|editor/i, "fas fa-file-alt"],
+  [/repo|code|dataset/i, "fas fa-code-branch"],
+  [/certif|award|honor|medal/i, "fas fa-certificate"],
+  [/volunteer|community|service/i, "fas fa-hands-helping"],
+  [/skill/i, "fas fa-tools"],
+  [/teach|course|lecture/i, "fas fa-chalkboard-teacher"],
+  [/project/i, "fas fa-diagram-project"],
+  [/photo|galler/i, "fas fa-images"],
+  [/rank|academ/i, "fas fa-ranking-star"],
+  [/present|talk|invited/i, "fas fa-microphone"],
+  [/membership|societ|board/i, "fas fa-users"],
+  [/snapshot|stats|metrics/i, "fas fa-chart-simple"],
+  [/reference/i, "fas fa-quote-right"],
+  [/contact/i, "fas fa-address-card"]
+];
+
+// Initialize the Table of Contents rail.
+// Collapsed (default) the rail shows icons only, each with a flyout tooltip;
+// expanded it shows icons and text labels side by side.
 function InitializeStickyToc() {
   // Get the TOC container element.
   const tocContainer = document.getElementById("sticky-toc");
@@ -4272,32 +4372,43 @@ function InitializeStickyToc() {
   }
   // Select all section headings.
   const headings = document.querySelectorAll("h2.resume-section-title");
-  // Clear existing content and add the header.
-  tocContainer.innerHTML = "<h6 class=\"toc-header\">Table of Contents</h6>";
+  // The rail shows an icon per section plus a text label revealed on expand.
+  tocContainer.innerHTML = "";
   // Iterate over each heading to build the TOC.
   headings.forEach(function (heading, index) {
     // Ensure the heading has an ID.
     const targetId = heading.id || ("section-" + index);
     heading.id = targetId;
-    // Create the TOC link element.
+    // Resolve the section name.
+    const sectionName = (heading.textContent || "").trim().replace(/\s+/g, " ");
+    // Pick an icon for the section from the icon map (default: dot).
+    let iconClass = "fas fa-circle-dot";
+    for (const entry of TocIconMap) {
+      if (entry[0].test(sectionName)) {
+        iconClass = entry[1];
+        break;
+      }
+    }
+    // Count the items in this section (surfaced through the tooltip).
+    let itemCount = 0;
+    const section = heading.closest(".resume-section");
+    if (section) {
+      itemCount = section.querySelectorAll(
+        ".resume-timeline-item, .repo-item, .course-card, .cert-item, .volunteer-item"
+      ).length;
+    }
+    // Build the tooltip text (shown on hover while the rail is collapsed).
+    const tooltip = itemCount > 0
+      ? sectionName + " (" + itemCount + " items)"
+      : sectionName;
+    // Create the TOC link element: icon plus a label that is revealed when
+    // the rail is expanded.
     const link = document.createElement("a");
     link.href = "#" + targetId;
     link.className = "toc-link";
-    link.textContent = heading.textContent.trim();
-    // Count the items in this section for a TOC count badge.
-    const section = heading.closest(".resume-section");
-    if (section) {
-      const items = section.querySelectorAll(
-        ".resume-timeline-item, .repo-item, .course-card, .cert-item, .volunteer-item"
-      );
-      if (items.length > 0) {
-        const badge = document.createElement("span");
-        badge.className = "toc-count-badge";
-        badge.textContent = items.length;
-        badge.setAttribute("aria-label", items.length + " items in this section");
-        link.appendChild(badge);
-      }
-    }
+    link.setAttribute("data-tooltip", tooltip);
+    link.setAttribute("aria-label", tooltip);
+    link.innerHTML = "<i class=\"" + iconClass + "\" aria-hidden=\"true\"></i><span class=\"toc-label\" title=\"" + sectionName.replace(/"/g, "&quot;") + "\">" + sectionName + "</span>";
     // Add smooth scroll behavior on click.
     link.addEventListener("click", function (event) {
       event.preventDefault();
@@ -4344,7 +4455,7 @@ function ExportToBibTeX() {
     TriggerDownloadWebhook("BibTeX");
     let bibtex = "";
     // Select all publication items.
-    // audit-fix: Deduplicate by title to prevent doubled entries.
+    // Deduplicate by title to prevent doubled entries.
     const _seenBib = {};
     const pubs = document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item");
     let bibIndex = 0;
@@ -4427,7 +4538,7 @@ function ExportToJSONResume() {
       "rankings": [],
     };
     // Extract Work Experience using accurate selectors.
-    // audit-fix: Deduplicate by position+company to prevent doubled entries.
+    // Deduplicate by position+company to prevent doubled entries.
     const _seenWork = {};
     document.querySelectorAll("#Experience .resume-timeline-item").forEach(function (item) {
       const position = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
@@ -4446,7 +4557,7 @@ function ExportToJSONResume() {
       });
     });
     // Extract Education using accurate selectors.
-    // audit-fix: Deduplicate by institution+area to prevent doubled entries.
+    // Deduplicate by institution+area to prevent doubled entries.
     const _seenEdu = {};
     document.querySelectorAll("#Education .resume-timeline-item").forEach(function (item) {
       const area = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
@@ -4465,7 +4576,7 @@ function ExportToJSONResume() {
       });
     });
     // Extract Publications using accurate selectors.
-    // audit-fix: Deduplicate by title+year to prevent doubled entries.
+    // Deduplicate by title+year to prevent doubled entries.
     const _seenPubs = {};
     document.querySelectorAll("#Published-Papers .resume-timeline-item, #Published-Conferences .resume-timeline-item").forEach(function (item) {
       const title = item.querySelector(".resume-position-title")?.textContent.trim().replace(/\s+/g, " ") || "";
@@ -4495,7 +4606,7 @@ function ExportToJSONResume() {
       }
     });
     // Extract Scholar Rankings using accurate table selectors.
-    // audit-fix: Deduplicate by topic+window to prevent doubled entries.
+    // Deduplicate by topic+window to prevent doubled entries.
     const _seenRank = {};
     document.querySelectorAll(".ranking-table tbody tr").forEach(function (row) {
       const cells = row.querySelectorAll("td");
@@ -4538,98 +4649,6 @@ function ExportToJSONResume() {
   }
 }
 
-// Export the resume to a PDF file.
-async function ExportToPDF() {
-  // audit-fix: Temporarily suppress html2canvas console spam during PDF export.
-  // html2canvas logs every image it processes, creating hundreds of console lines.
-  const _origLog = console.log;
-  const _origInfo = console.info;
-  console.log = function () {
-  };
-  console.info = function () {
-  };
-  try {
-
-    // Track the analytics event.
-    TrackAnalyticsEvent("Export", "PDF");
-    // Trigger the download webhook.
-    TriggerDownloadWebhook("PDF");
-    const resumeElement = document.querySelector(".resume-wrapper-inner");
-    if (!resumeElement) {
-      return;
-    }
-    const clonedElement = resumeElement.cloneNode(true);
-    clonedElement.style.padding = "20px";
-    clonedElement.style.background = "#ffffff";
-    clonedElement.style.color = "#000000";
-    // Add a faint generation-timestamp watermark.
-    const wm = document.createElement("div");
-    wm.style.cssText = "position:fixed;bottom:8px;right:12px;font-size:8px;color:#999;font-family:Roboto,sans-serif;pointer-events:none;z-index:9999";
-    wm.textContent = "Generated " + new Date().toISOString().split("T")[0] + " — hossambalaha.github.io";
-    clonedElement.appendChild(wm);
-    const opt = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      filename: "Hossam_Magdy_Balaha_CV.pdf",
-      docInfo: {
-        title: "Hossam Magdy Balaha — Curriculum Vitae",
-        author: "Hossam Magdy Balaha",
-        subject: "Academic CV — AI Researcher & Full-Stack Engineer",
-        keywords: "CV, Hossam Balaha, AI, Machine Learning, Bioengineering, Ph.D.",
-        creator: "Hossam Balaha CV Generator"
-      }, image: {
-        type: "jpeg",
-        quality: 0.95
-      },
-      html2canvas: {
-        scale: 1.2,
-        useCORS: true,
-        letterRendering: true,
-        scrollY: 0
-      },
-      jsPDF: {
-        unit: "in",
-        format: "letter",
-        orientation: "portrait"
-      },
-      pagebreak: {
-        mode: ["avoid-all", "css", "legacy"]
-      }
-    };
-    const tempDiv = document.createElement("div");
-    tempDiv.style.position = "absolute";
-    tempDiv.style.left = "-9999px";
-    tempDiv.style.width = "8.5in";
-    tempDiv.appendChild(clonedElement);
-    document.body.appendChild(tempDiv);
-    try {
-      if (typeof html2pdf !== "undefined") {
-        await html2pdf().set(opt).from(clonedElement).save();
-        // Show completion alert on success.
-        Swal.fire({
-          icon: "success",
-          title: "PDF Export Complete",
-          text: "Your CV has been successfully exported to PDF format."
-        });
-      } else {
-        throw new Error("html2pdf library not found");
-      }
-    } catch (e) {
-      CVLog.warn("HTML2PDF failed or canvas limit reached. Falling back to native browser print.", e);
-      alert("Direct PDF generation encountered a length limit. Falling back to the browser's native 'Save as PDF' dialog.");
-      window.print();
-    } finally {
-      document.body.removeChild(tempDiv);
-    }
-  } catch (err) {
-    CVLog.error("ExportToPDF failed:", err);
-    ExportErrorToast("ExportToPDF", err);
-  } finally {
-    // Restore console.
-    console.log = _origLog;
-    console.info = _origInfo;
-  }
-}
-
 // Define the main asynchronous function to generate and download the Word document.
 async function GenerateWordDocument(options) {
   try {
@@ -4641,71 +4660,58 @@ async function GenerateWordDocument(options) {
       CVLog.error("Resume wrapper element not found.");
       return;
     }
-    // Find the download button.
-    const downloadButton = document.getElementById("DownloadPdfButton");
-    // Disable the download button.
-    if (downloadButton) {
-      downloadButton.disabled = true;
+    // Clone the resume element.
+    const clonedElement = resumeElement.cloneNode(true);
+    // Process the cloned element.
+    await ProcessResumeElement(clonedElement, options);
+    // Get the Word-friendly styles.
+    const wordStyles = GetWordFriendlyStyles(options);
+    // Initialize the watermark VML.
+    let watermarkVml = "";
+    // Check if a watermark is selected.
+    if (options.Watermark !== "none") {
+      const wmText = options.Watermark.toUpperCase();
+      watermarkVml = "<v:shape id=\"Watermark\" type=\"#x0000_t136\" style=\"position:absolute;left:0;top:0;width:650pt;height:150pt;rotation:315;z-index:-251658752;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:center;mso-position-vertical-relative:margin\" fillcolor=\"#C0C0C0\" stroked=\"f\" o:allowincell=\"f\">" + "<v:fill opacity=\".15\"/>" + "<v:textbox style=\"mso-fit-shape-to-text:t\" inset=\"0,0,0,0\">" + "<w:txbxContent>" + "<p class=\"MsoNormal\" align=\"center\"><span style=\"font-size:88pt;font-family:Calibri,sans-serif;color:#C0C0C0;font-weight:bold;\">" + wmText + "</span></p>" + "</w:txbxContent>" + "</v:textbox>" + "</v:shape>";
     }
-    try {
-      // Clone the resume element.
-      const clonedElement = resumeElement.cloneNode(true);
-      // Process the cloned element.
-      await ProcessResumeElement(clonedElement, options);
-      // Get the Word-friendly styles.
-      const wordStyles = GetWordFriendlyStyles(options);
-      // Initialize the watermark VML.
-      let watermarkVml = "";
-      // Check if a watermark is selected.
-      if (options.Watermark !== "none") {
-        const wmText = options.Watermark.toUpperCase();
-        watermarkVml = "<v:shape id=\"Watermark\" type=\"#x0000_t136\" style=\"position:absolute;left:0;top:0;width:650pt;height:150pt;rotation:315;z-index:-251658752;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:center;mso-position-vertical-relative:margin\" fillcolor=\"#C0C0C0\" stroked=\"f\" o:allowincell=\"f\">" + "<v:fill opacity=\".15\"/>" + "<v:textbox style=\"mso-fit-shape-to-text:t\" inset=\"0,0,0,0\">" + "<w:txbxContent>" + "<p class=\"MsoNormal\" align=\"center\"><span style=\"font-size:88pt;font-family:Calibri,sans-serif;color:#C0C0C0;font-weight:bold;\">" + wmText + "</span></p>" + "</w:txbxContent>" + "</v:textbox>" + "</v:shape>";
-      }
-      // Define the document metadata.
-      const documentMetadata = {
-        "Title": "Hossam_Magdy_Balaha_CV",
-        "Charset": "utf-8",
-        "Language": options.DocumentLanguage || "en-US"
-      };
-      // Build the full HTML string.
-      const fullHtml = "<!DOCTYPE html>" + "<html lang=\"" + documentMetadata["Language"] + "\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns=\"https://www.w3.org/TR/REC-html40\">" + "<head>" + "<meta charset=\"" + documentMetadata["Charset"] + "\">" + "<title>" + documentMetadata["Title"] + "</title>" + "<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->" + "<style>v:* {behavior:url(#default#VML);} " + wordStyles + "</style>" + "</head>" + "<body>" + watermarkVml + "<div class=\"WordSection1\">" + clonedElement.innerHTML + "</div></body>" + "</html>";
-      // Check if html-docx-js is loaded.
-      if (typeof htmlDocx === "undefined") {
-        CVLog.error("html-docx-js library is not loaded.");
-        return;
-      }
-      // Convert the HTML to a Blob.
-      const convertedBlob = htmlDocx.asBlob(fullHtml);
-      // Define the base file name.
-      let baseFileName = "Hossam_Magdy_Balaha_CV";
-      // Append the filename suffix if provided.
-      if (options.FilenameSuffix) {
-        const cleanSuffix = options.FilenameSuffix.replace(/[^a-zA-Z0-9_]/g, "");
-        baseFileName = baseFileName + "_" + cleanSuffix;
-      }
-      // Define the output file name.
-      const outputFileName = baseFileName + ".docx";
-      // Trigger download webhook.
-      TriggerDownloadWebhook("DOCX");
-      // Check if FileSaver.js is loaded.
-      if (typeof saveAs === "undefined") {
-        CVLog.error("FileSaver.js library is not loaded.");
-        return;
-      }
-      // Save the file.
-      saveAs(convertedBlob, outputFileName);
-      // Show completion alert on success.
-      Swal.fire({
-        icon: "success",
-        title: "DOCX Export Complete",
-        text: "Your CV has been successfully exported to Word format."
-      });
-    } finally {
-      // Re-enable the download button.
-      if (downloadButton) {
-        downloadButton.disabled = false;
-      }
+    // Define the document metadata.
+    const documentMetadata = {
+      "Title": "Hossam_Magdy_Balaha_CV",
+      "Charset": "utf-8",
+      "Language": options.DocumentLanguage || "en-US"
+    };
+    // Build the full HTML string.
+    const fullHtml = "<!DOCTYPE html>" + "<html lang=\"" + documentMetadata["Language"] + "\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns=\"https://www.w3.org/TR/REC-html40\">" + "<head>" + "<meta charset=\"" + documentMetadata["Charset"] + "\">" + "<title>" + documentMetadata["Title"] + "</title>" + "<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->" + "<style>v:* {behavior:url(#default#VML);} " + wordStyles + "</style>" + "</head>" + "<body>" + watermarkVml + "<div class=\"WordSection1\">" + clonedElement.innerHTML + "</div></body>" + "</html>";
+    // Check if html-docx-js is loaded.
+    if (typeof htmlDocx === "undefined") {
+      CVLog.error("html-docx-js library is not loaded.");
+      return;
     }
+    // Convert the HTML to a Blob.
+    const convertedBlob = htmlDocx.asBlob(fullHtml);
+    // Define the base file name.
+    let baseFileName = "Hossam_Magdy_Balaha_CV";
+    // Append the filename suffix if provided.
+    if (options.FilenameSuffix) {
+      const cleanSuffix = options.FilenameSuffix.replace(/[^a-zA-Z0-9_]/g, "");
+      baseFileName = baseFileName + "_" + cleanSuffix;
+    }
+    // Define the output file name.
+    const outputFileName = baseFileName + ".docx";
+    // Trigger download webhook.
+    TriggerDownloadWebhook("DOCX");
+    // Check if FileSaver.js is loaded.
+    if (typeof saveAs === "undefined") {
+      CVLog.error("FileSaver.js library is not loaded.");
+      return;
+    }
+    // Save the file.
+    saveAs(convertedBlob, outputFileName);
+    // Show completion alert on success.
+    Swal.fire({
+      icon: "success",
+      title: "DOCX Export Complete",
+      text: "Your CV has been successfully exported to Word format."
+    });
   } catch (err) {
     CVLog.error("GenerateWordDocument failed:", err);
     ExportErrorToast("GenerateWordDocument", err);
@@ -4713,8 +4719,7 @@ async function GenerateWordDocument(options) {
 }
 
 // ---------------------------------------------------------------------------
-// New export formats (RIS, CSV, Markdown) + cover letter generator.
-// Added 2026-10-30.
+// Export formats (RIS, CSV, Markdown) + cover letter generator.
 // ---------------------------------------------------------------------------
 
 // Shared helper: collect all publications from the DOM as structured objects.
@@ -4819,60 +4824,6 @@ function ExportToCSV() {
   } catch (err) {
     CVLog.error("ExportToCSV failed:", err);
     ExportErrorToast("ExportToCSV", err);
-  }
-}
-
-// Export the whole CV (or just publications) to Markdown.
-function ExportToMarkdown() {
-  try {
-    TrackAnalyticsEvent("Export", "Markdown");
-    TriggerDownloadWebhook("Markdown");
-    const today = new Date().toISOString().split("T")[0];
-    let md = "# Hossam Magdy Balaha \u2014 Curriculum Vitae\n\n";
-    md += "**Ph.D. Candidate and Graduate Teaching Assistant**  \n";
-    md += "University of Louisville, J.B. Speed School of Engineering  \n";
-    md += "hmbala01@louisville.edu | +1 502-767-9991  \n";
-    md += "https://hossambalaha.github.io/\n\n";
-    md += "_Generated: " + today + "_\n\n";
-    md += "---\n\n";
-    const sections = document.querySelectorAll(".resume-section");
-    sections.forEach(function (section) {
-      const heading = section.querySelector(".resume-section-title");
-      if (!heading) return;
-      md += "## " + heading.textContent.trim() + "\n\n";
-      const items = section.querySelectorAll(".resume-timeline-item");
-      if (items.length > 0) {
-        items.forEach(function (item) {
-          const title = item.querySelector(".resume-position-title");
-          const venue = item.querySelector(".resume-company-name");
-          const time = item.querySelector(".resume-position-time");
-          const doi = item.querySelector("a[href*='doi.org']");
-          if (title) md += "- **" + title.textContent.trim() + "**";
-          if (venue) md += " _" + venue.textContent.trim() + "_";
-          if (time) md += " (" + time.textContent.trim() + ")";
-          if (doi) md += " [DOI](" + doi.getAttribute("href") + ")";
-          md += "\n";
-        });
-        md += "\n";
-      } else {
-        const paras = section.querySelectorAll("p");
-        paras.forEach(function (p) {
-          md += p.textContent.trim() + "\n\n";
-        });
-      }
-    });
-    const blob = new Blob([md], {type: "text/markdown;charset=utf-8"});
-    if (typeof saveAs !== "undefined") {
-      saveAs(blob, "Hossam_Balaha_CV.md");
-    } else {
-      throw new Error("FileSaver library not loaded.");
-    }
-    if (typeof Swal !== "undefined") {
-      Swal.fire({icon: "success", title: "Markdown Export Complete", text: "CV exported to Markdown."});
-    }
-  } catch (err) {
-    CVLog.error("ExportToMarkdown failed:", err);
-    ExportErrorToast("ExportToMarkdown", err);
   }
 }
 
@@ -5401,9 +5352,7 @@ function ExportErrorToast(operationName, err) {
     }).then(function (result) {
       if (result.isConfirmed) {
         // Retry the same operation.
-        if (operationName === "ExportToPDF") {
-          ExportToPDF();
-        } else if (operationName === "ExportToBibTeX") {
+        if (operationName === "ExportToBibTeX") {
           ExportToBibTeX();
         } else if (operationName === "GenerateWordDocument") {
           HandleWordDownloadClick();
@@ -5430,8 +5379,12 @@ function SetupBackToTop() {
     ticking = false;
     if (window.scrollY > 600) {
       btn.classList.add("is-visible");
+      // Body-level flag so the "+" FAB can slide out of the back-to-top
+      // spot and back above it in sync with this button.
+      document.body.classList.add("btt-visible");
     } else {
       btn.classList.remove("is-visible");
+      document.body.classList.remove("btt-visible");
     }
   }
 
@@ -5441,80 +5394,122 @@ function SetupBackToTop() {
       window.requestAnimationFrame(update);
     }
   }, {passive: true});
+  // Sync once on load so a restored scroll position starts in the right state.
+  update();
   btn.addEventListener("click", function () {
     window.scrollTo({top: 0, behavior: "smooth"});
   });
 }
 
-// Mobile TOC drawer: open/close + backdrop + Escape to close + focus return.
-function SetupMobileToc() {
+// TOC rail toggle: expands the rail to reveal the section labels and
+// collapses it back to the icon-only state (where flyout tooltips appear).
+function SetupTocToggle() {
   const toggle = document.getElementById("mobile-toc-toggle");
   const toc = document.getElementById("sticky-toc");
   if (!toggle || !toc) return;
-  // Create a backdrop element dynamically.
-  const backdrop = document.createElement("div");
-  backdrop.className = "toc-backdrop";
-  backdrop.setAttribute("aria-hidden", "true");
-  document.body.appendChild(backdrop);
-  let lastFocused = null;
+
+  // Reflect the expanded/collapsed state on the toggle button itself.
+  function updateToggleButton(isOpen) {
+    const icon = toggle.querySelector("i");
+    if (icon) {
+      icon.className = isOpen ? "fas fa-angles-left" : "fas fa-list";
+    }
+    toggle.title = isOpen ? "Collapse table of contents" : "Expand table of contents";
+    toggle.setAttribute("aria-label", toggle.title);
+    toggle.classList.toggle("is-open", isOpen);
+  }
 
   function open() {
     toc.classList.add("is-open");
-    backdrop.classList.add("is-open");
     toggle.setAttribute("aria-expanded", "true");
-    lastFocused = document.activeElement;
-    // Focus the first toc-link.
-    const firstLink = toc.querySelector(".toc-link");
-    if (firstLink) firstLink.focus();
-    document.addEventListener("keydown", onKeydown);
+    updateToggleButton(true);
+    HideTocFlyout();
   }
 
   function close() {
     toc.classList.remove("is-open");
-    backdrop.classList.remove("is-open");
     toggle.setAttribute("aria-expanded", "false");
-    document.removeEventListener("keydown", onKeydown);
-    if (lastFocused && typeof lastFocused.focus === "function") {
-      lastFocused.focus();
-    }
+    updateToggleButton(false);
   }
 
   function onKeydown(e) {
     if (e.key === "Escape") {
       close();
     }
-    // Basic focus trap: keep Tab within the toc while open.
-    if (e.key === "Tab") {
-      const links = toc.querySelectorAll("a, button");
-      if (links.length === 0) return;
-      const first = links[0];
-      const last = links[links.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
   }
 
   toggle.addEventListener("click", function () {
     if (toc.classList.contains("is-open")) {
       close();
+      document.removeEventListener("keydown", onKeydown);
     } else {
       open();
+      document.addEventListener("keydown", onKeydown);
     }
   });
-  backdrop.addEventListener("click", close);
-  // Close when a TOC link is clicked (mobile only).
-  toc.querySelectorAll(".toc-link").forEach(function (link) {
-    link.addEventListener("click", function () {
-      if (window.matchMedia("(max-width: 991px)").matches) {
-        close();
-      }
-    });
+  // Collapse after navigating on small screens (the expanded rail covers
+  // content there). Delegated on the container so it works no matter when
+  // the links are built.
+  toc.addEventListener("click", function (clickEvent) {
+    const link = clickEvent.target.closest(".toc-link");
+    if (!link) return;
+    if (window.matchMedia("(max-width: 991px)").matches) {
+      close();
+      document.removeEventListener("keydown", onKeydown);
+    }
   });
+  // Wire the collapsed-state flyout tooltips.
+  SetupTocFlyout(toc);
+}
+
+// Flyout tooltip for the collapsed TOC rail. A single reusable element is
+// appended to <body> (so the rail's scroll container cannot clip it) and is
+// positioned next to the hovered/focused icon.
+let tocFlyoutEl = null;
+
+function HideTocFlyout() {
+  if (tocFlyoutEl) {
+    tocFlyoutEl.classList.remove("is-visible");
+  }
+}
+
+function SetupTocFlyout(toc) {
+  tocFlyoutEl = document.createElement("div");
+  tocFlyoutEl.className = "toc-flyout";
+  tocFlyoutEl.setAttribute("aria-hidden", "true");
+  document.body.appendChild(tocFlyoutEl);
+
+  function show(link) {
+    const text = link.getAttribute("data-tooltip");
+    if (!text) return;
+    tocFlyoutEl.textContent = text;
+    const rect = link.getBoundingClientRect();
+    tocFlyoutEl.style.left = (rect.right + 12) + "px";
+    tocFlyoutEl.style.top = (rect.top + rect.height / 2) + "px";
+    tocFlyoutEl.classList.add("is-visible");
+  }
+
+  function considerShow(event) {
+    // Only in the collapsed state; the visible labels replace the tooltip
+    // when the rail is expanded.
+    if (toc.classList.contains("is-open")) {
+      HideTocFlyout();
+      return;
+    }
+    const link = event.target.closest(".toc-link");
+    if (link) {
+      show(link);
+    } else {
+      HideTocFlyout();
+    }
+  }
+
+  toc.addEventListener("mouseover", considerShow);
+  toc.addEventListener("mouseout", HideTocFlyout);
+  toc.addEventListener("focusin", considerShow);
+  toc.addEventListener("focusout", HideTocFlyout);
+  window.addEventListener("scroll", HideTocFlyout, {passive: true});
+  window.addEventListener("resize", HideTocFlyout);
 }
 
 // Copy-to-clipboard for any element with [data-copy].
@@ -5655,12 +5650,6 @@ function SetupReadingTime() {
 
 // Execute initialization when the DOM is ready.
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize the Word export generator
-  try {
-    InitializeWordGenerator();
-  } catch (e) {
-    CVLog.error("InitializeWordGenerator failed:", e);
-  }
   // Initialize the new UI enhancements
   try {
     InitializeUIEnhancements();
@@ -5681,11 +5670,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Batch 6: New JS functions for live data integrations, accessibility extras,
-// analytics, and lazy-loaded libraries. This file is APPENDED to scripts.latest.js
-// via the batch6 runner. All functions are standalone and called from the
-// enhanced InitializeUIEnhancements().
-
 // ===========================================================================
 // LIVE DATA INTEGRATIONS
 // ===========================================================================
@@ -5697,7 +5681,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // aggressive concurrent requests with CORS-blocking 429 responses, so we
 // serialize them. Failures are silent (badges are an enhancement, not critical).
 //
-// audit-fix: Three robustness improvements:
+// Robustness details:
 //   1. Skip entirely on file:// protocol — Semantic Scholar and OpenAlex both
 //      reject `null` origins with CORS errors, so there's no point trying.
 //      This eliminates the noisy CORS console errors when the CV is opened
@@ -5708,7 +5692,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //   3. Exponential backoff on 429 — if Semantic Scholar returns 429, double
 //      the delay before the next request (up to 10s max).
 function SetupCitationBadges() {
-  // audit-fix: Skip on file:// — APIs will CORS-reject with `null` origin.
+  // Skip on file:// — APIs will CORS-reject with `null` origin.
   if (window.location.protocol === "file:") {
     CVLog.log("Citation badges skipped: file:// protocol (APIs require http(s) origin).");
     return;
@@ -6127,18 +6111,13 @@ function SetupFabMenu() {
 }
 
 // --- Download Word FAB ---
-// Wires the "Download Word" FAB item to the same handler as the existing
-// floating DownloadPdfButton (which opens the export configuration modal).
+// Wires the "Download Word" quick action to the export configuration modal.
 function SetupDownloadWordFab() {
   const fab = document.getElementById("download-word-fab");
   if (!fab) return;
   fab.addEventListener("click", function () {
     if (typeof HandleWordDownloadClick === "function") {
       HandleWordDownloadClick();
-    } else {
-      // Fallback: trigger the original download button.
-      const btn = document.getElementById("DownloadPdfButton");
-      if (btn) btn.click();
     }
   });
 }
@@ -6232,7 +6211,7 @@ function SetupQrSharePopup() {
   }
 
   function positionPopup() {
-    // audit-fix: Center the popup on screen instead of positioning relative to FAB.
+    // Center the popup on screen instead of positioning relative to the FAB.
     if (isMobile()) {
       const vw = document.documentElement.clientWidth;
       popup.style.width = (vw - 32) + "px";
@@ -6895,7 +6874,7 @@ function SetupReadingGuide() {
   const enabled = localStorage.getItem("cv-reading-guide") === "true";
   if (enabled) document.body.classList.add("reading-guide-active");
 
-  // audit-fix Enh 2: Show/hide the indicator badge.
+  // Show/hide the indicator badge.
   function updateGuideIndicator() {
     const indicator = document.getElementById("reading-guide-indicator");
     if (!indicator) return;
@@ -6929,7 +6908,7 @@ function SetupReadingGuide() {
       updateGuideIndicator();
     });
   }
-  // audit-fix: Toggle on Shift+R (not just R) to prevent accidental activation.
+  // Toggle on Shift+R (not just R) to prevent accidental activation.
   // Previously, pressing 'R' alone would toggle the guide, which was too easy
   // to trigger by mistake while typing in the search box or navigating.
   document.addEventListener("keydown", function (e) {
@@ -6960,7 +6939,7 @@ function SetupReadingGuide() {
 // "Accessibility" button in the global toolbar. The panel sits just
 // under the toolbar (top-right of the viewport) and closes on outside
 // click or Escape.
-// audit-fix Enh 1: Reset all preferences — clears all localStorage keys and reloads.
+// Reset all preferences — clears all localStorage keys and reloads.
 function ResetAllPreferences() {
   if (!confirm("Reset all preferences? This will clear dark mode, font size, reading guide, high contrast, dyslexia font, per-block buttons, and all cached data. The page will reload.")) return;
   const keysToRemove = [
@@ -7047,7 +7026,7 @@ function SetupAccessibilityMenu() {
       }
     }
   }, {passive: true});
-  // audit-fix Enh 1: Wire up the Reset All Preferences button.
+  // Wire up the Reset All Preferences button.
   const resetBtn = document.getElementById("a11y-reset-btn");
   if (resetBtn) {
     resetBtn.addEventListener("click", ResetAllPreferences);
@@ -7293,7 +7272,7 @@ function SetupCalendly() {
 
 // --- Lazy-load Flickr embeds ---
 function SetupLazyFlickr() {
-  // audit-fix: Skip Flickr embeds entirely on file:// protocol — the embedr
+  // Skip Flickr embeds entirely on file:// protocol — the embedr
   // script requires http(s) origin and throws "contentWindow is null" errors
   // when loaded from a local file. On production (https://), it works fine.
   if (window.location.protocol === "file:") {
@@ -7387,8 +7366,8 @@ function HideZeroAltmetricBadges() {
 // Append new setup calls to the existing InitializeUIEnhancements function.
 
 
-// audit-fix P2-2: Move inline onload/onerror on profile img to addEventListener.
-// Replaces the previous inline handlers (which required CSP 'unsafe-inline').
+// Profile image load/error handlers attached with addEventListener
+// (avoids inline handlers, so CSP 'unsafe-inline' is not needed).
 (function () {
   function setupProfileImageHandlers() {
     var img = document.querySelector('img.picture.rounded-circle');
@@ -7415,7 +7394,7 @@ function HideZeroAltmetricBadges() {
   }
 })();
 
-// audit-fix P0-1 runtime: ensure dynamically-generated target=_blank links get rel=noopener noreferrer.
+// Ensure dynamically-generated target=_blank links get rel=noopener noreferrer.
 // DataTables and other JS may rebuild <a> tags from data attributes; this observer catches them.
 (function () {
   function patchLink(a) {
@@ -7451,25 +7430,22 @@ function HideZeroAltmetricBadges() {
 })();
 
 // ===========================================================================
-// audit-fix: Per-block copy + read-aloud buttons.
-// Instead of one global "read this section aloud" button in the accessibility
-// menu, every section header and every timeline item gets its own small toolbar
-// with two buttons: Copy (copies text to clipboard) and Read Aloud (uses the
-// Web Speech API to speak just that block's text). Buttons appear on hover
-// (desktop) or always visible (touch devices). The global TTS button in the
-// a11y menu is kept for backwards compatibility.
+// Per-block copy + read-aloud buttons.
+// Every section header and timeline item gets a small toolbar with two
+// buttons: Copy (copies that block's text to the clipboard) and Read Aloud
+// (speaks just that block's text via the Web Speech API). Buttons appear on
+// hover (desktop) or stay visible (touch devices).
 // ===========================================================================
 function SetupPerBlockActions() {
   // Don't run twice.
   if (document.querySelector('.block-action-toolbar')) return;
 
-  // audit-fix: Add accessibility-menu toggles for the per-block buttons.
   // Body classes hide the buttons; the state persists in localStorage and
-  // is wired up by SetupBlockActionToggles() (see below). Defaults: ON.
-  if (localStorage.getItem("cv-block-copy") === "false") {
+  // is wired up by SetupBlockActionToggles() (see below). Defaults: OFF.
+  if (localStorage.getItem("cv-block-copy") !== "true") {
     document.body.classList.add("block-copy-off");
   }
-  if (localStorage.getItem("cv-block-speak") === "false") {
+  if (localStorage.getItem("cv-block-speak") !== "true") {
     document.body.classList.add("block-speak-off");
   }
 
@@ -7703,16 +7679,16 @@ function SetupPerBlockActions() {
 // Two switches in the accessibility menu ("Copy-to-clipboard buttons" and
 // "Read-aloud buttons") show/hide the per-block Copy and Read Aloud buttons
 // added by SetupPerBlockActions(). State persists in localStorage and is
-// cleared by "Reset all preferences" (all cv-* keys). Defaults: ON.
+// cleared by "Reset all preferences" (all cv-* keys). Defaults: OFF.
 function SetupBlockActionToggles() {
   const copyToggle = document.getElementById("a11y-block-copy-toggle");
   const speakToggle = document.getElementById("a11y-block-speak-toggle");
 
   // Apply the saved state early so already-rendered toolbars hide instantly.
-  if (localStorage.getItem("cv-block-copy") === "false") {
+  if (localStorage.getItem("cv-block-copy") !== "true") {
     document.body.classList.add("block-copy-off");
   }
-  if (localStorage.getItem("cv-block-speak") === "false") {
+  if (localStorage.getItem("cv-block-speak") !== "true") {
     document.body.classList.add("block-speak-off");
   }
 
@@ -7740,7 +7716,7 @@ function SetupBlockActionToggles() {
 }
 
 
-// audit-fix Enh 4: Wrap acronyms in <abbr> tags for screen readers.
+// Wrap acronyms in <abbr> tags for screen readers.
 // This function walks all text nodes in the main content and wraps known
 // acronyms in <abbr title="..."> tags. It skips <script>, <style>, <code>,
 // <pre>, <textarea>, and <a> elements (to avoid breaking links).
@@ -7819,7 +7795,6 @@ function SetupAbbrAcronyms() {
     "IAPR": "International Association for Pattern Recognition",
     "BStP": "Biomedical Signal Processing and informatics",
     "UofL": "University of Louisville",
-    "CV": "Computer Vision",
     "HR": "Human Resources",
     "MCQ": "Multiple Choice Question",
     "AECF": "Automatic Exam Correction Framework",
@@ -7916,7 +7891,7 @@ function SetupAbbrAcronyms() {
 }
 
 
-// audit-fix Enh 5: Export the resume to Markdown format.
+// Export the resume to Markdown format.
 // Generates a clean Markdown document with headers, bullets, and links —
 // suitable for GitHub README, Notion, or developer profiles.
 function ExportToMarkdown() {

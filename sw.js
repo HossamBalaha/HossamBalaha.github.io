@@ -1,6 +1,6 @@
 /* sw.js — Service Worker for the Hossam Balaha online CV.
  *
- * Pass 2 enhancements:
+ * Features:
  *   - Precache all certification PDFs (~12 MB) so the full CV works offline.
  *   - Cache Semantic Scholar / GitHub / ORCID API responses for 24h.
  *   - Cache Altmetric badge script.
@@ -15,25 +15,22 @@
  *     cache-first with a 24-hour TTL.
  *   - For everything else: pass through to the network.
  *
- * Bump CACHE_VERSION whenever you ship a new build to invalidate old caches.
+ * CACHE_VERSION keys the runtime caches; change its value to invalidate
+ * everything that was cached by previous builds.
  */
-
-// 2026-11-14: bumped cache version — removed D3 co-author graph, added a11y
-// per-block button toggles, new +/- font-size shortcut, 3 new publications.
-const CACHE_VERSION = "cv-final-v16-20261114";
-const API_CACHE_VERSION = "cv-api-v16-20261114";
+const CACHE_VERSION = "cv-static";
+const API_CACHE_VERSION = "cv-api";
 
 const PRECACHE_URLS = [
   "./",
   "./index.html",
-  "./assets/css/styles.latest.min.css",
-  "./assets/css/pillar-6.css",
+  "./assets/css/styles.min.css",
+  "./assets/css/pillar-6.min.css",
   "./assets/css/bootstrap-5.3.3.min.css",
   "./assets/css/pillar-theme.css",
-  "./assets/js/scripts.latest.min.js",
+  "./assets/js/scripts.min.js",
   "./export-worker.js",
   "./manifest.json",
-  "./site.webmanifest",
   "./favicon.ico",
   "./assets/favicons/favicon-16x16.png",
   "./assets/favicons/favicon-32x32.png",
